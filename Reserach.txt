@@ -93,3 +93,20 @@ https://youtu.be/n3rkF0el0AQ
 C4D to threejs
 https://github.com/BlackDice/Cinema4D-Threejs-Exporter
 
+
+Move 1 object
+You can listen to 'mousemove' event and apply an increment to the objects rotation.
+
+This is a very easy working solution to start with:
+
+var canvas = renderer.domElement;
+canvas.addEventListener('mousemove', onMouseMove);
+
+function onMouseMove(event) {
+  cube.rotation.y += event.movementX * 0.005;
+}
+
+Found how to change postprocessing
+13/01/2022
+https://vanruesc.github.io/postprocessing/public/docs/class/src/effects/HueSaturationEffect.js~HueSaturationEffect.html
+

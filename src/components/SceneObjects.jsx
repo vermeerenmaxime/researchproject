@@ -41,7 +41,7 @@ const Video = () => {
     <>
       <mesh rotation={[0, 0, 0]} position={[0, 0, -5]}>
         <planeGeometry args={[50, 50]} />
-        <meshStandardMaterial emissive={"white"} >
+        <meshStandardMaterial emissive={"white"}>
           <videoTexture attach="map" args={[video]} />
           <videoTexture attach="emissiveMap" args={[video]} />
         </meshStandardMaterial>
@@ -63,6 +63,9 @@ const Analyzer = ({ sound, scene }) => {
     analyser.current = new THREE.AudioAnalyser(sound.current, 128);
   });
   const frequencyDataArray = [];
+
+  // function Foo({ vec = new THREE.Vector3(), ...props })
+
   useFrame(() => {
     const averageFrequency = analyser.current.getAverageFrequency();
     frequencyDataArray = analyser.current.getFrequencyData();
@@ -94,12 +97,13 @@ const Analyzer = ({ sound, scene }) => {
     const zoom = min(avg(kickArray) / 100, 0.7);
 
     // Edit elements
+    // meshRef.current.scale.lerp(vec.set(zoom, zoom, zoom), 0.15);
     meshRef.current.scale.lerp(new THREE.Vector3(zoom, zoom, zoom), 0.15);
     // Create calulculation but element cannot go lower than 1
 
     scene.current.rotation.y -= avg(kickArray) / 100000;
-    light1Ref.current.intensity = max(avg(kickArray) / 40,5);
-    light2Ref.current.intensity = max(avg(kickArray) / 40,5);
+    light1Ref.current.intensity = max(avg(kickArray) / 40, 5);
+    light2Ref.current.intensity = max(avg(kickArray) / 40, 5);
     // console.log( avg(lowerHalfArray)/20)
     // htmlRef.current.innerHTML = Math.round(zoom * 100, 2) / 100;
   });
@@ -114,7 +118,7 @@ const Analyzer = ({ sound, scene }) => {
       <pointLight
         ref={light2Ref}
         intensity={0}
-        position={[-5,5,5]}
+        position={[-5, 5, 5]}
         color="green"
       />
       <mesh ref={meshRef} scale={1}>
@@ -160,7 +164,7 @@ export const SceneObjects = () => {
 
   const nodesCubes = ["hi", "hi", "hi", "hi", "yo", "xp", "ahha"].map(
     (el, i) => {
-      console.log("hi");
+      // console.log("hi");
       return (
         <Box key={i} position={[i + 2, 0, 0]}>
           <meshPhongMaterial attach="material" color="#f3f3f3" />
@@ -254,8 +258,8 @@ export const SceneObjects = () => {
           <Bugatti></Bugatti>
         </mesh> */}
         <mesh position={new THREE.Vector3(0, 0, 0)}>
-        {/* <Cubes></Cubes> */}
-      </mesh>
+          {/* <Cubes></Cubes> */}
+        </mesh>
         <mesh position={new THREE.Vector3(0, 0, -5)}>
           {/* <Diodes></Diodes> */}
         </mesh>
