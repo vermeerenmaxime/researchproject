@@ -17,18 +17,10 @@ import shallow from "zustand/shallow";
 import { useFrame } from "@react-three/fiber";
 
 export const Scene = () => {
-  const [bloom, addBloom, removeBloom, resetBloom, lightIntensity, hue] =
-    useSceneStore(
-      (state) => [
-        state.bloom,
-        state.addBloom,
-        state.removeBloom,
-        state.resetBloom,
-        state.lightIntensity,
-        state.hue,
-      ],
-      shallow
-    );
+  const [bloom, lightIntensity, hue] = useSceneStore(
+    (state) => [state.bloom, state.lightIntensity, state.hue],
+    shallow
+  );
 
   //   const Loader = () => {
   //     const { active, progress, errors, item, loaded, total } = useProgress();

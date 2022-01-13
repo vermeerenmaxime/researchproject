@@ -23,6 +23,10 @@ import * as THREE from "three";
 import { useFrame, useThree } from "@react-three/fiber";
 
 import { avg } from "../utils/calculations";
+import { useObjectStore } from "../stores/objectStore";
+import { useSceneStore } from "../stores/sceneStore";
+
+import { shallow } from "zustand/shallow";
 
 // import url from "../../public/video/video.mp4";
 
@@ -64,6 +68,8 @@ const Analyzer = ({ sound, scene }) => {
   });
   const frequencyDataArray = [];
 
+  const [sceneSpeed] = useSceneStore((state) => [state.sceneSpeed], shallow); 
+
   // function Foo({ vec = new THREE.Vector3(), ...props })
 
   useFrame(() => {
@@ -101,7 +107,7 @@ const Analyzer = ({ sound, scene }) => {
     meshRef.current.scale.lerp(new THREE.Vector3(zoom, zoom, zoom), 0.15);
     // Create calulculation but element cannot go lower than 1
 
-    scene.current.rotation.y -= avg(kickArray) / 100000;
+    scene.current.rotation.y -= avg(kickArray) / (100000/sceneSpeed);
     light1Ref.current.intensity = max(avg(kickArray) / 40, 5);
     light2Ref.current.intensity = max(avg(kickArray) / 40, 5);
     // console.log( avg(lowerHalfArray)/20)
@@ -144,8 +150,10 @@ export const SceneObjects = () => {
   const bounceRef = useRef();
   const sceneRef = useRef();
   const soundRef = useRef();
+  const starsRef = useRef();
   const { camera } = useThree();
 
+  const [stars] = useObjectStore((state) => [state.stars], shallow);
   useFrame((smth, x) => {
     bounceRef.current.rotation.y += 0.01;
     // sceneRef.current.rotation.y -= 0.001;
@@ -158,7 +166,14 @@ export const SceneObjects = () => {
     // camera.position.x += 0.2
     // camera.position.y += 0.2
     // camera.position.z += 0.2
+    // if (playVideo) console.log(soundRef.current);
+    // if (playVideo) console.log(soundRef.current.listener);
   });
+
+  useEffect(() => {
+    // starsRef.current.
+    console.log("" + stars + " stars rendering");
+  }, [stars]);
 
   const [playVideo, setPlayVideo] = useState(false);
 
@@ -226,9 +241,10 @@ export const SceneObjects = () => {
       /> */}
 
         <Stars
+          ref={starsRef}
           radius={100} // Radius of the inner sphere (default=100)
           depth={50} // Depth of area where stars should fit (default=50)
-          count={50} // Amount of stars (default=5000)
+          count={stars} // Amount of stars (default=5000)
           factor={10} // Size factor (default=4)
           saturation={1} // Saturation 0-1 (default=0)
           fade // Faded dots (default=false)

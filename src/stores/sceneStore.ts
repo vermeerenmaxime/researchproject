@@ -7,14 +7,16 @@ export const useSceneStore = create(
       bloom: 0.1,
       addBloom: () =>
         set((state: { bloom: number }) => ({
-          bloom: state.bloom + 0.1,
+          bloom: state.bloom < 1 ? state.bloom + 0.1 : state.bloom,
         })),
       removeBloom: () =>
         set((state: { bloom: number }) => ({
-          bloom: state.bloom - 0.1,
+          bloom: state.bloom > 0 ? state.bloom - 0.1 : state.bloom,
         })),
       resetBloom: () => set({ bloom: 0.1 }),
       setBloom: (value: number) => set({ bloom: value }),
+
+      // Light
       lightIntensity: 0,
       addLightIntensity: () =>
         set((state: { lightIntensity: number }) => ({
@@ -25,6 +27,8 @@ export const useSceneStore = create(
           lightIntensity: state.lightIntensity - 0.1,
         })),
       resetLightIntensity: () => set({ lightIntensity: 0 }),
+
+      // Hue
       hue: 0,
       addHue: () =>
         set((state: { hue: number }) => ({
@@ -36,6 +40,19 @@ export const useSceneStore = create(
         })),
       resetHue: () => set({ hue: 0 }),
       setHue: (value: number) => set({ hue: value }),
+
+      // SceneSpeed
+      sceneSpeed: 1,
+      addSceneSpeed: () =>
+        set((state: { sceneSpeed: number }) => ({
+          sceneSpeed: state.sceneSpeed + 1,
+        })),
+      removeSceneSpeed: () =>
+        set((state: { sceneSpeed: number }) => ({
+          sceneSpeed: state.sceneSpeed - 1,
+        })),
+      resetSceneSpeed: () => set({ sceneSpeed: 1 }),
+      setSceneSpeed: (value: number) => set({ sceneSpeed: value }),
     }),
     { name: "scene", getStorage: () => sessionStorage }
   )
