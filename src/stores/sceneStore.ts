@@ -14,6 +14,7 @@ export const useSceneStore = create(
           bloom: state.bloom - 0.1,
         })),
       resetBloom: () => set({ bloom: 0.1 }),
+      setBloom: (value: number) => set({ bloom: value }),
       lightIntensity: 0,
       addLightIntensity: () =>
         set((state: { lightIntensity: number }) => ({
