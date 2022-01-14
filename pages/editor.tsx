@@ -13,7 +13,7 @@ import { PageContent } from "../src/components/PageContent";
 import { Scene } from "../src/components/Scene";
 import { Footer } from "../src/components/Footer";
 import { Main } from "../src/components/Main";
-import { useSceneStore } from "../src/stores/sceneStore";
+import { useEnvironmentStore, useSceneStore } from "../src/stores/sceneStore";
 import { useObjectStore } from "../src/stores/objectStore";
 import { useAudioStore } from "../src/stores/audioStore";
 
@@ -175,8 +175,6 @@ const Editor: NextPage = () => {
     removeSceneSpeed,
     setSceneSpeed,
     resetSceneSpeed,
-    environmentBackgroundUrl,
-    setEnvironmentBackgroundUrl,
   ] = useSceneStore(
     (state) => [
       state.bloom,
@@ -194,8 +192,6 @@ const Editor: NextPage = () => {
       state.removeSceneSpeed,
       state.setSceneSpeed,
       state.resetSceneSpeed,
-      state.environmentBackgroundUrl,
-      state.setEnvironmentBackgroundUrl,
     ],
     shallow
   );
@@ -214,6 +210,14 @@ const Editor: NextPage = () => {
     (state: any) => [state.audioUrl, state.setAudioUrl],
     shallow
   );
+  const [environmentBackgroundUrl, setEnvironmentBackgroundUrl] =
+    useEnvironmentStore(
+      (state: any) => [
+        state.environmentBackgroundUrl,
+        state.setEnvironmentBackgroundUrl,
+      ],
+      shallow
+    );
 
   const onChangeBackground = (e: any) => {
     const urlBackground = URL.createObjectURL(e.target.files[0]);
@@ -312,7 +316,8 @@ const Editor: NextPage = () => {
               ></Control>
 
               <input
-                accept="image/*"
+                accept=".pic"
+                // accept="image/*"
                 id="backgroundImage"
                 type="file"
                 className="hidden"

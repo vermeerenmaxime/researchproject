@@ -17,22 +17,21 @@ import { Suspense, useEffect, useRef } from "react";
 // @ts-ignore
 import { BlurPass, Resizer, KernelSize, BlendFunction } from "postprocessing";
 import { SceneObjects } from "./SceneObjects";
-import { useSceneStore } from "../stores/sceneStore";
+import { useEnvironmentStore, useSceneStore } from "../stores/sceneStore";
 import shallow from "zustand/shallow";
 import { useFrame } from "@react-three/fiber";
 import { useAudioStore } from "../stores/audioStore";
 
 export const Scene = () => {
-  const [bloom, lightIntensity, hue, environmentBackgroundUrl] = useSceneStore(
-    (state) => [
-      state.bloom,
-      state.lightIntensity,
-      state.hue,
-      state.environmentBackgroundUrl,
-    ],
+  const [bloom, lightIntensity, hue] = useSceneStore(
+    (state) => [state.bloom, state.lightIntensity, state.hue],
     shallow
   );
-//   const [audioUrl] = useAudioStore((state) => [state.audioUrl], shallow);
+  const [environmentBackgroundUrl] = useEnvironmentStore(
+    (state) => [state.environmentBackgroundUrl],
+    shallow
+  );
+  //   const [audioUrl] = useAudioStore((state) => [state.audioUrl], shallow);
 
   //   const Loader = () => {
   //     const { active, progress, errors, item, loaded, total } = useProgress();
@@ -142,7 +141,7 @@ export const Scene = () => {
       {/* <Suspense fallback={<Loader />}> */}
       <Suspense fallback={null}>
         <Environment files={environmentBackgroundUrl} background />
-        <SceneObjects ></SceneObjects>
+        <SceneObjects></SceneObjects>
       </Suspense>
     </>
   );

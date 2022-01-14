@@ -54,13 +54,14 @@ export const useSceneStore = create(
       resetSceneSpeed: () => set({ sceneSpeed: 1 }),
       setSceneSpeed: (value: number) => set({ sceneSpeed: value }),
 
-      // Background
-      environmentBackgroundUrl: "/spaces/studio_small_03_4k.pic",
-      setEnvironmentBackgroundUrl: (value: string) =>
-        set({ environmentBackgroundUrl: value }),
-
-
     }),
     { name: "scene", getStorage: () => sessionStorage }
   )
 );
+
+export const useEnvironmentStore = create((set: any) => ({
+  // Background
+  environmentBackgroundUrl: "/spaces/studio_small_03_4k.pic",
+  setEnvironmentBackgroundUrl: (value: string) =>
+    set({ environmentBackgroundUrl: value }),
+}));
