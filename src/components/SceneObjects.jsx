@@ -25,6 +25,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { avg } from "../utils/calculations";
 import { useObjectStore } from "../stores/objectStore";
 import { useSceneStore } from "../stores/sceneStore";
+import { useAudioStore } from "../stores/audioStore";
 
 import { shallow } from "zustand/shallow";
 
@@ -68,7 +69,7 @@ const Analyzer = ({ sound, scene }) => {
   });
   const frequencyDataArray = [];
 
-  const [sceneSpeed] = useSceneStore((state) => [state.sceneSpeed], shallow); 
+  const [sceneSpeed] = useSceneStore((state) => [state.sceneSpeed], shallow);
 
   // function Foo({ vec = new THREE.Vector3(), ...props })
 
@@ -107,7 +108,7 @@ const Analyzer = ({ sound, scene }) => {
     meshRef.current.scale.lerp(new THREE.Vector3(zoom, zoom, zoom), 0.15);
     // Create calulculation but element cannot go lower than 1
 
-    scene.current.rotation.y -= avg(kickArray) / (100000/sceneSpeed);
+    scene.current.rotation.y -= avg(kickArray) / (100000 / sceneSpeed);
     light1Ref.current.intensity = max(avg(kickArray) / 40, 5);
     light2Ref.current.intensity = max(avg(kickArray) / 40, 5);
     // console.log( avg(lowerHalfArray)/20)
@@ -154,6 +155,8 @@ export const SceneObjects = () => {
   const { camera } = useThree();
 
   const [stars] = useObjectStore((state) => [state.stars], shallow);
+  const [audioUrl] = useAudioStore((state) => [state.audioUrl], shallow);
+
   useFrame((smth, x) => {
     bounceRef.current.rotation.y += 0.01;
     // sceneRef.current.rotation.y -= 0.001;
@@ -172,10 +175,20 @@ export const SceneObjects = () => {
 
   useEffect(() => {
     // starsRef.current.
-    console.log("" + stars + " stars rendering");
+    console.log("Audio url loaded");
+    // setMusicUrl(audioUrl);
+  }, [audioUrl]);
+  useEffect(() => {
+    // starsRef.current.
+    console.log("✨ " + stars + " stars rendering");
   }, [stars]);
 
   const [playVideo, setPlayVideo] = useState(false);
+
+  // useEffect(() => {
+  //   setMusicUrl(audioUrl);
+  //   // setMusicUrl("/audio/lightswitch.mp3");
+  // }, [playVideo]);
 
   const nodesCubes = ["hi", "hi", "hi", "hi", "yo", "xp", "ahha"].map(
     (el, i) => {
@@ -201,7 +214,7 @@ export const SceneObjects = () => {
         <>
           <PositionalAudio
             autoplay
-            url={"/audio/memories.mp3"}
+            url={audioUrl}
             ref={soundRef}
             distance={1}
           />
@@ -216,7 +229,8 @@ export const SceneObjects = () => {
         azimuth={0.25}
       /> */}
       {/* <Environment preset="sunset" background /> */}
-      <Environment files="/spaces/studio_small_03_4k.pic" background />
+      {/* <Environment files="/spaces/studio_small_03_4k.pic" background /> */}
+
       <mesh ref={sceneRef}>
         {/* Song Title */}
         {/* @ts-ignore */}

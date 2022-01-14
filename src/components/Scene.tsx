@@ -1,4 +1,9 @@
-import { Html, OrbitControls, useProgress } from "@react-three/drei";
+import {
+  Environment,
+  Html,
+  OrbitControls,
+  useProgress,
+} from "@react-three/drei";
 import {
   Bloom,
   DepthOfField,
@@ -15,12 +20,19 @@ import { SceneObjects } from "./SceneObjects";
 import { useSceneStore } from "../stores/sceneStore";
 import shallow from "zustand/shallow";
 import { useFrame } from "@react-three/fiber";
+import { useAudioStore } from "../stores/audioStore";
 
 export const Scene = () => {
-  const [bloom, lightIntensity, hue] = useSceneStore(
-    (state) => [state.bloom, state.lightIntensity, state.hue],
+  const [bloom, lightIntensity, hue, environmentBackgroundUrl] = useSceneStore(
+    (state) => [
+      state.bloom,
+      state.lightIntensity,
+      state.hue,
+      state.environmentBackgroundUrl,
+    ],
     shallow
   );
+//   const [audioUrl] = useAudioStore((state) => [state.audioUrl], shallow);
 
   //   const Loader = () => {
   //     const { active, progress, errors, item, loaded, total } = useProgress();
@@ -42,37 +54,37 @@ export const Scene = () => {
   const bloomRef: any = useRef();
   const effectRef: any = useRef();
 
-  useEffect(() => {
-    // bloomRef.current.intensity = Math.round(bloom * 10) / 10;
-    console.log(bloomRef.current.intensity);
-  }, [bloom]);
+  //   useEffect(() => {
+  //     // bloomRef.current.intensity = Math.round(bloom * 10) / 10;
+  //     console.log(bloomRef.current.intensity);
+  //   }, [bloom]);
 
-  useEffect(() => {
-    directionalLight1Ref.current.intensity = lightIntensity;
-    directionalLight2Ref.current.intensity = lightIntensity;
-  }, [lightIntensity]);
+  //   useEffect(() => {
+  //     directionalLight1Ref.current.intensity = lightIntensity;
+  //     directionalLight2Ref.current.intensity = lightIntensity;
+  //   }, [lightIntensity]);
 
-  useEffect(() => {
-    hueRef.current.setHue(hue);
-  }, [hue]);
+  //   useEffect(() => {
+  //     hueRef.current.setHue(hue);
+  //   }, [hue]);
 
-  useFrame(() => {
-    bloomRef.current.intensity = Math.round(bloom * 10) / 10;
-    //todo: bloom not working
-    // hueRef.current.hue += 0.1;
-    // hueRef.current.setHue(hue);
-    // for (let key of hueRef.current.uniforms) {
-    //   // console.log(key)
-    //   if (key[0] === "hue") {
-    //     // console.log(key[1].value);
-    //     // key[1].value.x += 0.01;
-    //   }
-    // }
-    // bloomRef.current.luminanceSmoothing = 10;
-    // console.log(effectRef.current);
-    // if (bloomRef.current) bloomRef.current.luminanceSmoothing = 10;
-    // console.log(bloomRef.current)
-  });
+  //   useFrame(() => {
+  //     bloomRef.current.intensity = Math.round(bloom * 10) / 10;
+  //     //todo: bloom not working
+  //     // hueRef.current.hue += 0.1;
+  //     // hueRef.current.setHue(hue);
+  //     // for (let key of hueRef.current.uniforms) {
+  //     //   // console.log(key)
+  //     //   if (key[0] === "hue") {
+  //     //     // console.log(key[1].value);
+  //     //     // key[1].value.x += 0.01;
+  //     //   }
+  //     // }
+  //     // bloomRef.current.luminanceSmoothing = 10;
+  //     // console.log(effectRef.current);
+  //     // if (bloomRef.current) bloomRef.current.luminanceSmoothing = 10;
+  //     // console.log(bloomRef.current)
+  //   });
 
   return (
     <>
@@ -80,7 +92,7 @@ export const Scene = () => {
         <HueSaturation
           ref={hueRef}
           blendFunction={BlendFunction.NORMAL} // blend mode
-          hue={10} // hue in radians
+          hue={hue} // hue in radians
           saturation={0.5} // saturation in radians
         />
         <Glitch
@@ -98,7 +110,7 @@ export const Scene = () => {
           blendFunction={BlendFunction.SCREEN}
           luminanceThreshold={0}
           luminanceSmoothing={1}
-          intensity={1}
+          intensity={Math.round(bloom * 10) / 10}
           // Hoogte van bloom
           height={400}
         />
@@ -119,17 +131,18 @@ export const Scene = () => {
         ref={directionalLight1Ref}
         color="white"
         position={[-5, -5, -5]}
-        intensity={0.5}
+        intensity={lightIntensity}
       />
       <directionalLight
         ref={directionalLight2Ref}
         color="white"
         position={[5, 5, 10]}
-        intensity={0.5}
+        intensity={lightIntensity}
       />
       {/* <Suspense fallback={<Loader />}> */}
       <Suspense fallback={null}>
-        <SceneObjects></SceneObjects>
+        <Environment files={environmentBackgroundUrl} background />
+        <SceneObjects ></SceneObjects>
       </Suspense>
     </>
   );
