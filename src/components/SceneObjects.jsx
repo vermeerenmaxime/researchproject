@@ -23,6 +23,8 @@ import * as THREE from "three";
 import { useFrame, useThree } from "@react-three/fiber";
 
 import { avg } from "../utils/calculations";
+import { formatTime } from "../utils/time";
+
 import { useObjectStore } from "../stores/objectStore";
 import { useSceneStore } from "../stores/sceneStore";
 import { useAudioStore } from "../stores/audioStore";
@@ -64,7 +66,7 @@ const Analyzer = ({ sound, scene }) => {
 
   useEffect(() => {
     // console.log(sound.current);
-    console.log("✅ Audio Loaded");
+
     analyser.current = new THREE.AudioAnalyser(sound.current, 128);
   });
   const frequencyDataArray = [];
@@ -155,7 +157,17 @@ export const SceneObjects = () => {
   const { camera } = useThree();
 
   const [stars] = useObjectStore((state) => [state.stars], shallow);
-  const [audioUrl] = useAudioStore((state) => [state.audioUrl], shallow);
+  const [audioUrl, audioStart, audioPlay, setAudioPlay, setAudioStart] =
+    useAudioStore(
+      (state) => [
+        state.audioUrl,
+        state.audioStart,
+        state.audioPlay,
+        state.setAudioPlay,
+        state.setAudioStart,
+      ],
+      shallow
+    );
 
   useFrame((smth, x) => {
     bounceRef.current.rotation.y += 0.01;
@@ -165,25 +177,48 @@ export const SceneObjects = () => {
     // Every second of render loop
     if (Math.round((x * 3600) % 60) == 0) {
       // console.log(camera);
+      // if (playVideo) console.log(soundRef.current.pause());
+      // if (playVideo) console.log(soundRef.current.play());
     }
     // camera.position.x += 0.2
     // camera.position.y += 0.2
     // camera.position.z += 0.2
     // if (playVideo) console.log(soundRef.current);
-    // if (playVideo) console.log(soundRef.current.listener);
   });
 
   useEffect(() => {
-    // starsRef.current.
-    console.log("Audio url loaded");
-    // setMusicUrl(audioUrl);
+    console.log("✅ Audio Loaded");
   }, [audioUrl]);
+
   useEffect(() => {
-    // starsRef.current.
+    if (soundRef.current)
+      console.log(formatTime(soundRef.current.buffer.duration));
+  }, [soundRef.current]);
+
+  useEffect(() => {
     console.log("✨ " + stars + " stars rendering");
   }, [stars]);
 
-  const [playVideo, setPlayVideo] = useState(false);
+  useEffect(() => {
+    if (audioPlay) setAudioStart(true);
+    // setAudioStart(true);
+    if (!audioStart || !soundRef.current) return;
+    if (audioPlay) {
+      soundRef.current.play();
+      console.log("⏯ Audio playing");
+    } else {
+      soundRef.current.pause();
+      console.log("⏸ Audio paused");
+    }
+    // Format seconds to mm:ss
+
+    // Get currenttime from audiocontext
+
+    // console.log(soundRef.current.context.currentTime);
+    // console.log(soundRef.current.context);
+  }, [audioPlay]);
+
+  // const [playVideo, setPlayVideo] = useState(false);
 
   // useEffect(() => {
   //   setMusicUrl(audioUrl);
@@ -210,12 +245,13 @@ export const SceneObjects = () => {
         })} */}
         {/* <Video></Video>; */}
       </group>
-      {playVideo ? (
+      {audioStart ? (
         <>
           <PositionalAudio
             autoplay
             url={audioUrl}
             ref={soundRef}
+            controls
             distance={1}
           />
           <Analyzer sound={soundRef} scene={sceneRef} />
@@ -277,7 +313,10 @@ export const SceneObjects = () => {
 
         <mesh
           position={new THREE.Vector3(2, 2, 2)}
-          onClick={() => setPlayVideo(true)}
+          onClick={() => {
+            setPlayVideo(true);
+            setAudioPlay(true);
+          }}
         >
           <sphereGeometry args={[1, 32, 32]} />
           <meshStandardMaterial />

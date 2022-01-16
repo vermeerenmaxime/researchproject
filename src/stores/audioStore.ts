@@ -5,4 +5,8 @@ export const useAudioStore = create((set: any) => ({
   // Audio
   audioUrl: "/audio/memories.mp3",
   setAudioUrl: (value: string) => set({ audioUrl: value }),
+  audioPlay: false,
+  setAudioPlay: (value: boolean) => set({ audioPlay: value }),
+  audioStart: false,
+  setAudioStart: (value: boolean) => set({ audioStart: value }),
 }));

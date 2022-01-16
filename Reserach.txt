@@ -110,3 +110,6 @@ Found how to change postprocessing
 13/01/2022
 https://vanruesc.github.io/postprocessing/public/docs/class/src/effects/HueSaturationEffect.js~HueSaturationEffect.html
 
+File input react
+14/01
+https://javascript.plainenglish.io/how-to-add-a-file-input-button-and-display-a-preview-image-with-react-2568d9d849f5

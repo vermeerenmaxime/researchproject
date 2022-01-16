@@ -17,6 +17,6 @@ export const useObjectStore = create(
       resetStars: () => set({ stars: 0 }),
       setStars: (value: number) => set({ stars: value }),
     }),
-    { name: "scene", getStorage: () => sessionStorage }
+    { name: "object", getStorage: () => sessionStorage }
   )
 );

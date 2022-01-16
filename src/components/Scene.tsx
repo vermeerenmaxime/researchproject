@@ -87,6 +87,11 @@ export const Scene = () => {
 
   return (
     <>
+      {/* <Html fullscreen>
+         <div>Track title</div>
+        <div>Artists</div>
+        <div>Track title</div> 
+      </Html> */}
       <EffectComposer ref={effectRef}>
         <HueSaturation
           ref={hueRef}

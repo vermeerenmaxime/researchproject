@@ -16,6 +16,7 @@ import { Main } from "../src/components/Main";
 import { useEnvironmentStore, useSceneStore } from "../src/stores/sceneStore";
 import { useObjectStore } from "../src/stores/objectStore";
 import { useAudioStore } from "../src/stores/audioStore";
+import { Html } from "@react-three/drei";
 
 const Control = ({
   add,
@@ -206,10 +207,17 @@ const Editor: NextPage = () => {
     ],
     shallow
   );
-  const [audioUrl, setAudioUrl] = useAudioStore(
-    (state: any) => [state.audioUrl, state.setAudioUrl],
-    shallow
-  );
+  const [audioUrl, setAudioUrl, audioPlay, setAudioPlay, setAudioStart] =
+    useAudioStore(
+      (state: any) => [
+        state.audioUrl,
+        state.setAudioUrl,
+        state.audioPlay,
+        state.setAudioPlay,
+        state.setAudioStart,
+      ],
+      shallow
+    );
   const [environmentBackgroundUrl, setEnvironmentBackgroundUrl] =
     useEnvironmentStore(
       (state: any) => [
@@ -262,11 +270,11 @@ const Editor: NextPage = () => {
           <h1 className="text-xl font-semibold ">3D Web Player</h1>
           <hr className="opacity-10 m-0"></hr>
           <div>
-            <h2 className="text-lg font-semibold ">Controls</h2>
+            {/* <h2 className="text-lg font-semibold ">Controls</h2>
             <div className="opacity-70 font-base">
               Play, pause, reset, resolution, ..
-            </div>
-            {audioUrl}
+            </div> */}
+
             <div className="bg-white/90 px-1 py-1 rounded-sm grid grid-flow-col text-slate-700 justify-start gap-4 text-sm">
               <Control
                 add={addBloom}
@@ -460,12 +468,91 @@ const Editor: NextPage = () => {
                 }}
               />
             </div>
+            <div className="flex">
+              <div className="bg-white/10 px-4 py-2 rounded-sm text-sm hover:bg-white/20 transition-all cursor-pointer grid grid-flow-cols gap-2">
+                Save settings
+              </div>
+            </div>
           </div>
 
-          <div className="bg-white/10 aspect-video rounded-sm relative overflow-hidden lg:w-[100%]">
-            <CanvasPlayer>
-              <Scene></Scene>
-            </CanvasPlayer>
+          <div className="grid gap-2">
+            <div className="bg-white/10 aspect-video rounded-sm relative overflow-hidden lg:w-[100%]">
+              <CanvasPlayer>
+                <Scene></Scene>
+              </CanvasPlayer>
+            </div>
+            <div className="bg-white/10 rounded-sm text-sm relative ">
+              <div className="px-5 py-4 flex justify-between items-center">
+                <div className="grid gap-2 grid-flow-col items-center">
+                  <div className="flex space-x-1 items-center">
+                    <svg
+                      className="w-5 h-5 rotate-180	"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M11.933 12.8a1 1 0 000-1.6L6.6 7.2A1 1 0 005 8v8a1 1 0 001.6.8l5.333-4zM19.933 12.8a1 1 0 000-1.6l-5.333-4A1 1 0 0013 8v8a1 1 0 001.6.8l5.333-4z"
+                      ></path>
+                    </svg>
+                    <svg
+                      className="w-5 h-5 cursor-pointer"
+                      onClick={() => {
+                        setAudioPlay(!audioPlay);
+                      }}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
+                      ></path>
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                      ></path>
+                    </svg>
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M11.933 12.8a1 1 0 000-1.6L6.6 7.2A1 1 0 005 8v8a1 1 0 001.6.8l5.333-4zM19.933 12.8a1 1 0 000-1.6l-5.333-4A1 1 0 0013 8v8a1 1 0 001.6.8l5.333-4z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div className="flex items-center opacity-75">
+                    Mave & Alex Silves - Memories
+                  </div>
+                  <div className="bg-white/20 py-1 px-2 rounded-full text-xs opacity-75">
+                    00:00
+                  </div>
+                </div>
+                <div className="text-xs opacity-50 ">03:59</div>
+              </div>
+              <div className="absolute left-0 right-0 bottom-0 h-[1.5px] w-1/3 bg-white/80 m-1"></div>
+            </div>
+          </div>
+          <div>
+            <audio>
+              <source src="/audio/memories.mp3" type="audio/mpeg" />
+            </audio>
           </div>
           <Footer></Footer>
         </PageContent>
