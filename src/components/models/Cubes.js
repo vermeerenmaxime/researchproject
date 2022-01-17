@@ -6,18 +6,36 @@ source: https://sketchfab.com/3d-models/kaleidoscopic-perception-leave-camera-al
 title: Kaleidoscopic Perception (Leave Camera Alone)
 */
 
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
+import { useFrame } from "@react-three/fiber";
 import { useGLTF, useAnimations } from "@react-three/drei";
+import * as THREE from "three";
 
 export default function Model({ ...props }) {
   const group = useRef();
   const { nodes, materials, animations } = useGLTF("/gltf/cubes.gltf");
-  const { actions, mixer } = useAnimations(animations, group);
-  useEffect(() => {
-    actions.Animation.play()
+  // const { actions, mixer } = useAnimations(animations, group);
+  // useEffect(() => {
+  //   actions.Animation.play()
 
-    console.log(mixer);
-  },[mixer]);
+  //   console.log(mixer);
+  // },[mixer]);
+  const [start] = useState(() => Math.random() * 5000);
+  const [mixer] = useState(() => new THREE.AnimationMixer());
+  useEffect(
+    () => void mixer.clipAction(animations[0], group.current).play(),
+    []
+  );
+  useFrame((state, delta) => {
+    // mesh.current.position.y = Math.sin(start + state.clock.elapsedTime) * 5;
+    // mesh.current.rotation.x =
+    //   Math.PI / 2 + (Math.sin(start + state.clock.elapsedTime) * Math.PI) / 10;
+    // mesh.current.rotation.y =
+    //   (Math.sin(start + state.clock.elapsedTime) * Math.PI) / 2;
+    group.current.rotation.y +=
+      Math.sin((delta * 3) / 2) * Math.cos((delta * 3) / 2) * 1.5;
+    mixer.update(delta * 0.5);
+  });
   return (
     <group ref={group} {...props} dispose={null}>
       <group rotation={[-Math.PI / 2, 0, 0]}>

@@ -1,6 +1,7 @@
 import {
   AdaptiveDpr,
   CameraShake,
+  FlyControls,
   Loader,
   OrbitControls,
 } from "@react-three/drei";
@@ -34,13 +35,21 @@ export const CanvasPlayer = ({ children }: any) => {
       <Canvas
         ref={canvasRef}
         shadows
-        camera={{ position: [0, 3, 10] }}
+        // camera={{ position: [0, 3, 10] }}
+        camera={{ position: [0, 3, 10], rotation: [0, 0, 0] }}
         vr={false} //Dunno what this does !todo
         mode="concurrent"
         className="overflow-hidden "
         dpr={2}
       >
         <Rig>
+          {/* Flycontrols met q,z,s,d */}
+          <FlyControls
+            autoForward={false}
+            dragToLook={false}
+            movementSpeed={5.0}
+            rollSpeed={0.005}
+          />
           <OrbitControls
             maxDistance={20}
             minDistance={5}

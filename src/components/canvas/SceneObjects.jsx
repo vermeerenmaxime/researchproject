@@ -4,17 +4,18 @@ import {
   Stars,
   Sky,
   PositionalAudio,
+  MeshWobbleMaterial,
   Box,
   Html,
 } from "@react-three/drei";
 import { useRef, useState, useEffect, useMemo } from "react";
-import Heart from "./models/Heart.js";
-import Bugatti from "./models/Bugatti.js";
-import Cubes from "./models/Cubes.js";
-import Diodes from "./models/Diodes.js";
-import Orb from "./models/Orb.js";
-import Cube from "./models/Cube.js";
-import Rainbow from "./models/Rainbow.js";
+import Heart from "../models/Heart.js";
+import Bugatti from "../models/Bugatti.js";
+import Cubes from "../models/Cubes.js";
+import Diodes from "../models/Diodes.js";
+import Orb from "../models/Orb.js";
+import Cube from "../models/Cube.js";
+import Rainbow from "../models/Rainbow.js";
 import { EffectComposer, HueSaturation } from "@react-three/postprocessing";
 // @ts-ignore
 import { BlendFunction } from "postprocessing";
@@ -22,17 +23,17 @@ import { BlendFunction } from "postprocessing";
 import * as THREE from "three";
 import { useFrame, useThree } from "@react-three/fiber";
 
-import { avg } from "../utils/calculations";
-import { formatTime } from "../utils/time";
+import { avg } from "../../utils/calculations";
+import { formatTime } from "../../utils/time";
 
-import { useObjectStore } from "../stores/objectStore";
-import { useSceneStore } from "../stores/sceneStore";
-import { useAudioStore } from "../stores/audioStore";
-import { useChatStore } from "../stores/chatStore";
+import { useObjectStore } from "../../stores/objectStore";
+import { useSceneStore } from "../../stores/sceneStore";
+import { useAudioStore } from "../../stores/audioStore";
+import { useChatStore } from "../../stores/chatStore";
 
 import { shallow } from "zustand/shallow";
 
-import { Text } from "../components/Text.jsx";
+import { Text } from "./Text.jsx";
 
 // import url from "../../public/video/video.mp4";
 
@@ -141,6 +142,11 @@ const Analyzer = ({ sound, scene }) => {
       />
       <mesh ref={meshRef} scale={1}>
         <Heart position={[0, 0, 0]}></Heart>
+        {/* <MeshWobbleMaterial
+          attach="material"
+          factor={1} // Strength, 0 disables the effect (default=1)
+          speed={10} // Speed (default=1)
+        /> */}
         {/* <Html>
           <div className="w-[200px] bg-red-500 flex">
             Current size
@@ -258,7 +264,7 @@ export const SceneObjects = () => {
     // if (!soundRef.current) return;
     // console.log(soundRef.current.context.currentTime);
     // console.log(soundRef.current.getOutput());
-    console.log(soundRef.current);
+    // console.log(soundRef.current);
     // get currenttime from positionAudio threejs
     // console.log(soundRef.current.context.currentTime);
     // calculate currenttime from positionalaudio threejs
@@ -325,7 +331,7 @@ export const SceneObjects = () => {
         {audioName}
       </Text>
       <Text hAlign="center" position={[0, 0, -25]} fontSize={10}>
-        {messages[messages.length-1].message}
+        {messages[messages.length - 1].message}
       </Text>
       {/* <Text hAlign="center" position={[0, 3, -50]} children={audioName} /> */}
       {/* <Text hAlign="right" position={[-12, 3, -25]} children="Memories" /> */}
@@ -388,9 +394,9 @@ export const SceneObjects = () => {
         {/* <mesh position={new THREE.Vector3(-4, -3, 2)}>
           <Bugatti></Bugatti>
         </mesh> */}
-        <mesh position={new THREE.Vector3(0, 0, 0)}>
-          {/* <Cubes></Cubes> */}
-        </mesh>
+        {/* <mesh position={new THREE.Vector3(0, 0, 0)}> */}
+        {/* <Cubes></Cubes> */}
+        {/* </mesh> */}
         <mesh position={new THREE.Vector3(0, 0, -5)}>
           {/* <Diodes></Diodes> */}
         </mesh>

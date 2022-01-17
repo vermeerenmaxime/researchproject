@@ -22,7 +22,7 @@ import { BlurPass, Resizer, KernelSize, BlendFunction } from "postprocessing";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { Suspense, useEffect, useRef } from "react";
-import { SceneObjects } from "../src/components/SceneObjects";
+import { SceneObjects } from "../src/components/canvas/SceneObjects";
 
 import shallow from "zustand/shallow";
 import { useStore } from "../src/stores/store";

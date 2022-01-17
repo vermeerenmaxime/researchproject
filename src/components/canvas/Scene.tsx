@@ -19,11 +19,11 @@ import { Suspense, useEffect, useRef } from "react";
 // @ts-ignore
 import { BlurPass, Resizer, KernelSize, BlendFunction } from "postprocessing";
 import { SceneObjects } from "./SceneObjects";
-import { useEnvironmentStore, useSceneStore } from "../stores/sceneStore";
+import { useEnvironmentStore, useSceneStore } from "../../stores/sceneStore";
 import shallow from "zustand/shallow";
 import { useFrame } from "@react-three/fiber";
-import { useAudioStore } from "../stores/audioStore";
-import { Ground } from "../components/Ground.jsx";
+import { useAudioStore } from "../../stores/audioStore";
+import { Ground } from "./Ground.jsx";
 
 export const Scene = () => {
   const [bloom, lightIntensity, hue] = useSceneStore(

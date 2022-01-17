@@ -120,8 +120,11 @@ const vector = (x, y, z) => {
   };
 
 font inladen
-  https://codesandbox.io/s/r3f-gltf-fonts-c671i?file=/src/App.js
+https://codesandbox.io/s/r3f-gltf-fonts-c671i?file=/src/App.js
 
 
-  bloomy effects, light bulbs, 
-  https://sketchfab.com/3d-models/bloom-light-7c63fddf1e874a3196d6ceb3386b69d1
+bloomy effects, light bulbs, 
+https://sketchfab.com/3d-models/bloom-light-7c63fddf1e874a3196d6ceb3386b69d1
+
+omzetten van typografie font, naar js/json
+https://gero3.github.io/facetype.js/

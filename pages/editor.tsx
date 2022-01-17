@@ -10,7 +10,7 @@ import { CanvasPlayer } from "../src/components/CanvasPlayer";
 import { Menu } from "../src/components/menu/Menu";
 import { MenuLink } from "../src/components/menu/Link";
 import { PageContent } from "../src/components/PageContent";
-import { Scene } from "../src/components/Scene";
+import { Scene } from "../src/components/canvas/Scene";
 import { Footer } from "../src/components/Footer";
 import { Main } from "../src/components/Main";
 import { useEnvironmentStore, useSceneStore } from "../src/stores/sceneStore";
@@ -19,6 +19,7 @@ import { useAudioStore } from "../src/stores/audioStore";
 import { Html } from "@react-three/drei";
 import { formatTime } from "../src/utils/time";
 import { useChatStore } from "../src/stores/chatStore";
+import Cubes from "../src/components/models/Cubes";
 
 const Control = ({
   add,
@@ -298,7 +299,7 @@ const Editor: NextPage = () => {
     // setSeconds(0);
     const timer = setInterval(() => {
       if (audioPlay) {
-        console.log("hey");
+        // console.log("hey");
         // setSeconds(seconds + 1);
         // setAudioCurrentTime(audioCurrentTime + 1);
         // addAudioCurrentTime();
@@ -580,6 +581,13 @@ const Editor: NextPage = () => {
                 <Scene></Scene>
               </CanvasPlayer>
             </div>
+            {/* <div className="bg-white/10 aspect-video">
+
+              <CanvasPlayer>
+                
+                <Cubes></Cubes>
+              </CanvasPlayer>
+            </div> */}
             <div className="bg-white/10 rounded-sm text-sm relative ">
               <div className="px-5 py-4 flex justify-between items-center">
                 <div className="grid gap-2 grid-flow-col items-center">
