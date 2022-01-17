@@ -1,16 +1,18 @@
-const Ground = (props) => {
+import { Reflector, useTexture } from "@react-three/drei";
+export const Ground = ({ props }) => {
   const [floor, normal] = useTexture([
-    "/SurfaceImperfections003_1K_var1.jpg",
-    "/SurfaceImperfections003_1K_Normal.jpg",
+    "/textures/surfaceimperfection.jpeg",
+    "/textures/surfaceimperfection2.jpeg",
   ]);
   return (
-    <Reflector resolution={1024} args={[8, 8]} {...props}>
+    <Reflector resolution={1024} args={[100, 100]} {...props}>
       {(Material, props) => (
         <Material
           color="#f0f0f0"
-          metalness={0}
+          metalness={0.9}
           roughnessMap={floor}
           normalMap={normal}
+          //@ts-ignore
           normalScale={[2, 2]}
           {...props}
         />

@@ -23,28 +23,7 @@ import { useEnvironmentStore, useSceneStore } from "../stores/sceneStore";
 import shallow from "zustand/shallow";
 import { useFrame } from "@react-three/fiber";
 import { useAudioStore } from "../stores/audioStore";
-
-const Ground = ({ props }: any) => {
-  const [floor, normal] = useTexture([
-    "/textures/surfaceimperfection.jpeg",
-    "/textures/surfaceimperfection2.jpeg",
-  ]);
-  return (
-    <Reflector resolution={1024} args={[8, 8]} {...props}>
-      {(Material, props) => (
-        <Material
-          color="#f0f0f0"
-          metalness={0}
-          roughnessMap={floor}
-          normalMap={normal}
-          //@ts-ignore
-          normalScale={[2, 2]}
-          {...props}
-        />
-      )}
-    </Reflector>
-  );
-};
+import { Ground } from "../components/Ground.jsx";
 
 export const Scene = () => {
   const [bloom, lightIntensity, hue] = useSceneStore(
@@ -76,38 +55,6 @@ export const Scene = () => {
   const depthOfFieldRef: any = useRef();
   const bloomRef: any = useRef();
   const effectRef: any = useRef();
-
-  //   useEffect(() => {
-  //     // bloomRef.current.intensity = Math.round(bloom * 10) / 10;
-  //     console.log(bloomRef.current.intensity);
-  //   }, [bloom]);
-
-  //   useEffect(() => {
-  //     directionalLight1Ref.current.intensity = lightIntensity;
-  //     directionalLight2Ref.current.intensity = lightIntensity;
-  //   }, [lightIntensity]);
-
-  //   useEffect(() => {
-  //     hueRef.current.setHue(hue);
-  //   }, [hue]);
-
-  //   useFrame(() => {
-  //     bloomRef.current.intensity = Math.round(bloom * 10) / 10;
-  //     //todo: bloom not working
-  //     // hueRef.current.hue += 0.1;
-  //     // hueRef.current.setHue(hue);
-  //     // for (let key of hueRef.current.uniforms) {
-  //     //   // console.log(key)
-  //     //   if (key[0] === "hue") {
-  //     //     // console.log(key[1].value);
-  //     //     // key[1].value.x += 0.01;
-  //     //   }
-  //     // }
-  //     // bloomRef.current.luminanceSmoothing = 10;
-  //     // console.log(effectRef.current);
-  //     // if (bloomRef.current) bloomRef.current.luminanceSmoothing = 10;
-  //     // console.log(bloomRef.current)
-  //   });
 
   return (
     <>
@@ -158,7 +105,8 @@ export const Scene = () => {
         <Vignette eskil={false} offset={0.01} darkness={1} />
       </EffectComposer>
 
-      <ambientLight intensity={0.01} />
+      <ambientLight intensity={0.0001} />
+
       <directionalLight
         ref={directionalLight1Ref}
         color="white"
@@ -173,15 +121,17 @@ export const Scene = () => {
       />
       {/* <Suspense fallback={<Loader />}> */}
       <Suspense fallback={null}>
-        <Ground
-          mirror={1}
-          blur={[500, 100]}
-          mixBlur={12}
-          mixStrength={1.5}
-          rotation={[-Math.PI / 2, 0, Math.PI / 2]}
-          position-y={-0.8}
-          position-z={50}
-        />
+        <mesh rotation={[-1.6, 0, 0]} position={[0, -10, 0]}>
+          <Ground
+            //@ts-ignore
+            mirror={1}
+            blur={[500, 100]}
+            mixBlur={12}
+            mixStrength={1.5}
+            rotation={[-Math.PI / 2, 0, Math.PI / 2]}
+            position-y={-1}
+          />
+        </mesh>
         <Environment files={environmentBackgroundUrl} background />
         <SceneObjects></SceneObjects>
       </Suspense>

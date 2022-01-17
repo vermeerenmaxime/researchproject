@@ -28,6 +28,7 @@ import { formatTime } from "../utils/time";
 import { useObjectStore } from "../stores/objectStore";
 import { useSceneStore } from "../stores/sceneStore";
 import { useAudioStore } from "../stores/audioStore";
+import { useChatStore } from "../stores/chatStore";
 
 import { shallow } from "zustand/shallow";
 
@@ -85,7 +86,7 @@ const Analyzer = ({ sound, scene }) => {
     return new THREE.Vector3(x, y, z);
   };
 
-  const vec = new THREE.Vector3()
+  const vec = new THREE.Vector3();
   useFrame(() => {
     const averageFrequency = analyser.current.getAverageFrequency();
     frequencyDataArray = analyser.current.getFrequencyData();
@@ -105,9 +106,6 @@ const Analyzer = ({ sound, scene }) => {
 
     // console.log(averageFrequency, frequencyDataArray.slice(0, 10)[0]);
 
-    // number cannot go lower than 3
-    //  const zoom = avg(kickArray) / 100;
-    // console.log(avg(kickArray) / 100);
     const min = (calc, minValue) => {
       return calc < minValue ? minValue : calc;
     };
@@ -197,6 +195,7 @@ export const SceneObjects = () => {
     ],
     shallow
   );
+  const [messages] = useChatStore((state) => [state.messages], shallow);
 
   useFrame(({ clock }, x) => {
     bounceRef.current.rotation.y += 0.01;
@@ -322,7 +321,13 @@ export const SceneObjects = () => {
       {/* <Environment preset="sunset" background /> */}
       {/* <Environment files="/spaces/studio_small_03_4k.pic" background /> */}
 
-      <Text hAlign="center" position={[0, 3, -50]} children={audioName} />
+      <Text hAlign="center" position={[0, 3, -50]}>
+        {audioName}
+      </Text>
+      <Text hAlign="center" position={[0, 0, -25]} fontSize={10}>
+        {messages[messages.length-1].message}
+      </Text>
+      {/* <Text hAlign="center" position={[0, 3, -50]} children={audioName} /> */}
       {/* <Text hAlign="right" position={[-12, 3, -25]} children="Memories" /> */}
       <mesh ref={sceneRef}>
         {/* Song Title */}
