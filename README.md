@@ -80,9 +80,9 @@ Research.txt
 - [x] Import GLTF object
 - [ ] Import custom GLTF object
 - [x] Import audio
-- [ ] Import custom audio from input (file) field
+- [x] Import custom audio from input (file) field
 - [x] Import environment (360° foto)
-- [ ] Import custom environment (360° foto)
+- [x] Import custom environment (360° foto)
 - [x] Import video as object
 - [x] Import video as background
 - [ ] Import custom video
@@ -95,6 +95,11 @@ Research.txt
 - [ ] Canvas fullscreen
 - [ ] Canvas quality controls
 - [ ] Audio play, pause, stop, replay, .. controls
+  - [x] play
+  - [x] pause
+
+- [x] 3D text on scene
+- [ ] Edit 3D text
 - [ ] Auth login
 - [ ] Admin panel
 - [ ] Landingpage
@@ -113,3 +118,4 @@ Research.txt
 - Material inladen
 - 3D Text gebruiken (troikaJS TS error)
 - TS
+- Timer with hooks makes scene glitchy and choppy, not smooth

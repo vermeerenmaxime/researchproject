@@ -31,6 +31,8 @@ import { useAudioStore } from "../stores/audioStore";
 
 import { shallow } from "zustand/shallow";
 
+import { Text } from "../components/Text.jsx";
+
 // import url from "../../public/video/video.mp4";
 
 const Video = () => {
@@ -73,7 +75,15 @@ const Analyzer = ({ sound, scene }) => {
 
   const [sceneSpeed] = useSceneStore((state) => [state.sceneSpeed], shallow);
 
-  // function Foo({ vec = new THREE.Vector3(), ...props })
+  // function Foo({ vec = new THREE.Vector(), ...props }) {
+  //   useFrame(() => {
+  //     ref.current.position.lerp(vec.set(x, y, z), 0.1);
+  //   });
+  // }
+
+  const vector = (x, y, z) => {
+    return new THREE.Vector3(x, y, z);
+  };
 
   useFrame(() => {
     const averageFrequency = analyser.current.getAverageFrequency();
@@ -107,7 +117,7 @@ const Analyzer = ({ sound, scene }) => {
 
     // Edit elements
     // meshRef.current.scale.lerp(vec.set(zoom, zoom, zoom), 0.15);
-    meshRef.current.scale.lerp(new THREE.Vector3(zoom, zoom, zoom), 0.15);
+    meshRef.current.scale.lerp(vector(zoom, zoom, zoom), 0.15);
     // Create calulculation but element cannot go lower than 1
 
     scene.current.rotation.y -= avg(kickArray) / (100000 / sceneSpeed);
@@ -156,6 +166,8 @@ export const SceneObjects = () => {
   const starsRef = useRef();
   const { camera } = useThree();
 
+  const [seconds, setSeconds] = useState(0);
+
   const [stars, starSize] = useObjectStore(
     (state) => [state.stars, state.starSize],
     shallow
@@ -164,53 +176,77 @@ export const SceneObjects = () => {
     audioUrl,
     audioStart,
     audioPlay,
+    audioName,
+
     setAudioPlay,
     setAudioStart,
     setAudioLength,
+    setAudioCurrentTime,
   ] = useAudioStore(
     (state) => [
       state.audioUrl,
       state.audioStart,
       state.audioPlay,
+      state.audioName,
+
       state.setAudioPlay,
       state.setAudioStart,
       state.setAudioLength,
+      state.setAudioCurrentTime,
     ],
     shallow
   );
 
-  useFrame((smth, x) => {
+  useFrame(({ clock }, x) => {
     bounceRef.current.rotation.y += 0.01;
     // sceneRef.current.rotation.y -= 0.001;
     // round to 2 decimal places
 
     // Every second of render loop
-    if (Math.round((x * 3600) % 60) == 0) {
-      // console.log(camera);
-      // if (playVideo) console.log(soundRef.current.pause());
-      // if (playVideo) console.log(soundRef.current.play());
-    }
+    // if (Math.round((clock * 3600) % 60) == 0) {
+    //   // setSeconds(seconds + 1);
+
+    //   console.log(seconds);
+    //   // console.log(camera);
+    // }
+    // if(Math.round(x*100)) {
+    //   console.log(Math.round(x*100)/100);
+    // }
+    //   console.log(Math.round(x*100)/100);
+    // console.log(Math.sin(clock.getElapsedTime()));
+    // console.log(clock,x)
     // camera.position.x += 0.2
     // camera.position.y += 0.2
     // camera.position.z += 0.2
-    // if (playVideo) console.log(soundRef.current);
   });
 
   useEffect(() => {
     console.log("✅ Audio Loaded");
     if (!soundRef.current) return;
     setAudioLength(Math.floor(soundRef.current.buffer.duration));
+    setAudioCurrentTime(0);
+    setSeconds(0);
   }, [audioUrl]);
-
-  useEffect(() => {
-    // if (soundRef.current)
-    //   setAudioLength(Math.floor(soundRef.current.buffer.duration));
-    // console.log(formatTime(soundRef.current.buffer.duration));
-  }, [soundRef.current]);
 
   useEffect(() => {
     console.log("✨ " + stars + " stars rendering");
   }, [stars]);
+
+  // timer that ticks every second
+
+  // const seconds = 0;
+  // useEffect(() => {
+  //   // setAudioCurrentTime(0)
+  //   // setSeconds(0);
+  //   const timer = setInterval(() => {
+  //     if (audioPlay) {
+  //       setSeconds(seconds + 1);
+  //       setAudioCurrentTime(seconds + 1);
+  //       // addAudioCurrentTime()
+  //     }
+  //   }, 1000);
+  //   return () => clearInterval(timer);
+  // });
 
   useEffect(() => {
     if (audioPlay) setAudioStart(true);
@@ -222,6 +258,10 @@ export const SceneObjects = () => {
     // if (!soundRef.current) return;
     // console.log(soundRef.current.context.currentTime);
     // console.log(soundRef.current.getOutput());
+    console.log(soundRef.current);
+    // get currenttime from positionAudio threejs
+    // console.log(soundRef.current.context.currentTime);
+    // calculate currenttime from positionalaudio threejs
   }, [audioPlay]);
 
   useEffect(() => {
@@ -240,16 +280,8 @@ export const SceneObjects = () => {
     }
   };
 
-  // const [playVideo, setPlayVideo] = useState(false);
-
-  // useEffect(() => {
-  //   setMusicUrl(audioUrl);
-  //   // setMusicUrl("/audio/lightswitch.mp3");
-  // }, [playVideo]);
-
   const nodesCubes = ["hi", "hi", "hi", "hi", "yo", "xp", "ahha"].map(
     (el, i) => {
-      // console.log("hi");
       return (
         <Box key={i} position={[i + 2, 0, 0]}>
           <meshPhongMaterial attach="material" color="#f3f3f3" />
@@ -259,6 +291,7 @@ export const SceneObjects = () => {
   );
   return (
     <>
+      {/* <Html>{seconds}</Html> */}
       <group>
         {nodesCubes}
         {/* {["hi", "hi", "hi", "hi"].map((el, i) => {
@@ -288,6 +321,8 @@ export const SceneObjects = () => {
       {/* <Environment preset="sunset" background /> */}
       {/* <Environment files="/spaces/studio_small_03_4k.pic" background /> */}
 
+      <Text hAlign="center" position={[0, 3, -50]} children={audioName} />
+      {/* <Text hAlign="right" position={[-12, 3, -25]} children="Memories" /> */}
       <mesh ref={sceneRef}>
         {/* Song Title */}
         {/* @ts-ignore */}

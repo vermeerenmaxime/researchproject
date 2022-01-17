@@ -113,3 +113,11 @@ https://vanruesc.github.io/postprocessing/public/docs/class/src/effects/HueSatur
 File input react
 14/01
 https://javascript.plainenglish.io/how-to-add-a-file-input-button-and-display-a-preview-image-with-react-2568d9d849f5
+
+Optimalisatie voor hergebruik
+const vector = (x, y, z) => {
+    return new THREE.Vector3(x, y, z);
+  };
+
+font inladen
+  https://codesandbox.io/s/r3f-gltf-fonts-c671i?file=/src/App.js

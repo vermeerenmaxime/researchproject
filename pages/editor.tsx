@@ -205,7 +205,7 @@ const Editor: NextPage = () => {
     removeStars,
     setStars,
     resetStars,
-    
+
     starSize,
     addStarSize,
     removeStarSize,
@@ -236,6 +236,9 @@ const Editor: NextPage = () => {
     audioLength,
     setAudioName,
     audioName,
+    audioCurrentTime,
+    setAudioCurrentTime,
+    addAudioCurrentTime,
   ] = useAudioStore(
     (state: any) => [
       state.audioUrl,
@@ -246,6 +249,9 @@ const Editor: NextPage = () => {
       state.audioLength,
       state.setAudioName,
       state.audioName,
+      state.audioCurrentTime,
+      state.setAudioCurrentTime,
+      state.addAudioCurrentTime,
     ],
     shallow
   );
@@ -280,6 +286,21 @@ const Editor: NextPage = () => {
 
     console.log("🎧 NEW - audio url setted", urlAudio);
   };
+  const [seconds,setSeconds] = useState(0);
+
+  useEffect(() => {
+    // setAudioCurrentTime(0)
+    // setSeconds(0);
+    const timer = setInterval(() => {
+      if (audioPlay) {
+        console.log("hey");
+        // setSeconds(seconds + 1);
+        // setAudioCurrentTime(audioCurrentTime + 1);
+        // addAudioCurrentTime();
+      }
+    }, 1000);
+    return () => clearInterval(timer);
+  });
 
   // useEffect(() => {
   //   console.log(likes);
@@ -591,7 +612,7 @@ const Editor: NextPage = () => {
                     {audioName}
                   </div>
                   <div className="bg-white/20 py-1 px-2 rounded-full text-xs opacity-75">
-                    00:00
+                    {audioLength ? formatTime(audioCurrentTime) : "00:00"}
                   </div>
                 </div>
                 <div className="text-xs opacity-50 ">
