@@ -2,7 +2,9 @@ import {
   Environment,
   Html,
   OrbitControls,
+  Reflector,
   useProgress,
+  useTexture,
 } from "@react-three/drei";
 import {
   Bloom,
@@ -21,6 +23,28 @@ import { useEnvironmentStore, useSceneStore } from "../stores/sceneStore";
 import shallow from "zustand/shallow";
 import { useFrame } from "@react-three/fiber";
 import { useAudioStore } from "../stores/audioStore";
+
+const Ground = ({ props }: any) => {
+  const [floor, normal] = useTexture([
+    "/textures/surfaceimperfection.jpeg",
+    "/textures/surfaceimperfection2.jpeg",
+  ]);
+  return (
+    <Reflector resolution={1024} args={[8, 8]} {...props}>
+      {(Material, props) => (
+        <Material
+          color="#f0f0f0"
+          metalness={0}
+          roughnessMap={floor}
+          normalMap={normal}
+          //@ts-ignore
+          normalScale={[2, 2]}
+          {...props}
+        />
+      )}
+    </Reflector>
+  );
+};
 
 export const Scene = () => {
   const [bloom, lightIntensity, hue] = useSceneStore(
@@ -92,7 +116,19 @@ export const Scene = () => {
         <div>Artists</div>
         <div>Track title</div> 
       </Html> */}
-      <EffectComposer ref={effectRef}>
+      <EffectComposer ref={effectRef} multisampling={8}>
+        {/* <Bloom
+          kernelSize={3}
+          luminanceThreshold={0}
+          luminanceSmoothing={0.4}
+          intensity={0.6}
+        /> */}
+        <Bloom
+          kernelSize={KernelSize.HUGE}
+          luminanceThreshold={0}
+          luminanceSmoothing={0}
+          intensity={0.2}
+        />
         <HueSaturation
           ref={hueRef}
           blendFunction={BlendFunction.NORMAL} // blend mode
@@ -121,15 +157,7 @@ export const Scene = () => {
         {/* <Noise opacity={0.03} /> */}
         <Vignette eskil={false} offset={0.01} darkness={1} />
       </EffectComposer>
-      <OrbitControls
-        maxDistance={20}
-        minDistance={3}
-        enableZoom={true}
-        addEventListener={undefined}
-        hasEventListener={undefined}
-        removeEventListener={undefined}
-        dispatchEvent={undefined}
-      />
+
       <ambientLight intensity={0.01} />
       <directionalLight
         ref={directionalLight1Ref}
@@ -145,6 +173,15 @@ export const Scene = () => {
       />
       {/* <Suspense fallback={<Loader />}> */}
       <Suspense fallback={null}>
+        <Ground
+          mirror={1}
+          blur={[500, 100]}
+          mixBlur={12}
+          mixStrength={1.5}
+          rotation={[-Math.PI / 2, 0, Math.PI / 2]}
+          position-y={-0.8}
+          position-z={50}
+        />
         <Environment files={environmentBackgroundUrl} background />
         <SceneObjects></SceneObjects>
       </Suspense>

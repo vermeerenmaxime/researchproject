@@ -85,6 +85,7 @@ const Analyzer = ({ sound, scene }) => {
     return new THREE.Vector3(x, y, z);
   };
 
+  const vec = new THREE.Vector3()
   useFrame(() => {
     const averageFrequency = analyser.current.getAverageFrequency();
     frequencyDataArray = analyser.current.getFrequencyData();
@@ -117,7 +118,7 @@ const Analyzer = ({ sound, scene }) => {
 
     // Edit elements
     // meshRef.current.scale.lerp(vec.set(zoom, zoom, zoom), 0.15);
-    meshRef.current.scale.lerp(vector(zoom, zoom, zoom), 0.15);
+    meshRef.current.scale.lerp(vec.set(zoom, zoom, zoom), 0.15);
     // Create calulculation but element cannot go lower than 1
 
     scene.current.rotation.y -= avg(kickArray) / (100000 / sceneSpeed);
