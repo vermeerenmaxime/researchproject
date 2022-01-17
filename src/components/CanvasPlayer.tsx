@@ -44,12 +44,13 @@ export const CanvasPlayer = ({ children }: any) => {
       >
         <Rig>
           {/* Flycontrols met q,z,s,d */}
-          <FlyControls
+          {/* <FlyControls
             autoForward={false}
             dragToLook={false}
             movementSpeed={5.0}
             rollSpeed={0.005}
-          />
+            makeDefault
+          /> */}
           <OrbitControls
             maxDistance={20}
             minDistance={5}
@@ -58,6 +59,7 @@ export const CanvasPlayer = ({ children }: any) => {
             hasEventListener={undefined}
             removeEventListener={undefined}
             dispatchEvent={undefined}
+            makeDefault
           />
           {/* Shake camera => buggy, not able to rotate, ..
           <CameraShake

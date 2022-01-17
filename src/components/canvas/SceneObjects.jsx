@@ -7,6 +7,7 @@ import {
   MeshWobbleMaterial,
   Box,
   Html,
+  TransformControls,
 } from "@react-three/drei";
 import { useRef, useState, useEffect, useMemo } from "react";
 import Heart from "../models/Heart.js";
@@ -140,6 +141,7 @@ const Analyzer = ({ sound, scene }) => {
         position={[-5, 5, 5]}
         color="green"
       />
+
       <mesh ref={meshRef} scale={1}>
         <Heart position={[0, 0, 0]}></Heart>
         {/* <MeshWobbleMaterial
@@ -154,6 +156,7 @@ const Analyzer = ({ sound, scene }) => {
           </div>
         </Html> */}
       </mesh>
+      <TransformControls object={meshRef} mode="translate"></TransformControls>
       {/* <group position={[2, 2, 0.1]}>
         <mesh>
           <boxBufferGeometry attach="geometry" args={[0.047, 0.5, 0.29]} />
