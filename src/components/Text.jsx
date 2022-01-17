@@ -12,6 +12,7 @@ export const Text = ({
   hAlign = "center",
   size = 1.5,
   color = "#000000",
+  fontSize = 40,
   ...props
 }) => {
   // const font = new THREE.FontLoader().parse("/fonts/montserrat.js");
@@ -24,7 +25,7 @@ export const Text = ({
   const config = useMemo(
     () => ({
       font,
-      size: 40,
+      size: fontSize,
       height: 30,
       curveSegments: 50,
       bevelEnabled: true,
@@ -33,7 +34,7 @@ export const Text = ({
       bevelOffset: 0,
       bevelSegments: 8,
     }),
-    [font]
+    [font, fontSize]
   );
 
   const mesh = useRef();
