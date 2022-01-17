@@ -139,12 +139,12 @@ const Analyzer = ({ sound, scene }) => {
           </div>
         </Html> */}
       </mesh>
-      <group position={[2, 2, 0.1]}>
+      {/* <group position={[2, 2, 0.1]}>
         <mesh>
           <boxBufferGeometry attach="geometry" args={[0.047, 0.5, 0.29]} />
           <meshStandardMaterial attach="material" color={0xf95b3c} />
         </mesh>
-      </group>
+      </group> */}
     </>
   );
 };
@@ -157,17 +157,24 @@ export const SceneObjects = () => {
   const { camera } = useThree();
 
   const [stars] = useObjectStore((state) => [state.stars], shallow);
-  const [audioUrl, audioStart, audioPlay, setAudioPlay, setAudioStart] =
-    useAudioStore(
-      (state) => [
-        state.audioUrl,
-        state.audioStart,
-        state.audioPlay,
-        state.setAudioPlay,
-        state.setAudioStart,
-      ],
-      shallow
-    );
+  const [
+    audioUrl,
+    audioStart,
+    audioPlay,
+    setAudioPlay,
+    setAudioStart,
+    setAudioLength,
+  ] = useAudioStore(
+    (state) => [
+      state.audioUrl,
+      state.audioStart,
+      state.audioPlay,
+      state.setAudioPlay,
+      state.setAudioStart,
+      state.setAudioLength,
+    ],
+    shallow
+  );
 
   useFrame((smth, x) => {
     bounceRef.current.rotation.y += 0.01;
@@ -188,11 +195,14 @@ export const SceneObjects = () => {
 
   useEffect(() => {
     console.log("✅ Audio Loaded");
+    if (!soundRef.current) return;
+    setAudioLength(Math.floor(soundRef.current.buffer.duration));
   }, [audioUrl]);
 
   useEffect(() => {
-    if (soundRef.current)
-      console.log(formatTime(soundRef.current.buffer.duration));
+    // if (soundRef.current)
+    //   setAudioLength(Math.floor(soundRef.current.buffer.duration));
+    // console.log(formatTime(soundRef.current.buffer.duration));
   }, [soundRef.current]);
 
   useEffect(() => {
@@ -201,8 +211,23 @@ export const SceneObjects = () => {
 
   useEffect(() => {
     if (audioPlay) setAudioStart(true);
-    // setAudioStart(true);
-    if (!audioStart || !soundRef.current) return;
+
+    if (!soundRef.current) return;
+    playAudio();
+
+    // Get currenttime from audiocontext
+    // if (!soundRef.current) return;
+    // console.log(soundRef.current.context.currentTime);
+    // console.log(soundRef.current.getOutput());
+  }, [audioPlay]);
+
+  useEffect(() => {
+    if (!soundRef.current) return;
+    playAudio();
+    setAudioLength(Math.floor(soundRef.current.buffer.duration));
+  }, [audioStart]);
+
+  const playAudio = () => {
     if (audioPlay) {
       soundRef.current.play();
       console.log("⏯ Audio playing");
@@ -210,13 +235,7 @@ export const SceneObjects = () => {
       soundRef.current.pause();
       console.log("⏸ Audio paused");
     }
-    // Format seconds to mm:ss
-
-    // Get currenttime from audiocontext
-
-    // console.log(soundRef.current.context.currentTime);
-    // console.log(soundRef.current.context);
-  }, [audioPlay]);
+  };
 
   // const [playVideo, setPlayVideo] = useState(false);
 
@@ -248,10 +267,9 @@ export const SceneObjects = () => {
       {audioStart ? (
         <>
           <PositionalAudio
-            autoplay
             url={audioUrl}
             ref={soundRef}
-            controls
+            onEnded={() => setAudioPlay(false)}
             distance={1}
           />
           <Analyzer sound={soundRef} scene={sceneRef} />
@@ -307,20 +325,20 @@ export const SceneObjects = () => {
             </Box>
           );
         })} */}
-        <Box position={[1, 1, 1]}>
+        {/* <Box position={[1, 1, 1]}>
           <meshPhongMaterial attach="material" color="#f3f3f3" />
-        </Box>
+        </Box> */}
 
-        <mesh
+        {/* <mesh
           position={new THREE.Vector3(2, 2, 2)}
           onClick={() => {
-            setPlayVideo(true);
-            setAudioPlay(true);
+            // setPlayVideo(true);
+            // setAudioPlay(true);
           }}
         >
           <sphereGeometry args={[1, 32, 32]} />
           <meshStandardMaterial />
-        </mesh>
+        </mesh> */}
 
         <mesh ref={bounceRef}>{/* <Heart></Heart> */}</mesh>
         {/* <mesh position={new THREE.Vector3(-4, -3, 2)}>
@@ -339,7 +357,7 @@ export const SceneObjects = () => {
         <mesh position={new THREE.Vector3(-3, -3, -3)}>
           {/* <Orb></Orb> */}
         </mesh>
-        <fog attach="fog" args={["white", 0, 100]} />
+        <fog attach="fog" args={["white", 0, 5]} />
       </mesh>
     </>
   );

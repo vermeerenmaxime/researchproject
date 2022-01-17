@@ -9,4 +9,8 @@ export const useAudioStore = create((set: any) => ({
   setAudioPlay: (value: boolean) => set({ audioPlay: value }),
   audioStart: false,
   setAudioStart: (value: boolean) => set({ audioStart: value }),
+  audioLength: 0,
+  setAudioLength: (value: number) => set({ audioLength: value }),
+  audioName: "artists : title",
+  setAudioName: (value: string) => set({ audioName: value }),
 }));

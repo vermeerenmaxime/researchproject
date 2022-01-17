@@ -32,7 +32,14 @@ Ter uitbreiding van de appliciatie kan de administrator van de web applicatie ka
 - Hoeveel verschillende canvassen kunnen we op eenzelfde pagina renderen?
 - 
 - Welke voordelen heeft realtime rendering tegenover video?
-  - 
+  - Customization
+  - Precision
+  - Quality
+  - Loading lagg
+
+  - Video voordelen
+    - Streamingbuffer
+    - Compability
 - Zijn er tools op de markt beschikbaar die dit al kunnen realiseren?
 
 

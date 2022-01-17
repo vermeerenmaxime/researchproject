@@ -17,6 +17,7 @@ import { useEnvironmentStore, useSceneStore } from "../src/stores/sceneStore";
 import { useObjectStore } from "../src/stores/objectStore";
 import { useAudioStore } from "../src/stores/audioStore";
 import { Html } from "@react-three/drei";
+import { formatTime } from "../src/utils/time";
 
 const Control = ({
   add,
@@ -207,17 +208,28 @@ const Editor: NextPage = () => {
     ],
     shallow
   );
-  const [audioUrl, setAudioUrl, audioPlay, setAudioPlay, setAudioStart] =
-    useAudioStore(
-      (state: any) => [
-        state.audioUrl,
-        state.setAudioUrl,
-        state.audioPlay,
-        state.setAudioPlay,
-        state.setAudioStart,
-      ],
-      shallow
-    );
+  const [
+    audioUrl,
+    setAudioUrl,
+    audioPlay,
+    setAudioPlay,
+    setAudioStart,
+    audioLength,
+    setAudioName,
+    audioName,
+  ] = useAudioStore(
+    (state: any) => [
+      state.audioUrl,
+      state.setAudioUrl,
+      state.audioPlay,
+      state.setAudioPlay,
+      state.setAudioStart,
+      state.audioLength,
+      state.setAudioName,
+      state.audioName,
+    ],
+    shallow
+  );
   const [environmentBackgroundUrl, setEnvironmentBackgroundUrl] =
     useEnvironmentStore(
       (state: any) => [
@@ -235,13 +247,19 @@ const Editor: NextPage = () => {
 
   const onChangeAudio = (e: any) => {
     const urlAudio = URL.createObjectURL(e.target.files[0]);
+
+    // remove string .mp3 .wav .flac, .. from names
+    const name = e.target.files[0].name
+      .replace(".mp3", "")
+      .replace(".wav", "")
+      .replace(".flac", "");
+
+    setAudioName(name);
     setAudioUrl(urlAudio);
+    setAudioPlay(false)
+
     console.log("🎧 NEW - audio url setted", urlAudio);
   };
-
-  useEffect(() => {
-    console.log(audioUrl);
-  }, [audioUrl]);
 
   // useEffect(() => {
   //   console.log(likes);
@@ -464,7 +482,7 @@ const Editor: NextPage = () => {
                 step="0.1"
                 onChange={(e) => {
                   setHue(parseInt(e.target.value));
-                  console.log(e.target.value);
+                  // console.log(e.target.value);
                 }}
               />
             </div>
@@ -509,18 +527,29 @@ const Editor: NextPage = () => {
                       viewBox="0 0 24 24"
                       xmlns="http://www.w3.org/2000/svg"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
-                      ></path>
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                      ></path>
+                      {audioPlay ? (
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                        ></path>
+                      ) : (
+                        <>
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
+                          ></path>
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                          ></path>
+                        </>
+                      )}
                     </svg>
                     <svg
                       className="w-5 h-5"
@@ -538,13 +567,16 @@ const Editor: NextPage = () => {
                     </svg>
                   </div>
                   <div className="flex items-center opacity-75">
-                    Mave & Alex Silves - Memories
+                    {/* Mave & Alex Silves - Memories */}
+                    {audioName}
                   </div>
                   <div className="bg-white/20 py-1 px-2 rounded-full text-xs opacity-75">
                     00:00
                   </div>
                 </div>
-                <div className="text-xs opacity-50 ">03:59</div>
+                <div className="text-xs opacity-50 ">
+                  {audioLength ? formatTime(audioLength) : "00:00"}
+                </div>
               </div>
               <div className="absolute left-0 right-0 bottom-0 h-[1.5px] w-1/3 bg-white/80 m-1"></div>
             </div>
