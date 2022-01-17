@@ -156,7 +156,10 @@ export const SceneObjects = () => {
   const starsRef = useRef();
   const { camera } = useThree();
 
-  const [stars] = useObjectStore((state) => [state.stars], shallow);
+  const [stars, starSize] = useObjectStore(
+    (state) => [state.stars, state.starSize],
+    shallow
+  );
   const [
     audioUrl,
     audioStart,
@@ -313,7 +316,7 @@ export const SceneObjects = () => {
           radius={100} // Radius of the inner sphere (default=100)
           depth={50} // Depth of area where stars should fit (default=50)
           count={stars} // Amount of stars (default=5000)
-          factor={10} // Size factor (default=4)
+          factor={starSize} // Size factor (default=4)
           saturation={1} // Saturation 0-1 (default=0)
           fade // Faded dots (default=false)
         />

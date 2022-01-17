@@ -183,6 +183,7 @@ const Editor: NextPage = () => {
       state.addBloom,
       state.removeBloom,
       state.resetBloom,
+
       state.lightIntensity,
       state.addLightIntensity,
       state.removeLightIntensity,
@@ -198,13 +199,31 @@ const Editor: NextPage = () => {
     shallow
   );
 
-  const [stars, addStars, removeStars, setStars, resetStars] = useObjectStore(
+  const [
+    stars,
+    addStars,
+    removeStars,
+    setStars,
+    resetStars,
+    
+    starSize,
+    addStarSize,
+    removeStarSize,
+    resetStarSize,
+    setStarSize,
+  ] = useObjectStore(
     (state: any) => [
       state.stars,
       state.addStars,
       state.removeStars,
       state.setStars,
       state.resetStars,
+
+      state.starSize,
+      state.addStarSize,
+      state.removeStarSize,
+      state.resetStarSize,
+      state.setStarSize,
     ],
     shallow
   );
@@ -255,8 +274,9 @@ const Editor: NextPage = () => {
       .replace(".flac", "");
 
     setAudioName(name);
+
     setAudioUrl(urlAudio);
-    setAudioPlay(false)
+    setAudioPlay(false);
 
     console.log("🎧 NEW - audio url setted", urlAudio);
   };
@@ -382,10 +402,10 @@ const Editor: NextPage = () => {
                     set: setStars,
                   },
                   size: {
-                    value: stars,
-                    add: addStars,
-                    remove: removeStars,
-                    set: setStars,
+                    value: starSize,
+                    add: addStarSize,
+                    remove: removeStarSize,
+                    set: setStarSize,
                   },
                 }}
               >
