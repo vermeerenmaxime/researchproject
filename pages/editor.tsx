@@ -344,12 +344,16 @@ const Editor: NextPage = () => {
   };
 
   const loadSettings = (e: any) => {
-    console.log("📤 Load settings");
-    const fileReader = new FileReader();
-    fileReader.readAsText(e.target.files[0], "UTF-8");
-    fileReader.onload = (e) => {
-      console.log("e.target.result", e.target.result);
-    };
+    if (e.target.files[0]) {
+      console.log("📤 Load settings");
+      const fileReader = new FileReader();
+      fileReader.readAsText(e.target.files[0], "UTF-8");
+      fileReader.onload = (e) => {
+        const data = JSON.parse(e.target.result as string);
+        console.log(data);
+        // console.log("e.target.result", e.target.result);
+      };
+    }
   };
   return (
     <>
@@ -375,14 +379,15 @@ const Editor: NextPage = () => {
           <hr className="opacity-10 m-0"></hr>
           <div className="grid grid-flow-col gap-4 justify-start">
             <input
+              accept=".json"
               type="file"
               className="hidden"
               id="settingsUpload"
               onChange={loadSettings}
             />
-            <Button
-              icon={
-                <label htmlFor="settingsUpload">
+            <label htmlFor="settingsUpload">
+              <Button
+                icon={
                   <svg
                     className="w-4 h-4"
                     fill="none"
@@ -397,39 +402,37 @@ const Editor: NextPage = () => {
                       d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
                     ></path>
                   </svg>
-                </label>
-              }
-            >
-              Load settings
-            </Button>
+                }
+              >
+                Load settings
+              </Button>
+            </label>
             <a
               download="EditorSettings.json"
               ref={downloadSettingsRef}
               onClick={saveSettings}
             >
-              download
+              <Button
+                icon={
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"
+                    ></path>
+                  </svg>
+                }
+              >
+                Save settings
+              </Button>
             </a>
-            <Button
-              onClick={saveSettings}
-              icon={
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"
-                  ></path>
-                </svg>
-              }
-            >
-              Save settings
-            </Button>
           </div>
           <div>
             <div>
@@ -738,9 +741,9 @@ const Editor: NextPage = () => {
                     {/* Mave & Alex Silves - Memories */}
                     {audioName}
                   </div>
-                  <div className="bg-white/20 py-1 px-2 rounded-full text-xs opacity-75">
+                  {/* <div className="bg-white/20 py-1 px-2 rounded-full text-xs opacity-75">
                     {audioLength ? formatTime(audioCurrentTime) : "00:00"}
-                  </div>
+                  </div> */}
                 </div>
                 <div className="text-xs opacity-50 ">
                   {audioLength ? formatTime(audioLength) : "00:00"}

@@ -94,12 +94,16 @@ const Analyzer = ({ sound, scene }) => {
     frequencyDataArray = analyser.current.getFrequencyData();
 
     const kickArray = frequencyDataArray.slice(0, 10);
-    const lowerHalfArray = frequencyDataArray.slice(
+    const lowFreqArray = frequencyDataArray.slice(
       0,
-      frequencyDataArray.length / 2 - 1
+      frequencyDataArray.length / 3 - 1
     );
-    const upperHalfArray = frequencyDataArray.slice(
-      frequencyDataArray.length / 2 - 1,
+    const midFreqArray = frequencyDataArray.slice(
+      (frequencyDataArray.length / 3) - 1,
+      (frequencyDataArray.length / 3) * 2 - 1
+    );
+    const highFreqArray = frequencyDataArray.slice(
+      (frequencyDataArray.length / 3) * 2 - 1,
       frequencyDataArray.length - 1
     );
 
