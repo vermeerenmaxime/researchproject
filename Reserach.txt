@@ -128,3 +128,7 @@ https://sketchfab.com/3d-models/bloom-light-7c63fddf1e874a3196d6ceb3386b69d1
 
 omzetten van typografie font, naar js/json
 https://gero3.github.io/facetype.js/
+
+Audio not working in safari/ios
+https://github.com/mrdoob/three.js/issues/10404
+

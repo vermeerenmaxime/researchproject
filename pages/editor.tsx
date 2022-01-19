@@ -2,7 +2,7 @@
 
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import shallow from "zustand/shallow";
 import { useStore } from "../src/stores/store";
@@ -20,6 +20,7 @@ import { Html } from "@react-three/drei";
 import { formatTime } from "../src/utils/time";
 import { useChatStore } from "../src/stores/chatStore";
 import Cubes from "../src/components/models/Cubes";
+import { Button } from "../src/components/Button";
 
 const Control = ({
   add,
@@ -313,8 +314,45 @@ const Editor: NextPage = () => {
   //   console.log(likes);
   // }, [likes]);
   // const likes = useStore();
+
+  // const [downloadData, setDownloadData] = useState({});
+  const downloadSettingsRef: any = useRef();
+
+  const saveSettings = () => {
+    console.log("📥 Save settings");
+    downloadSettingsRef.current.href =
+      `data: "text/json;charset=utf-8,` +
+      encodeURIComponent(JSON.stringify(downloadData()));
+  };
+
+  const downloadData = () => {
+    return {
+      scene: {
+        bloom: bloom,
+        lightIntensity: lightIntensity,
+        sceneSpeed: sceneSpeed,
+      },
+      speed: {},
+      objects: {
+        stars: stars,
+        starSize: starSize,
+      },
+      environment: {
+        environmentBackgroundUrl: environmentBackgroundUrl,
+      },
+    };
+  };
+
+  const loadSettings = (e: any) => {
+    console.log("📤 Load settings");
+    const fileReader = new FileReader();
+    fileReader.readAsText(e.target.files[0], "UTF-8");
+    fileReader.onload = (e) => {
+      console.log("e.target.result", e.target.result);
+    };
+  };
   return (
-    <div>
+    <>
       <Head>
         <title>3D Audio Visualizer - Editor</title>
         <meta name="description" content="3D Audio Visualizer" />
@@ -335,24 +373,63 @@ const Editor: NextPage = () => {
           {/* <img src={environmentBackgroundUrl}></img> */}
           <h1 className="text-xl font-semibold ">3D Web Player</h1>
           <hr className="opacity-10 m-0"></hr>
-          <div className="flex">
-            <div className="bg-white/10 px-4 py-2 rounded-sm text-sm hover:bg-white/20 transition-all cursor-pointer grid grid-flow-col items-center gap-2">
-              <p>Save settings</p>
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"
-                ></path>
-              </svg>
-            </div>
+          <div className="grid grid-flow-col gap-4 justify-start">
+            <input
+              type="file"
+              className="hidden"
+              id="settingsUpload"
+              onChange={loadSettings}
+            />
+            <Button
+              icon={
+                <label htmlFor="settingsUpload">
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                    ></path>
+                  </svg>
+                </label>
+              }
+            >
+              Load settings
+            </Button>
+            <a
+              download="EditorSettings.json"
+              ref={downloadSettingsRef}
+              onClick={saveSettings}
+            >
+              download
+            </a>
+            <Button
+              onClick={saveSettings}
+              icon={
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"
+                  ></path>
+                </svg>
+              }
+            >
+              Save settings
+            </Button>
           </div>
           <div>
             <div>
@@ -557,22 +634,24 @@ const Editor: NextPage = () => {
           </div>
           <div>
             {/* Create input box where input has to contain only letters and numbers */}
-
-            <input
-              className="bg-white/10 px-3 py-2 border-[1px] border-white/10 rounded-sm outline-none"
-              type="text"
-              onChange={(e) => {
-                console.log(e.target.value);
-                setInputMessage(e.target.value);
-              }}
-            />
-            <button
-              onClick={() =>
-                addMessage({ name: "Mave", message: inputMessage })
-              }
-            >
-              Add message
-            </button>
+            <div className="grid grid-flow-col gap-2 justify-start">
+              <input
+                className="bg-white/10 px-3 py-2 border-[1px] border-white/10 rounded-sm outline-none"
+                type="text"
+                onChange={(e) => {
+                  console.log(e.target.value);
+                  setInputMessage(e.target.value);
+                }}
+              />
+              <button
+                onClick={() =>
+                  addMessage({ name: "Mave", message: inputMessage })
+                }
+                className="px-5 py-2 border-white/10 border-2 rounded-sm outline-none bg-white/20 hover:bg-white/5 transition-all uppercase text-xs"
+              >
+                Add message
+              </button>
+            </div>
           </div>
 
           <div className="grid gap-2">
@@ -678,7 +757,7 @@ const Editor: NextPage = () => {
           <Footer></Footer>
         </PageContent>
       </Main>
-    </div>
+    </>
   );
 };
 
