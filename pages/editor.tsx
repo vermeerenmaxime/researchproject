@@ -21,6 +21,7 @@ import { formatTime } from "../src/utils/time";
 import { useChatStore } from "../src/stores/chatStore";
 import Cubes from "../src/components/models/Cubes";
 import { Button } from "../src/components/Button";
+import { useThemeStore } from "../src/stores/themeStore";
 
 const Control = ({
   add,
@@ -270,6 +271,15 @@ const Editor: NextPage = () => {
     (state: any) => [state.messages, state.addMessage, state.setMessages],
     shallow
   );
+  const [theme, addTheme, setTheme, removeTheme] = useThemeStore(
+    (state: any) => [
+      state.theme,
+      state.addTheme,
+      state.setTheme,
+      state.removeTheme,
+    ],
+    shallow
+  );
 
   const onChangeBackground = (e: any) => {
     const urlBackground = URL.createObjectURL(e.target.files[0]);
@@ -298,15 +308,15 @@ const Editor: NextPage = () => {
   useEffect(() => {
     // setAudioCurrentTime(0)
     // setSeconds(0);
-    const timer = setInterval(() => {
-      if (audioPlay) {
-        // console.log("hey");
-        // setSeconds(seconds + 1);
-        // setAudioCurrentTime(audioCurrentTime + 1);
-        // addAudioCurrentTime();
-      }
-    }, 1000);
-    return () => clearInterval(timer);
+    // const timer = setInterval(() => {
+    //   if (audioPlay) {
+    //     // console.log("hey");
+    //     // setSeconds(seconds + 1);
+    //     // setAudioCurrentTime(audioCurrentTime + 1);
+    //     // addAudioCurrentTime();
+    //   }
+    // }, 1000);
+    // return () => clearInterval(timer);
   });
 
   const [inputMessage, setInputMessage] = useState("");
@@ -355,6 +365,10 @@ const Editor: NextPage = () => {
       };
     }
   };
+
+  useEffect(() => {
+    console.log(theme);
+  }, [theme]);
   return (
     <>
       <Head>
@@ -655,6 +669,13 @@ const Editor: NextPage = () => {
                 Add message
               </button>
             </div>
+          </div>
+          <div className="grid grid-flow-col gap-2 justify-start items-center">
+            <div>Select theme</div>
+            <Button onClick={() => setTheme("heart")}>Heart</Button>
+            <Button onClick={() => setTheme("space")}>Space</Button>
+            <Button>Sun</Button>
+            <Button>Moon</Button>
           </div>
 
           <div className="grid gap-2">

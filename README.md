@@ -99,7 +99,7 @@ Research.txt
   - [x] pause
 
 - [x] 3D text on scene
-- [ ] Edit 3D text
+- [x] Edit 3D text
 - [ ] Auth login
 - [ ] Admin panel
 - [ ] Landingpage

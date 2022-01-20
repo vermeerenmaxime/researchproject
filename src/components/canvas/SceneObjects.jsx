@@ -35,6 +35,7 @@ import { useChatStore } from "../../stores/chatStore";
 import { shallow } from "zustand/shallow";
 
 import { Text } from "./Text.jsx";
+import { NormalText } from "./NormalText.jsx";
 
 // import url from "../../public/video/video.mp4";
 
@@ -87,6 +88,10 @@ const Analyzer = ({ sound, scene }) => {
   const vector = (x, y, z) => {
     return new THREE.Vector3(x, y, z);
   };
+  const avgDataRef = useRef();
+  const lowDataRef = useRef();
+  const midDataRef = useRef();
+  const highDataRef = useRef();
 
   const vec = new THREE.Vector3();
   useFrame(() => {
@@ -99,13 +104,18 @@ const Analyzer = ({ sound, scene }) => {
       frequencyDataArray.length / 3 - 1
     );
     const midFreqArray = frequencyDataArray.slice(
-      (frequencyDataArray.length / 3) - 1,
+      frequencyDataArray.length / 3 - 1,
       (frequencyDataArray.length / 3) * 2 - 1
     );
     const highFreqArray = frequencyDataArray.slice(
       (frequencyDataArray.length / 3) * 2 - 1,
       frequencyDataArray.length - 1
     );
+
+    avgDataRef.current.innerHTML = averageFrequency;
+    lowDataRef.current.innerHTML = avg(lowFreqArray);
+    midDataRef.current.innerHTML = avg(midFreqArray);
+    highDataRef.current.innerHTML = avg(highFreqArray);
 
     // const overalAvg = avg(frequencyDataArray);
     // console.log(overalAvg, averageFrequency);
@@ -133,6 +143,14 @@ const Analyzer = ({ sound, scene }) => {
   });
   return (
     <>
+      <Html center>
+        <div className="flex space-x-4">
+          <div ref={avgDataRef}></div>
+          <div ref={lowDataRef}></div>
+          <div ref={midDataRef}></div>
+          <div ref={highDataRef}></div>
+        </div>
+      </Html>
       <pointLight
         ref={light1Ref}
         intensity={0}
@@ -306,7 +324,7 @@ export const SceneObjects = () => {
     <>
       {/* <Html>{seconds}</Html> */}
       <group>
-        {nodesCubes}
+        {/* {nodesCubes} */}
         {/* {["hi", "hi", "hi", "hi"].map((el, i) => {
           console.log("hi");
           return <Video key={i}></Video>;
@@ -337,9 +355,12 @@ export const SceneObjects = () => {
       <Text hAlign="center" position={[0, 3, -50]}>
         {audioName}
       </Text>
-      <Text hAlign="center" position={[0, 0, -25]} fontSize={10}>
+      <NormalText hAlign="center" position={[0, 0, -50]} fontSize={10}>
         {messages[messages.length - 1].message}
-      </Text>
+      </NormalText>
+      <NormalText hAlign="center" position={[0, -5, -5]} fontSize={10}>
+        {messages[messages.length - 1].message}
+      </NormalText>
       {/* <Text hAlign="center" position={[0, 3, -50]} children={audioName} /> */}
       {/* <Text hAlign="right" position={[-12, 3, -25]} children="Memories" /> */}
       <mesh ref={sceneRef}>

@@ -22,6 +22,7 @@ export const Text = ({
   // console.log(loader);
   // const font = useLoader(FontLoader, "/fonts/bold.blob");
   const font = useLoader(FontLoader, "/fonts/montserrat.json");
+  // const font = useLoader(FontLoader, "/fonts/Reglo_Regular.json");
   const config = useMemo(
     () => ({
       font,

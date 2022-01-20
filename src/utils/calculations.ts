@@ -1,6 +1,6 @@
 export const avg = (array: number[]) => {
   // Calculate average number of elements in arrays
-  return array.reduce((a, b) => a + b, 0) / array.length;
+  return Math.floor(array.reduce((a, b) => a + b, 0) / array.length);
 };
 export const min = (array: number[]) => {
   // Calculate lowest number of elemnts in arrays
