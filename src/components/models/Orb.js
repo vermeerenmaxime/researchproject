@@ -8,6 +8,7 @@ title: Ethereal Orbits
 
 import React, { useRef, useEffect } from "react";
 import { useGLTF, useAnimations } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
 
 export default function Model({ ...props }) {
   const group = useRef();
@@ -16,10 +17,15 @@ export default function Model({ ...props }) {
   // console.log(useAnimations(animations, group));
 
   useEffect(() => {
-    actions.Animation.play();
+    // actions.Animation.play();
     // clips.forEach(function (clip) {
     //   mixer.clipAction(clip, group.current).play();
     // });
+  });
+
+  useFrame(() => {
+    group.current.rotation.x += 0.01;
+    group.current.rotation.y += 0.01;
   });
 
   return (

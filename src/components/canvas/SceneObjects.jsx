@@ -20,6 +20,7 @@ import Rainbow from "../models/Rainbow.js";
 
 import Corridor from "../models/Corridor.js";
 import Explorer from "../models/Explorer.js";
+import Moon from "../models/Moon.js";
 
 import Spaceman from "../models/Spaceman.js";
 import { EffectComposer, HueSaturation } from "@react-three/postprocessing";
@@ -195,7 +196,7 @@ const Analyzer = ({ sound, scene }) => {
         {theme === "heart" ? (
           <Heart position={[0, 0, 0]}></Heart>
         ) : theme === "space" ? (
-          <Orb></Orb>
+          <Moon></Moon>
         ) : theme === "car" ? (
           <Bugatti></Bugatti>
         ) : theme === "explore" ? (
@@ -347,7 +348,12 @@ export const SceneObjects = () => {
       {/* <Text hAlign="center" position={[0, 3, -50]}>
         {audioName}
       </Text> */}
-      <NormalText hAlign="center" position={[0, 5, -70]} size={0.25}>
+      <NormalText
+        hAlign="center"
+        position={[0, 5, -70]}
+        size={0.25}
+        color={theme === "explore" ? "black" : "white"}
+      >
         {audioName.toUpperCase()}
       </NormalText>
       <NormalText hAlign="center" position={[0, -5, -50]} fontSize={10}>
@@ -406,6 +412,9 @@ export const SceneObjects = () => {
             </mesh>
             <mesh position={[0, 5, -10]}>
               <Diodes></Diodes>
+            </mesh>
+            <mesh position={[10, 5, 5]}>
+              <Orb></Orb>
             </mesh>
           </>
         ) : theme === "car" ? (

@@ -11,7 +11,7 @@ export const NormalText = ({
   vAlign = "center",
   hAlign = "center",
   size = 0.5,
-  color = "#000000",
+  color = "#ffffff",
   fontSize = 40,
   ...props
 }) => {
@@ -50,7 +50,7 @@ export const NormalText = ({
       <mesh ref={mesh} castShadow="true">
         <textGeometry args={[children, config]} center={true} />
         {/* <meshPhongMaterial /> */}
-        <meshPhysicalMaterial />
+        <meshPhysicalMaterial color={color}/>
         {/* <meshStandardMaterial /> */}
       </mesh>
     </group>

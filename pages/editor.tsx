@@ -22,6 +22,7 @@ import { useChatStore } from "../src/stores/chatStore";
 import Cubes from "../src/components/models/Cubes";
 import { Button } from "../src/components/Button";
 import { useThemeStore } from "../src/stores/themeStore";
+import { useEditorStore } from "../src/stores/editorStore";
 
 const Control = ({
   add,
@@ -281,6 +282,11 @@ const Editor: NextPage = () => {
     shallow
   );
 
+  const [mode, setMode] = useEditorStore(
+    (state: any) => [state.mode, state.setMode],
+    shallow
+  );
+
   const onChangeBackground = (e: any) => {
     const urlBackground = URL.createObjectURL(e.target.files[0]);
     setEnvironmentBackgroundUrl(urlBackground);
@@ -317,15 +323,15 @@ const Editor: NextPage = () => {
     //   }
     // }, 1000);
     // return () => clearInterval(timer);
+    setMode("edit");
   });
 
-  const [inputMessage, setInputMessage] = useState("");
-  // useEffect(() => {
-  //   console.log(likes);
-  // }, [likes]);
-  // const likes = useStore();
+  useEffect(() => {
+    console.log(mode);
+  }, [mode]);
 
-  // const [downloadData, setDownloadData] = useState({});
+  const [inputMessage, setInputMessage] = useState("");
+
   const downloadSettingsRef: any = useRef();
 
   const saveSettings = () => {
@@ -367,7 +373,7 @@ const Editor: NextPage = () => {
   };
 
   useEffect(() => {
-    console.log(theme);
+    console.log("🪄 Loaded new theme: " + theme);
   }, [theme]);
   return (
     <>
@@ -391,129 +397,167 @@ const Editor: NextPage = () => {
           {/* <img src={environmentBackgroundUrl}></img> */}
           <h1 className="text-xl font-semibold ">3D Web Player</h1>
           <hr className="opacity-10 m-0"></hr>
-          <div className="grid grid-flow-col gap-4 justify-start">
-            <input
-              accept=".json"
-              type="file"
-              className="hidden"
-              id="settingsUpload"
-              onChange={loadSettings}
-            />
-            <label htmlFor="settingsUpload">
-              <Button
-                icon={
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
+          {mode === "edit" && (
+            <>
+              <div className="grid grid-flow-col gap-4 justify-start">
+                <input
+                  accept=".json"
+                  type="file"
+                  className="hidden"
+                  id="settingsUpload"
+                  onChange={loadSettings}
+                />
+                <label htmlFor="settingsUpload">
+                  <Button
+                    icon={
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                        ></path>
+                      </svg>
+                    }
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                    ></path>
-                  </svg>
-                }
-              >
-                Load settings
-              </Button>
-            </label>
-            <a
-              download="EditorSettings.json"
-              ref={downloadSettingsRef}
-              onClick={saveSettings}
-            >
-              <Button
-                icon={
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
+                    Load settings
+                  </Button>
+                </label>
+                <a
+                  download="EditorSettings.json"
+                  ref={downloadSettingsRef}
+                  onClick={saveSettings}
+                >
+                  <Button
+                    icon={
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"
+                        ></path>
+                      </svg>
+                    }
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"
-                    ></path>
-                  </svg>
-                }
-              >
-                Save settings
-              </Button>
-            </a>
-          </div>
-          <div>
-            <div>
-              {/* <h2 className="text-lg font-semibold ">Controls</h2>
+                    Save settings
+                  </Button>
+                </a>
+              </div>
+              <div>
+                <div>
+                  {/* <h2 className="text-lg font-semibold ">Controls</h2>
             <div className="opacity-70 font-base">
               Play, pause, reset, resolution, ..
             </div> */}
 
-              <div className="bg-white/90 px-1 py-1 rounded-sm grid grid-flow-col text-slate-700 justify-start gap-4 text-sm">
-                <Control
-                  add={addBloom}
-                  remove={removeBloom}
-                  reset={resetBloom}
-                  value={bloom}
-                  name="Bloom"
-                  icon={
-                    <svg
-                      className="w-6 h-6"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
+                  <div className="bg-white/90 px-1 py-1 rounded-sm grid grid-flow-col text-slate-700 justify-start gap-4 text-sm">
+                    <Control
+                      add={addBloom}
+                      remove={removeBloom}
+                      reset={resetBloom}
+                      value={bloom}
+                      name="Bloom"
+                      icon={
+                        <svg
+                          className="w-6 h-6"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                          ></path>
+                        </svg>
+                      }
+                    ></Control>
+                    <Control
+                      add={addLightIntensity}
+                      remove={removeLightIntensity}
+                      reset={resetLightIntensity}
+                      value={lightIntensity}
+                      name="light"
+                      icon={
+                        <svg
+                          className="w-6 h-6"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+                          ></path>
+                        </svg>
+                      }
+                    ></Control>
+                    <input
+                      accept=".pic"
+                      // accept="image/*"
+                      id="backgroundImage"
+                      type="file"
+                      className="hidden"
+                      onChange={onChangeBackground}
+                    />
+                    <Control
+                      name="background"
+                      icon={
+                        <label htmlFor="backgroundImage">
+                          <svg
+                            className="w-6 h-6"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                            ></path>
+                          </svg>
+                        </label>
+                      }
+                    ></Control>
+                    <Setting
+                      name="stars"
+                      value={stars}
+                      actions={{
+                        top: resetStars,
+                        amount: {
+                          value: stars,
+                          add: addStars,
+                          remove: removeStars,
+                          set: setStars,
+                        },
+                        size: {
+                          value: starSize,
+                          add: addStarSize,
+                          remove: removeStarSize,
+                          set: setStarSize,
+                        },
+                      }}
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
-                      ></path>
-                    </svg>
-                  }
-                ></Control>
-                <Control
-                  add={addLightIntensity}
-                  remove={removeLightIntensity}
-                  reset={resetLightIntensity}
-                  value={lightIntensity}
-                  name="light"
-                  icon={
-                    <svg
-                      className="w-6 h-6"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-                      ></path>
-                    </svg>
-                  }
-                ></Control>
-                <input
-                  accept=".pic"
-                  // accept="image/*"
-                  id="backgroundImage"
-                  type="file"
-                  className="hidden"
-                  onChange={onChangeBackground}
-                />
-                <Control
-                  name="background"
-                  icon={
-                    <label htmlFor="backgroundImage">
                       <svg
                         className="w-6 h-6"
                         fill="none"
@@ -525,138 +569,113 @@ const Editor: NextPage = () => {
                           strokeLinecap="round"
                           strokeLinejoin="round"
                           strokeWidth="2"
-                          d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                          d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
                         ></path>
                       </svg>
-                    </label>
-                  }
-                ></Control>
-                <Setting
-                  name="stars"
-                  value={stars}
-                  actions={{
-                    top: resetStars,
-                    amount: {
-                      value: stars,
-                      add: addStars,
-                      remove: removeStars,
-                      set: setStars,
-                    },
-                    size: {
-                      value: starSize,
-                      add: addStarSize,
-                      remove: removeStarSize,
-                      set: setStarSize,
-                    },
-                  }}
-                >
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
-                    ></path>
-                  </svg>
-                </Setting>
-                <Setting
-                  name="music"
-                  actions={{
-                    top: resetSceneSpeed,
-                    scenespeed: {
-                      value: sceneSpeed,
-                      add: addSceneSpeed,
-                      remove: removeSceneSpeed,
-                      set: setSceneSpeed,
-                    },
-                  }}
-                >
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"
-                    ></path>
-                  </svg>
-                </Setting>
-                <input
-                  accept="audio/*"
-                  id="audioUrl"
-                  type="file"
-                  className="hidden"
-                  onChange={onChangeAudio}
-                />
-                <Setting name="upload">
-                  <label htmlFor="audioUrl">
-                    <svg
-                      className="w-6 h-6"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
+                    </Setting>
+                    <Setting
+                      name="music"
+                      actions={{
+                        top: resetSceneSpeed,
+                        scenespeed: {
+                          value: sceneSpeed,
+                          add: addSceneSpeed,
+                          remove: removeSceneSpeed,
+                          set: setSceneSpeed,
+                        },
+                      }}
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                      ></path>
-                    </svg>
-                  </label>
-                </Setting>
-                <Setting name="chat">
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"
-                    ></path>
-                  </svg>
-                </Setting>{" "}
-                <div>
-                  Color hue
-                  <input
-                    type="range"
-                    min="0"
-                    max="10"
-                    step="0.1"
-                    onChange={(e) => {
-                      setHue(parseInt(e.target.value));
-                      // console.log(e.target.value);
-                    }}
-                  />
+                      <svg
+                        className="w-6 h-6"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"
+                        ></path>
+                      </svg>
+                    </Setting>
+                    <input
+                      accept="audio/*"
+                      id="audioUrl"
+                      type="file"
+                      className="hidden"
+                      onChange={onChangeAudio}
+                    />
+                    <Setting name="upload">
+                      <label htmlFor="audioUrl">
+                        <svg
+                          className="w-6 h-6"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                          ></path>
+                        </svg>
+                      </label>
+                    </Setting>
+                    <Setting name="chat">
+                      <svg
+                        className="w-6 h-6"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"
+                        ></path>
+                      </svg>
+                    </Setting>{" "}
+                    <div>
+                      Color hue
+                      <input
+                        type="range"
+                        min="0"
+                        max="10"
+                        step="0.1"
+                        onChange={(e) => {
+                          setHue(parseInt(e.target.value));
+                          // console.log(e.target.value);
+                        }}
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
+            </>
+          )}
           <div>
             {/* Create input box where input has to contain only letters and numbers */}
+          </div>
+          {mode === "edit" ? (
+            <div className="grid grid-flow-col gap-2 justify-start items-center">
+              <div>Select theme</div>
+              <Button onClick={() => setTheme("heart")}>Heart</Button>
+              <Button onClick={() => setTheme("space")}>Space</Button>
+              <Button onClick={() => setTheme("car")}>Car</Button>
+              <Button onClick={() => setTheme("explore")}>Explore</Button>
+            </div>
+          ) : (
             <div className="grid grid-flow-col gap-2 justify-start">
               <input
                 className="bg-white/10 px-3 py-2 border-[1px] border-white/10 rounded-sm outline-none"
                 type="text"
                 onChange={(e) => {
-                  console.log(e.target.value);
                   setInputMessage(e.target.value);
                 }}
               />
@@ -669,14 +688,7 @@ const Editor: NextPage = () => {
                 Add message
               </button>
             </div>
-          </div>
-          <div className="grid grid-flow-col gap-2 justify-start items-center">
-            <div>Select theme</div>
-            <Button onClick={() => setTheme("heart")}>Heart</Button>
-            <Button onClick={() => setTheme("space")}>Space</Button>
-            <Button onClick={() => setTheme("car")}>Car</Button>
-            <Button onClick={() => setTheme("explore")}>Explore</Button>
-          </div>
+          )}
 
           <div className="grid gap-2">
             <div className="bg-white/10 aspect-video rounded-sm relative overflow-hidden lg:w-[100%]">
