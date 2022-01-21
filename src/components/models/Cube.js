@@ -17,8 +17,8 @@ export default function Model({ ...props }) {
     group
   );
   useEffect(() => {
-    console.log(mixer.clipAction);
-    console.log(actions.Animation);
+    // console.log(mixer.clipAction);
+    // console.log(actions.Animation);
     // nodes.map(node => console.log(node))
     // console.log(Object.keys(nodes));
     // let i = 2;

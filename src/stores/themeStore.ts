@@ -4,7 +4,7 @@ import { persist } from "zustand/middleware";
 export const useThemeStore = create(
   persist(
     (set: any) => ({
-      themes: ["heart", "space", "car", "moon"],
+      themes: ["heart", "space", "car", "explore"],
       theme: "heart",
       setTheme: (value: string) => set({ theme: value }),
       addTheme: (value: string) =>

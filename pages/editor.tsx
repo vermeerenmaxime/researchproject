@@ -675,7 +675,7 @@ const Editor: NextPage = () => {
             <Button onClick={() => setTheme("heart")}>Heart</Button>
             <Button onClick={() => setTheme("space")}>Space</Button>
             <Button onClick={() => setTheme("car")}>Car</Button>
-            <Button>Moon</Button>
+            <Button onClick={() => setTheme("explore")}>Explore</Button>
           </div>
 
           <div className="grid gap-2">

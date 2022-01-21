@@ -79,8 +79,6 @@ const Analyzer = ({ sound, scene }) => {
   const htmlRef = useRef();
 
   useEffect(() => {
-    // console.log(sound.current);
-
     analyser.current = new THREE.AudioAnalyser(sound.current, 128);
   });
   const frequencyDataArray = [];
@@ -90,12 +88,6 @@ const Analyzer = ({ sound, scene }) => {
     (state) => [state.mainObjectPosition, state.setMainObjectPosition],
     shallow
   );
-
-  // function Foo({ vec = new THREE.Vector(), ...props }) {
-  //   useFrame(() => {
-  //     ref.current.position.lerp(vec.set(x, y, z), 0.1);
-  //   });
-  // }
 
   const [theme] = useThemeStore((state) => [state.theme], shallow);
 
@@ -144,9 +136,10 @@ const Analyzer = ({ sound, scene }) => {
     // Edit elements
     // meshRef.current.scale.lerp(vec.set(zoom, zoom, zoom), 0.15);
     meshRef.current.scale.lerp(vec.set(zoom, zoom, zoom), 0.15);
-    // Create calulculation but element cannot go lower than 1
+    // Create calulculation but element cannot go lower than 1`
 
-    scene.current.rotation.y -= avg(midFreqArray) / (100000 / sceneSpeed);
+    if (theme != "car")
+      scene.current.rotation.y -= avg(midFreqArray) / (100000 / sceneSpeed);
 
     light1Ref.current.intensity = max(avg(highFreqArray) / 40, 5);
     light2Ref.current.intensity = max(avg(highFreqArray) / 40, 5);
@@ -205,38 +198,28 @@ const Analyzer = ({ sound, scene }) => {
           <Orb></Orb>
         ) : theme === "car" ? (
           <Bugatti></Bugatti>
+        ) : theme === "explore" ? (
+          <Cube scale={0.25} position={[0, 3, 0]}></Cube>
         ) : (
-          <Cube scale={0.5} position={[0, 0, 0]}></Cube>
+          <></>
         )}
-        {/* <MeshWobbleMaterial
-          attach="material"
-          factor={1} // Strength, 0 disables the effect (default=1)
-          speed={10} // Speed (default=1)
-        /> */}
-        {/* <Html>
-          <div className="w-[200px] bg-red-500 flex">
-            Current size
-            <span ref={htmlRef}>0</span>
-          </div>
-        </Html> */}
       </mesh>
       <TransformControls
         object={meshRef}
         mode="translate"
         onChange={() => updateMainObjectPosition()}
       ></TransformControls>
-      {/* <group position={[2, 2, 0.1]}>
+      <group position={[2, 2, 0.1]}>
         <mesh>
           <boxBufferGeometry attach="geometry" args={[0.047, 0.5, 0.29]} />
           <meshStandardMaterial attach="material" color={0xf95b3c} />
         </mesh>
-      </group> */}
+      </group>
     </>
   );
 };
 
 export const SceneObjects = () => {
-  const bounceRef = useRef();
   const sceneRef = useRef();
   const soundRef = useRef();
   const starsRef = useRef();
@@ -277,26 +260,10 @@ export const SceneObjects = () => {
   const [theme] = useThemeStore((state) => [state.theme], shallow);
 
   useFrame(({ clock }, x) => {
-    bounceRef.current.rotation.y += 0.01;
-    // sceneRef.current.rotation.y -= 0.001;
-    // round to 2 decimal places
-
-    // Every second of render loop
-    // if (Math.round((clock * 3600) % 60) == 0) {
-    //   // setSeconds(seconds + 1);
-
-    //   console.log(seconds);
-    //   // console.log(camera);
-    // }
-    // if(Math.round(x*100)) {
-    //   console.log(Math.round(x*100)/100);
-    // }
-    //   console.log(Math.round(x*100)/100);
-    // console.log(Math.sin(clock.getElapsedTime()));
-    // console.log(clock,x)
     // camera.position.x += 0.2
     // camera.position.y += 0.2
     // camera.position.z += 0.2
+    if (colliderRef.current) colliderRef.current.position.z -= 0.02;
   });
 
   useEffect(() => {
@@ -359,6 +326,8 @@ export const SceneObjects = () => {
     }
   };
 
+  const colliderRef = useRef();
+
   const nodesCubes = ["hi", "hi", "hi", "hi", "yo", "xp", "ahha"].map(
     (el, i) => {
       return (
@@ -371,28 +340,14 @@ export const SceneObjects = () => {
   return (
     <>
       {/* <Html>{seconds}</Html> */}
-      <group>
-        {/* {nodesCubes} */}
-        {/* {["hi", "hi", "hi", "hi"].map((el, i) => {
-          console.log("hi");
-          return <Video key={i}></Video>;
-        })} */}
-        {/* <Video></Video>; */}
-      </group>
 
-      {/* <Sky
-        distance={450000}
-        sunPosition={[0, 0.3, 0]}
-        inclination={0}
-        azimuth={0.25}
-      /> */}
       {/* <Environment preset="sunset" background /> */}
       {/* <Environment files="/spaces/studio_small_03_4k.pic" background /> */}
 
       {/* <Text hAlign="center" position={[0, 3, -50]}>
         {audioName}
       </Text> */}
-      <NormalText hAlign="center" position={[0, 30, -100]} size={0.25}>
+      <NormalText hAlign="center" position={[0, 5, -70]} size={0.25}>
         {audioName.toUpperCase()}
       </NormalText>
       <NormalText hAlign="center" position={[0, -5, -50]} fontSize={10}>
@@ -400,11 +355,14 @@ export const SceneObjects = () => {
       </NormalText>
       {/* <Text hAlign="center" position={[0, 3, -50]} children={audioName} /> */}
       {/* <Text hAlign="right" position={[-12, 3, -25]} children="Memories" /> */}
-      <mesh scale={25}>
-        {/* <Orb></Orb> */}
-        {/* <Corridor></Corridor> */}
-      </mesh>
+
       <mesh ref={sceneRef}>
+        {theme === "car" && (
+          <group position={[0, 0, -75]}>
+            {/* {nodesCubes} */}
+            <Video></Video>;
+          </group>
+        )}
         {audioStart ? (
           <>
             <PositionalAudio
@@ -418,10 +376,47 @@ export const SceneObjects = () => {
         ) : null}
         {/* <GLTF></GLTF> */}
         {/* <Lightmountain></Lightmountain> */}
-        <mesh>
-          {/* <Explorer scale={5}></Explorer> */}
-          <Spaceman scale={5}></Spaceman>
-        </mesh>
+        {theme === "explore" && (
+          <Sky
+            distance={450000}
+            sunPosition={[0, 0.3, 0]}
+            inclination={0}
+            azimuth={0.25}
+          />
+        )}
+
+        {theme === "heart" ? (
+          <></>
+        ) : theme === "explore" ? (
+          <>
+            <Sky
+              distance={450000}
+              sunPosition={[0, 0.3, 0]}
+              inclination={0}
+              azimuth={0.25}
+            />
+            <mesh>
+              <Explorer scale={4}></Explorer>
+            </mesh>
+          </>
+        ) : theme === "space" ? (
+          <>
+            <mesh>
+              <Spaceman scale={5} position={[0, -5, 0]}></Spaceman>
+            </mesh>
+            <mesh position={[0, 5, -10]}>
+              <Diodes></Diodes>
+            </mesh>
+          </>
+        ) : theme === "car" ? (
+          <mesh scale={25} ref={colliderRef}>
+            <Corridor></Corridor>
+          </mesh>
+        ) : (
+          <></>
+        )}
+
+        {/* <Orb></Orb> */}
         {/* Song Title */}
         {/* @ts-ignore */}
         {/* <Text color="black" anchorX="center" anchorY="middle">
@@ -476,16 +471,13 @@ export const SceneObjects = () => {
           <meshStandardMaterial />
         </mesh> */}
 
-        <mesh ref={bounceRef}>{/* <Heart></Heart> */}</mesh>
         {/* <mesh position={new THREE.Vector3(-4, -3, 2)}>
           <Bugatti></Bugatti>
         </mesh> */}
         {/* <mesh position={new THREE.Vector3(0, 0, 0)}> */}
         {/* <Cubes></Cubes> */}
         {/* </mesh> */}
-        <mesh position={new THREE.Vector3(0, 0, -5)}>
-          {/* <Diodes></Diodes> */}
-        </mesh>
+
         <mesh position={new THREE.Vector3(3, 3, 3)}>
           {/* <Cube></Cube> */}
           {/* <Rainbow></Rainbow> */}
