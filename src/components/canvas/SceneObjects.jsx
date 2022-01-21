@@ -19,6 +19,8 @@ import Cube from "../models/Cube.js";
 import Rainbow from "../models/Rainbow.js";
 import Bloomlight from "../models/Bloomlight.js";
 import Corridor from "../models/Corridor.js";
+import Explorer from "../models/Explorer.js";
+import Bloom from "../models/Bloom.js";
 import { EffectComposer, HueSaturation } from "@react-three/postprocessing";
 // @ts-ignore
 import { BlendFunction } from "postprocessing";
@@ -143,9 +145,10 @@ const Analyzer = ({ sound, scene }) => {
     meshRef.current.scale.lerp(vec.set(zoom, zoom, zoom), 0.15);
     // Create calulculation but element cannot go lower than 1
 
-    scene.current.rotation.y -= avg(kickArray) / (100000 / sceneSpeed);
-    light1Ref.current.intensity = max(avg(kickArray) / 40, 5);
-    light2Ref.current.intensity = max(avg(kickArray) / 40, 5);
+    scene.current.rotation.y -= avg(midFreqArray) / (100000 / sceneSpeed);
+
+    light1Ref.current.intensity = max(avg(highFreqArray) / 40, 5);
+    light2Ref.current.intensity = max(avg(highFreqArray) / 40, 5);
     // console.log( avg(lowerHalfArray)/20)
     // htmlRef.current.innerHTML = Math.round(zoom * 100, 2) / 100;
     // console.log(meshRef.current.position)
@@ -191,6 +194,8 @@ const Analyzer = ({ sound, scene }) => {
         position={[-5, 5, 5]}
         color="green"
       />
+      {/* <ambientLight color="white" position={[0, 15, 0]} intensity={2} /> */}
+      {/* <ambientLight  color="0xffffff" intensity={20}/> */}
 
       <mesh ref={meshRef} scale={1}>
         {theme === "heart" ? (
@@ -373,17 +378,6 @@ export const SceneObjects = () => {
         })} */}
         {/* <Video></Video>; */}
       </group>
-      {audioStart ? (
-        <>
-          <PositionalAudio
-            url={audioUrl}
-            ref={soundRef}
-            onEnded={() => setAudioPlay(false)}
-            distance={1}
-          />
-          <Analyzer sound={soundRef} scene={sceneRef} />
-        </>
-      ) : null}
 
       {/* <Sky
         distance={450000}
@@ -405,10 +399,28 @@ export const SceneObjects = () => {
       </NormalText>
       {/* <Text hAlign="center" position={[0, 3, -50]} children={audioName} /> */}
       {/* <Text hAlign="right" position={[-12, 3, -25]} children="Memories" /> */}
+      <mesh scale={25}>
+        {/* <Orb></Orb> */}
+        <Corridor></Corridor>
+      </mesh>
       <mesh ref={sceneRef}>
+        {audioStart ? (
+          <>
+            <PositionalAudio
+              url={audioUrl}
+              ref={soundRef}
+              onEnded={() => setAudioPlay(false)}
+              distance={1}
+            />
+            <Analyzer sound={soundRef} scene={sceneRef} />
+          </>
+        ) : null}
         {/* <GLTF></GLTF> */}
         {/* <Lightmountain></Lightmountain> */}
-        {/* <Bloomlight></Bloomlight> */}
+        <mesh>
+          <Explorer scale={5}></Explorer>
+          <Bloom></Bloom>
+        </mesh>
         {/* Song Title */}
         {/* @ts-ignore */}
         {/* <Text color="black" anchorX="center" anchorY="middle">
@@ -477,10 +489,7 @@ export const SceneObjects = () => {
           {/* <Cube></Cube> */}
           {/* <Rainbow></Rainbow> */}
         </mesh>
-        <mesh scale={25}>
-          {/* <Orb></Orb> */}
-          <Corridor></Corridor>
-        </mesh>
+
         <fog attach="fog" args={["white", 0, 5]} />
       </mesh>
     </>
