@@ -17,10 +17,11 @@ import Diodes from "../models/Diodes.js";
 import Orb from "../models/Orb.js";
 import Cube from "../models/Cube.js";
 import Rainbow from "../models/Rainbow.js";
-import Bloomlight from "../models/Bloomlight.js";
+
 import Corridor from "../models/Corridor.js";
 import Explorer from "../models/Explorer.js";
-import Bloom from "../models/Bloom.js";
+
+import Spaceman from "../models/Spaceman.js";
 import { EffectComposer, HueSaturation } from "@react-three/postprocessing";
 // @ts-ignore
 import { BlendFunction } from "postprocessing";
@@ -401,7 +402,7 @@ export const SceneObjects = () => {
       {/* <Text hAlign="right" position={[-12, 3, -25]} children="Memories" /> */}
       <mesh scale={25}>
         {/* <Orb></Orb> */}
-        <Corridor></Corridor>
+        {/* <Corridor></Corridor> */}
       </mesh>
       <mesh ref={sceneRef}>
         {audioStart ? (
@@ -418,8 +419,8 @@ export const SceneObjects = () => {
         {/* <GLTF></GLTF> */}
         {/* <Lightmountain></Lightmountain> */}
         <mesh>
-          <Explorer scale={5}></Explorer>
-          <Bloom></Bloom>
+          {/* <Explorer scale={5}></Explorer> */}
+          <Spaceman scale={5}></Spaceman>
         </mesh>
         {/* Song Title */}
         {/* @ts-ignore */}

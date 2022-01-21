@@ -132,7 +132,7 @@ export const Scene = () => {
             position-y={-1}
           />
         </mesh> */}
-        <Environment files={environmentBackgroundUrl} background />
+        {/* <Environment files={environmentBackgroundUrl} background /> */}
         <SceneObjects></SceneObjects>
       </Suspense>
     </>
