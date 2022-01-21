@@ -360,12 +360,13 @@ const Editor: NextPage = () => {
   };
 
   const loadSettings = (e: any) => {
-    if (e.target.files[0]) {
+    if (e.target && e.target.files[0]) {
       console.log("📤 Load settings");
       const fileReader = new FileReader();
       fileReader.readAsText(e.target.files[0], "UTF-8");
       fileReader.onload = (e) => {
-        const data = JSON.parse(e.target.result as string);
+        //@ts-ignore
+        const data = JSON.parse<any>(e.target.result as string);
         console.log(data);
         // console.log("e.target.result", e.target.result);
       };
