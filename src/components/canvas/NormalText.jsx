@@ -37,13 +37,12 @@ export const NormalText = ({
   const mesh = useRef();
 
   useEffect(() => {
-    console.log(mesh.current);
-    console.log(mesh.current.geometry.computeBoundingSphere()); // this isn't calculated automatically
+    // console.log(mesh.current);
+    mesh.current.geometry.computeBoundingSphere(); // this isn't calculated automatically
     // you need to call it
 
-    console.log(mesh.current.geometry.boundingSphere.center);
-    mesh.current.position.x =
-      -mesh.current.geometry.boundingSphere.center.x;
+    // console.log(mesh.current.geometry.boundingSphere.center);
+    mesh.current.position.x = -mesh.current.geometry.boundingSphere.center.x;
   });
 
   return (

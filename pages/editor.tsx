@@ -674,7 +674,7 @@ const Editor: NextPage = () => {
             <div>Select theme</div>
             <Button onClick={() => setTheme("heart")}>Heart</Button>
             <Button onClick={() => setTheme("space")}>Space</Button>
-            <Button>Sun</Button>
+            <Button onClick={() => setTheme("car")}>Car</Button>
             <Button>Moon</Button>
           </div>
 

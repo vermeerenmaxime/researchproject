@@ -29,7 +29,12 @@ export const useObjectStore = create(
         })),
       resetStarSize: () => set({ starSize: 1 }),
       setStarSize: (value: number) => set({ starSize: value }),
+
+      // mainObject
+      mainObjectPosition: [0, 0, 0],
+      setMainObjectPosition: (value: number[]) =>
+        set({ mainObjectPosition: value }),
     }),
-    { name: "object", getStorage: () => sessionStorage }
+    { name: "object", getStorage: () => localStorage }
   )
 );

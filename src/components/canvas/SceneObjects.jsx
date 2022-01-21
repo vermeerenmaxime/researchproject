@@ -31,6 +31,7 @@ import { useObjectStore } from "../../stores/objectStore";
 import { useSceneStore } from "../../stores/sceneStore";
 import { useAudioStore } from "../../stores/audioStore";
 import { useChatStore } from "../../stores/chatStore";
+import { useThemeStore } from "../../stores/themeStore";
 
 import { shallow } from "zustand/shallow";
 
@@ -78,6 +79,10 @@ const Analyzer = ({ sound, scene }) => {
   const frequencyDataArray = [];
 
   const [sceneSpeed] = useSceneStore((state) => [state.sceneSpeed], shallow);
+  const [mainObjectPosition, setMainObjectPosition] = useObjectStore(
+    (state) => [state.mainObjectPosition, state.setMainObjectPosition],
+    shallow
+  );
 
   // function Foo({ vec = new THREE.Vector(), ...props }) {
   //   useFrame(() => {
@@ -85,9 +90,8 @@ const Analyzer = ({ sound, scene }) => {
   //   });
   // }
 
-  const vector = (x, y, z) => {
-    return new THREE.Vector3(x, y, z);
-  };
+  const [theme] = useThemeStore((state) => [state.theme], shallow);
+
   const avgDataRef = useRef();
   const lowDataRef = useRef();
   const midDataRef = useRef();
@@ -112,7 +116,7 @@ const Analyzer = ({ sound, scene }) => {
       frequencyDataArray.length - 1
     );
 
-    avgDataRef.current.innerHTML = averageFrequency;
+    avgDataRef.current.innerHTML = Math.floor(averageFrequency);
     lowDataRef.current.innerHTML = avg(lowFreqArray);
     midDataRef.current.innerHTML = avg(midFreqArray);
     highDataRef.current.innerHTML = avg(highFreqArray);
@@ -140,7 +144,27 @@ const Analyzer = ({ sound, scene }) => {
     light2Ref.current.intensity = max(avg(kickArray) / 40, 5);
     // console.log( avg(lowerHalfArray)/20)
     // htmlRef.current.innerHTML = Math.round(zoom * 100, 2) / 100;
+    // console.log(meshRef.current.position)
   });
+
+  const updateMainObjectPosition = () => {
+    setMainObjectPosition([
+      meshRef.current.position.x,
+      meshRef.current.position.y,
+      meshRef.current.position.z,
+    ]);
+  };
+
+  useEffect(() => {
+    meshRef.current.position.set(
+      mainObjectPosition[0],
+      mainObjectPosition[1],
+      mainObjectPosition[2]
+    );
+
+    // mesh.current.position
+  });
+
   return (
     <>
       <Html center>
@@ -165,7 +189,15 @@ const Analyzer = ({ sound, scene }) => {
       />
 
       <mesh ref={meshRef} scale={1}>
-        <Heart position={[0, 0, 0]}></Heart>
+        {theme === "heart" ? (
+          <Heart position={[0, 0, 0]}></Heart>
+        ) : theme === "space" ? (
+          <Orb></Orb>
+        ) : theme === "car" ? (
+          <Bugatti></Bugatti>
+        ) : (
+          <Cube scale={0.5} position={[0, 0, 0]}></Cube>
+        )}
         {/* <MeshWobbleMaterial
           attach="material"
           factor={1} // Strength, 0 disables the effect (default=1)
@@ -178,7 +210,11 @@ const Analyzer = ({ sound, scene }) => {
           </div>
         </Html> */}
       </mesh>
-      <TransformControls object={meshRef} mode="translate"></TransformControls>
+      <TransformControls
+        object={meshRef}
+        mode="translate"
+        onChange={() => updateMainObjectPosition()}
+      ></TransformControls>
       {/* <group position={[2, 2, 0.1]}>
         <mesh>
           <boxBufferGeometry attach="geometry" args={[0.047, 0.5, 0.29]} />
@@ -352,13 +388,13 @@ export const SceneObjects = () => {
       {/* <Environment preset="sunset" background /> */}
       {/* <Environment files="/spaces/studio_small_03_4k.pic" background /> */}
 
-      <Text hAlign="center" position={[0, 3, -50]}>
+      {/* <Text hAlign="center" position={[0, 3, -50]}>
         {audioName}
-      </Text>
-      <NormalText hAlign="center" position={[0, 0, -50]} fontSize={10}>
-        {messages[messages.length - 1].message}
+      </Text> */}
+      <NormalText hAlign="center" position={[0, 30, -100]} size={0.25}>
+        {audioName.toUpperCase()}
       </NormalText>
-      <NormalText hAlign="center" position={[0, -5, -5]} fontSize={10}>
+      <NormalText hAlign="center" position={[0, -5, -50]} fontSize={10}>
         {messages[messages.length - 1].message}
       </NormalText>
       {/* <Text hAlign="center" position={[0, 3, -50]} children={audioName} /> */}
