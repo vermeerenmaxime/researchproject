@@ -674,4 +674,4 @@ export default function Model({ ...props }) {
   );
 }
 
-useGLTF.preload("/rainbow.gltf");
+useGLTF.preload("/gltf/rainbow.gltf");

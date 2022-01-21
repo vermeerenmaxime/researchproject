@@ -56,4 +56,4 @@ export default function Model({ ...props }) {
   );
 }
 
-useGLTF.preload("/heart.gltf");
+useGLTF.preload("/gltf/heart.gltf");

@@ -86,4 +86,4 @@ export default function Model({ ...props }) {
   );
 }
 
-useGLTF.preload("/diodes.gltf");
+useGLTF.preload("/gltf/diodes.gltf");

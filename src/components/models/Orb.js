@@ -473,4 +473,4 @@ export default function Model({ ...props }) {
   );
 }
 
-useGLTF.preload("/orb.gltf");
+useGLTF.preload("/gltf/orb.gltf");

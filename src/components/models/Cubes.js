@@ -1503,4 +1503,4 @@ export default function Model({ ...props }) {
   );
 }
 
-useGLTF.preload("/cubes.gltf");
+useGLTF.preload("/gltf/cubes.gltf");

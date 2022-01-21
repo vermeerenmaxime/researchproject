@@ -57,4 +57,4 @@ export default function Model({ ...props }) {
   )
 }
 
-useGLTF.preload('/bugatti.gltf')
+useGLTF.preload('/gltf/bugatti.gltf')

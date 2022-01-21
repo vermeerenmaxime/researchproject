@@ -17,6 +17,8 @@ import Diodes from "../models/Diodes.js";
 import Orb from "../models/Orb.js";
 import Cube from "../models/Cube.js";
 import Rainbow from "../models/Rainbow.js";
+import Bloomlight from "../models/Bloomlight.js";
+import Corridor from "../models/Corridor.js";
 import { EffectComposer, HueSaturation } from "@react-three/postprocessing";
 // @ts-ignore
 import { BlendFunction } from "postprocessing";
@@ -37,6 +39,8 @@ import { shallow } from "zustand/shallow";
 
 import { Text } from "./Text.jsx";
 import { NormalText } from "./NormalText.jsx";
+import { GLTF } from "./gltf.jsx";
+// import { Lightmountain } from "../models/Lightmountain.js";
 
 // import url from "../../public/video/video.mp4";
 
@@ -168,7 +172,7 @@ const Analyzer = ({ sound, scene }) => {
   return (
     <>
       <Html center>
-        <div className="flex space-x-4">
+        <div className="flex space-x-4 hidden">
           <div ref={avgDataRef}></div>
           <div ref={lowDataRef}></div>
           <div ref={midDataRef}></div>
@@ -263,6 +267,8 @@ export const SceneObjects = () => {
     shallow
   );
   const [messages] = useChatStore((state) => [state.messages], shallow);
+
+  const [theme] = useThemeStore((state) => [state.theme], shallow);
 
   useFrame(({ clock }, x) => {
     bounceRef.current.rotation.y += 0.01;
@@ -400,6 +406,9 @@ export const SceneObjects = () => {
       {/* <Text hAlign="center" position={[0, 3, -50]} children={audioName} /> */}
       {/* <Text hAlign="right" position={[-12, 3, -25]} children="Memories" /> */}
       <mesh ref={sceneRef}>
+        {/* <GLTF></GLTF> */}
+        {/* <Lightmountain></Lightmountain> */}
+        {/* <Bloomlight></Bloomlight> */}
         {/* Song Title */}
         {/* @ts-ignore */}
         {/* <Text color="black" anchorX="center" anchorY="middle">
@@ -468,8 +477,9 @@ export const SceneObjects = () => {
           {/* <Cube></Cube> */}
           {/* <Rainbow></Rainbow> */}
         </mesh>
-        <mesh position={new THREE.Vector3(-3, -3, -3)}>
+        <mesh scale={25}>
           {/* <Orb></Orb> */}
+          <Corridor></Corridor>
         </mesh>
         <fog attach="fog" args={["white", 0, 5]} />
       </mesh>

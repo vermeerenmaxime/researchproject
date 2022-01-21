@@ -121,7 +121,7 @@ export const Scene = () => {
       />
       {/* <Suspense fallback={<Loader />}> */}
       <Suspense fallback={null}>
-        <mesh rotation={[-1.6, 0, 0]} position={[0, -10, 0]}>
+        {/* <mesh rotation={[-1.6, 0, 0]} position={[0, -10, 0]}>
           <Ground
             //@ts-ignore
             mirror={1}
@@ -131,7 +131,7 @@ export const Scene = () => {
             rotation={[-Math.PI / 2, 0, Math.PI / 2]}
             position-y={-1}
           />
-        </mesh>
+        </mesh> */}
         <Environment files={environmentBackgroundUrl} background />
         <SceneObjects></SceneObjects>
       </Suspense>
