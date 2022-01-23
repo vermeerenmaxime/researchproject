@@ -7,7 +7,7 @@ export const useSceneStore = create(
       bloom: 0.1,
       addBloom: () =>
         set((state: { bloom: number }) => ({
-          bloom: state.bloom < 1 ? state.bloom + 0.1 : state.bloom,
+          bloom: state.bloom < 2 ? state.bloom + 0.1 : state.bloom,
         })),
       removeBloom: () =>
         set((state: { bloom: number }) => ({
@@ -27,6 +27,7 @@ export const useSceneStore = create(
           lightIntensity: state.lightIntensity - 0.1,
         })),
       resetLightIntensity: () => set({ lightIntensity: 0 }),
+      setLightIntensity: (value: number) => set({ lightIntensity: value }),
 
       // Hue
       hue: 0,
@@ -54,10 +55,8 @@ export const useSceneStore = create(
       resetSceneSpeed: () => set({ sceneSpeed: 1 }),
       setSceneSpeed: (value: number) => set({ sceneSpeed: value }),
 
-
-      light1:"blue",
-      light2:"red",
-
+      light1: "blue",
+      light2: "red",
     }),
     { name: "scene", getStorage: () => sessionStorage }
   )

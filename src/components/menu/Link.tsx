@@ -1,6 +1,10 @@
-export const MenuLink = ({ children }: any) => {
+export const MenuLink = ({ children, props, onClick }: any) => {
   return (
-    <a className="px-8 py-3 text-sm text-white/70 hover:bg-black/20 cursor-pointer">
+    <a
+      {...props}
+      onClick={onClick}
+      className="px-8 py-3 text-sm text-white/70 hover:bg-black/20 cursor-pointer"
+    >
       {children}
     </a>
   );

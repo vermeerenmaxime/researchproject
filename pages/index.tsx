@@ -27,25 +27,6 @@ import { SceneObjects } from "../src/components/canvas/SceneObjects";
 import shallow from "zustand/shallow";
 import { useStore } from "../src/stores/store";
 
-const Main = ({ children }: any) => {
-  return (
-    <main className="grid [grid-template-columns:16rem_calc(100vw-16rem)] w-screen h-screen">
-      {children}
-    </main>
-  );
-};
-const Menu = ({ children }: any) => {
-  return <aside className="bg-slate-900 text-white">{children}</aside>;
-};
-
-const MenuLink = ({ children }: any) => {
-  return (
-    <a className="px-8 py-3 text-sm text-white/70 hover:bg-black/20 cursor-pointer">
-      {children}
-    </a>
-  );
-};
-
 const CanvasPlayer = ({ children }: any) => {
   const canvasRef: any = useRef();
 
@@ -156,59 +137,46 @@ const Home: NextPage = () => {
   }, [likes]);
   // const likes = useStore();
   return (
-    <div>
+    <>
       <Head>
         <title>3D Audio Visualizer</title>
         <meta name="description" content="3D Audio Visualizer" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Main>
-        <Menu>
-          <h1 className="text-xl px-8 py-8 font-semibold ">eVision</h1>
-          <div className="grid ">
-            <MenuLink>Home</MenuLink>
-            <MenuLink>Player</MenuLink>
-            <MenuLink>About</MenuLink>
+      <PageContent>
+        <h1 className="text-xl font-semibold ">3D Web Player</h1>
+        <hr className="opacity-10 m-0"></hr>
+        <div>
+          <h2 className="text-lg font-semibold ">Controls</h2>
+          <div className="opacity-70 font-base">
+            Play, pause, reset, resolution, ..
           </div>
-        </Menu>
-
-        <PageContent>
-          <h1 className="text-xl font-semibold ">3D Web Player</h1>
-          <hr className="opacity-10 m-0"></hr>
-          <div>
-            <h2 className="text-lg font-semibold ">Controls</h2>
-            <div className="opacity-70 font-base">
-              Play, pause, reset, resolution, ..
-            </div>
-            likes {likes}
-            <button
-              className="bg-gray-700 px-8 py-4 rounded-sm"
-              onClick={addLike}
-            >
-              +1
-            </button>
-            <button
-              className="bg-gray-700 px-8 py-4 rounded-sm"
-              onClick={removeLikes}
-            >
-              clear
-            </button>
+          likes {likes}
+          <button
+            className="bg-gray-700 px-8 py-4 rounded-sm"
+            onClick={addLike}
+          >
+            +1
+          </button>
+          <button
+            className="bg-gray-700 px-8 py-4 rounded-sm"
+            onClick={removeLikes}
+          >
+            clear
+          </button>
+        </div>
+        {/* <video src="/video/video.mp4" loop controls></video> */}
+        <div className="bg-white/10 aspect-video rounded-sm relative overflow-hidden lg:w-[100%]">
+          <CanvasPlayer>
+            <Scene></Scene>
+          </CanvasPlayer>
+          <div className="absolute top-4 right-6 uppercase text-xs opacity-50">
+            fullscreen
           </div>
-          {/* <video src="/video/video.mp4" loop controls></video> */}
-          <div className="bg-white/10 aspect-video rounded-sm relative overflow-hidden lg:w-[100%]">
-            <CanvasPlayer>
-              <Scene></Scene>
-            </CanvasPlayer>
-            <div className="absolute top-4 right-6 uppercase text-xs opacity-50">
-              fullscreen
-            </div>
-          </div>
-        </PageContent>
-      </Main>
-
-      <footer></footer>
-    </div>
+        </div>
+      </PageContent>
+    </>
   );
 };
 

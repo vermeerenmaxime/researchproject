@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router'
 
-const Video = () => {
+const Index = () => {
   const router = useRouter()
   const { videoId } = router.query
 
-  return <p>Video: {videoId}</p>
+  return <p>Video: {videoId} heheh</p>
 }
 
-export default Video
+export default Index
