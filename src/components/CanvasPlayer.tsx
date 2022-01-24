@@ -32,6 +32,7 @@ export const CanvasPlayer = ({ children }: any) => {
 
   return (
     <>
+      
       <Canvas
         ref={canvasRef}
         shadows
@@ -72,8 +73,11 @@ export const CanvasPlayer = ({ children }: any) => {
           {children}
         </Rig>
       </Canvas>
+      {/* <div className="flex justify-center content-center bg-opacity-0">
+        <Loader />
+      </div> */}
+
       {/* Build in loader from drei */}
-      <Loader />
       <div className="absolute top-4 right-6 uppercase text-xs opacity-50 grid grid-flow-col gap-2 items-center cursor-pointer hover:opacity-75 transition-opacity">
         <div>fullscreen </div>
         <svg

@@ -36,16 +36,27 @@ export const Scene = () => {
   );
   //   const [audioUrl] = useAudioStore((state) => [state.audioUrl], shallow);
 
-  //   const Loader = () => {
-  //     const { active, progress, errors, item, loaded, total } = useProgress();
-  //     return (
-  //       <Html center>
-  //         <div className="bg-black/20 rounded-sm p-8 flex w-48 items-center justify-center">
-  //           {Math.round(progress)} % loaded
-  //         </div>
-  //       </Html>
-  //     );
-  //   };
+  const Loader = () => {
+    const { active, progress, errors, item, loaded, total } = useProgress();
+    const progressBarRef = useRef<HTMLDivElement>(null);
+    useEffect(() => {
+      if (progressBarRef.current)
+        progressBarRef.current.style.width = `${progress}%`;
+    }, [progress]);
+    return (
+      <Html center>
+        <div className="bg-black/20 rounded-sm p-4 backdrop-blur-xl text-xs flex flex-col space-y-2 w-48 justify-center ">
+          <p className="text-center opacity-50 uppercase">
+            {Math.round(progress)} % loaded
+          </p>
+          <div
+            className={`h-[2px] bg-white/90 rounded-full transition-all`}
+            ref={progressBarRef}
+          />
+        </div>
+      </Html>
+    );
+  };
 
   const directionalLight1Ref: any = useRef();
   const directionalLight2Ref: any = useRef();
@@ -119,8 +130,8 @@ export const Scene = () => {
         position={[5, 5, 10]}
         intensity={lightIntensity}
       />
-      {/* <Suspense fallback={<Loader />}> */}
-      <Suspense fallback={null}>
+      <Suspense fallback={<Loader />}>
+        {/* <Suspense fallback={null}> */}
         {/* <mesh rotation={[-1.6, 0, 0]} position={[0, -10, 0]}>
           <Ground
             //@ts-ignore

@@ -90,7 +90,7 @@ const VideoContent = () => {
     <PageContent>
       <h1 className="text-xl font-semibold ">Video {videoId}</h1>
       <hr className="opacity-10 m-0"></hr>
-      <div className="bg-white/10 aspect-video rounded-sm relative overflow-hidden lg:w-[100%]">
+      <div className="bg-white/10 aspect-video rounded-sm relative overflow-hidden lg:w-[100%] ">
         <CanvasPlayer>
           <Scene></Scene>
         </CanvasPlayer>

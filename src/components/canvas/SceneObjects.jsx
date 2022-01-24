@@ -73,7 +73,7 @@ const Video = () => {
   );
 };
 
-const Analyzer = ({ sound, scene }) => {
+const Analyzer = ({ sound, scene, props }) => {
   const meshRef = useRef();
   const analyser = useRef();
   const light1Ref = useRef();
@@ -150,6 +150,11 @@ const Analyzer = ({ sound, scene }) => {
     // console.log( avg(lowerHalfArray)/20)
     // htmlRef.current.innerHTML = Math.round(zoom * 100, 2) / 100;
     // console.log(meshRef.current.position)
+    if(props && props.corridor){
+      // props.corridor.current.position.z -= 0.02;
+      console.log(props.corridor.current.position.z)
+      props.corridor.current.position.z -= avg(lowFreqArray) / (5000 / sceneSpeed);
+    }
   });
 
   const updateMainObjectPosition = () => {
@@ -269,7 +274,7 @@ export const SceneObjects = () => {
     // camera.position.x += 0.2
     // camera.position.y += 0.2
     // camera.position.z += 0.2
-    if (colliderRef.current) colliderRef.current.position.z -= 0.02;
+    // if (corridorRef.current) corridorRef.current.position.z -= 0.02;
   });
 
   useEffect(() => {
@@ -285,20 +290,6 @@ export const SceneObjects = () => {
   }, [stars]);
 
   // timer that ticks every second
-
-  // const seconds = 0;
-  // useEffect(() => {
-  //   // setAudioCurrentTime(0)
-  //   // setSeconds(0);
-  //   const timer = setInterval(() => {
-  //     if (audioPlay) {
-  //       setSeconds(seconds + 1);
-  //       setAudioCurrentTime(seconds + 1);
-  //       // addAudioCurrentTime()
-  //     }
-  //   }, 1000);
-  //   return () => clearInterval(timer);
-  // });
 
   useEffect(() => {
     if (audioPlay) setAudioStart(true);
@@ -322,6 +313,14 @@ export const SceneObjects = () => {
     setAudioLength(Math.floor(soundRef.current.buffer.duration));
   }, [audioStart]);
 
+  // When component gets destroyed
+  useEffect(() => {
+    return () => {
+      setAudioStart(false);
+      setAudioPlay(false);
+    };
+  }, []);
+
   const playAudio = () => {
     if (audioPlay) {
       soundRef.current.play();
@@ -332,7 +331,7 @@ export const SceneObjects = () => {
     }
   };
 
-  const colliderRef = useRef();
+  const corridorRef = useRef();
 
   const nodesCubes = ["hi", "hi", "hi", "hi", "yo", "xp", "ahha"].map(
     (el, i) => {
@@ -345,11 +344,6 @@ export const SceneObjects = () => {
   );
   return (
     <>
-      {/* <Html>{seconds}</Html> */}
-
-      {/* <Environment preset="sunset" background /> */}
-      {/* <Environment files="/spaces/studio_small_03_4k.pic" background /> */}
-
       {/* <Text hAlign="center" position={[0, 3, -50]}>
         {audioName}
       </Text> */}
@@ -382,7 +376,11 @@ export const SceneObjects = () => {
               onEnded={() => setAudioPlay(false)}
               distance={1}
             />
-            <Analyzer sound={soundRef} scene={sceneRef} />
+            <Analyzer
+              sound={soundRef}
+              scene={sceneRef}
+              props={{ corridor: corridorRef }}
+            />
           </>
         ) : null}
         {/* <GLTF></GLTF> */}
@@ -423,19 +421,13 @@ export const SceneObjects = () => {
             </mesh>
           </>
         ) : theme === "car" ? (
-          <mesh scale={25} ref={colliderRef}>
+          <mesh scale={25} ref={corridorRef}>
             <Corridor></Corridor>
           </mesh>
         ) : (
           <></>
         )}
 
-        {/* <Orb></Orb> */}
-        {/* Song Title */}
-        {/* @ts-ignore */}
-        {/* <Text color="black" anchorX="center" anchorY="middle">
-        hello world!
-      </Text> */}
         {/* <Text
         color="black" // default
         anchorX="center" // default
@@ -443,15 +435,6 @@ export const SceneObjects = () => {
       >
         hello world!
       </Text> */}
-
-        {/* <Billboard
-        follow={true} // Follow the camera (default=true)
-        lockX={false} // Lock the rotation on the x axis (default=false)
-        lockY={false} // Lock the rotation on the y axis (default=false)
-        lockZ={false} // Lock the rotation on the z axis (default=false)
-        animations={undefined}
-        removeFromParent={undefined}
-      /> */}
 
         <Stars
           ref={starsRef}
@@ -462,14 +445,7 @@ export const SceneObjects = () => {
           saturation={1} // Saturation 0-1 (default=0)
           fade // Faded dots (default=false)
         />
-        {/* {["yes", "no", "maybe"].map((key, index) => {
-          console.log(key);
-          return (
-            <Box key={key} position={[index, 0, 0]}>
-              <meshPhongMaterial attach="material" color="#f3f3f3" />
-            </Box>
-          );
-        })} */}
+
         {/* <Box position={[1, 1, 1]}>
           <meshPhongMaterial attach="material" color="#f3f3f3" />
         </Box> */}
@@ -485,9 +461,6 @@ export const SceneObjects = () => {
           <meshStandardMaterial />
         </mesh> */}
 
-        {/* <mesh position={new THREE.Vector3(-4, -3, 2)}>
-          <Bugatti></Bugatti>
-        </mesh> */}
         {/* <mesh position={new THREE.Vector3(0, 0, 0)}> */}
         {/* <Cubes></Cubes> */}
         {/* </mesh> */}
