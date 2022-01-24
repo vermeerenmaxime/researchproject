@@ -38,6 +38,7 @@ import { useSceneStore } from "../../stores/sceneStore";
 import { useAudioStore } from "../../stores/audioStore";
 import { useChatStore } from "../../stores/chatStore";
 import { useThemeStore } from "../../stores/themeStore";
+import { useEditorStore } from "../../stores/editorStore";
 
 import { shallow } from "zustand/shallow";
 
@@ -91,6 +92,8 @@ const Analyzer = ({ sound, scene }) => {
   );
 
   const [theme] = useThemeStore((state) => [state.theme], shallow);
+
+  const [mode] = useEditorStore((state) => [state.mode], shallow);
 
   const avgDataRef = useRef();
   const lowDataRef = useRef();
@@ -205,11 +208,13 @@ const Analyzer = ({ sound, scene }) => {
           <></>
         )}
       </mesh>
-      <TransformControls
-        object={meshRef}
-        mode="translate"
-        onChange={() => updateMainObjectPosition()}
-      ></TransformControls>
+      {mode === "edit" && (
+        <TransformControls
+          object={meshRef}
+          mode="translate"
+          onChange={() => updateMainObjectPosition()}
+        ></TransformControls>
+      )}
       <group position={[2, 2, 0.1]}>
         <mesh>
           <boxBufferGeometry attach="geometry" args={[0.047, 0.5, 0.29]} />

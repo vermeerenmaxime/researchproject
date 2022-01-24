@@ -362,6 +362,10 @@ const Editor: NextPage = () => {
       environment: {
         environmentBackgroundUrl: environmentBackgroundUrl,
       },
+      audio: {
+        audioUrl: audioUrl,
+        audioName: audioName,
+      },
     };
   };
 
@@ -396,6 +400,11 @@ const Editor: NextPage = () => {
           if (data.scene.lightIntensity)
             setLightIntensity(data.scene.lightIntensity);
           if (data.scene.sceneSpeed) setSceneSpeed(data.scene.sceneSpeed);
+        }
+
+        if (data.audio) {
+          if (data.audio.audioUrl) setAudioUrl(data.audio.audioUrl);
+          if (data.audio.audioName) setAudioName(data.audio.audioName);
         }
 
         console.log(data);
@@ -491,14 +500,6 @@ const Editor: NextPage = () => {
             </div> */}
 
                 <div className="bg-white/90 px-1 py-1 rounded-sm grid grid-flow-col text-slate-700 justify-start gap-4 text-sm">
-                  <div
-                    onClick={() => {
-                      console.log("ya");
-                      addBloom();
-                    }}
-                  >
-                    +
-                  </div>
                   <Control
                     add={addBloom}
                     remove={removeBloom}

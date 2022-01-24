@@ -1,0 +1,9 @@
+{
+    "scene": { "bloom": 0.1, "lightIntensity": 0, "sceneSpeed": 1 },
+    "speed": {},
+    "objects": { "stars": 0, "starSize": 4 },
+    "environment": {
+      "environmentBackgroundUrl": "/spaces/studio_small_03_4k.pic"
+    }
+  }
+  
