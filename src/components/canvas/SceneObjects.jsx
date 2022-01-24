@@ -85,7 +85,10 @@ const Analyzer = ({ sound, scene, props }) => {
   });
   const frequencyDataArray = [];
 
-  const [sceneSpeed] = useSceneStore((state) => [state.sceneSpeed], shallow);
+  const [sceneSpeed, pointLight1, pointLight2] = useSceneStore(
+    (state) => [state.sceneSpeed, state.pointLight1, state.pointLight2],
+    shallow
+  );
   const [mainObjectPosition, setMainObjectPosition] = useObjectStore(
     (state) => [state.mainObjectPosition, state.setMainObjectPosition],
     shallow
@@ -191,13 +194,13 @@ const Analyzer = ({ sound, scene, props }) => {
         ref={light1Ref}
         intensity={0}
         position={[5, 5, 5]}
-        color="blue"
+        color={pointLight1}
       />
       <pointLight
         ref={light2Ref}
         intensity={0}
         position={[-5, 5, 5]}
-        color="green"
+        color={pointLight2}
       />
       {/* <ambientLight color="white" position={[0, 15, 0]} intensity={2} /> */}
       {/* <ambientLight  color="0xffffff" intensity={20}/> */}
@@ -222,12 +225,12 @@ const Analyzer = ({ sound, scene, props }) => {
           onChange={() => updateMainObjectPosition()}
         ></TransformControls>
       )}
-      <group position={[2, 2, 0.1]}>
+      {/* <group position={[2, 2, 0.1]}>
         <mesh>
           <boxBufferGeometry attach="geometry" args={[0.047, 0.5, 0.29]} />
           <meshStandardMaterial attach="material" color={0xf95b3c} />
         </mesh>
-      </group>
+      </group> */}
     </>
   );
 };
@@ -329,6 +332,7 @@ export const SceneObjects = () => {
       console.log("⏯ Audio playing");
     } else {
       soundRef.current.pause();
+      soundRef.current.seek();
       console.log("⏸ Audio paused");
     }
   };

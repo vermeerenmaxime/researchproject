@@ -21,6 +21,7 @@ Ter uitbreiding van de appliciatie kan de administrator van de web applicatie ka
 - Wat voor impact heeft een virtuele dom op de performance van canvas?
 - Heeft de compiler van een framework (rust in NextJS) een invloed op de performantie van canvas?
 - Is de snelheid van een computer waar de web applicatie op draait belangrijk voor de performance van HTML5 canvas?
+- 
 - Kunnen 3D programmas zoals Spline, Unity, Unreal Engine, Blender, .. helpen om 3D scenes te ontwikkelen en om te zetten naar ThreeJS?
   - Blender: ja
   - Spline
@@ -103,8 +104,8 @@ Research.txt
 - [ ] Auth login
 - [ ] Admin panel
 - [ ] Landingpage
-- [ ] Music page
-- [ ] Make changes in canvas from outside canvas
+- [x] Music page
+- [x] Make changes in canvas from outside canvas
 
 - [ ] Import scene from Blender
 - [ ] Import object from C4D

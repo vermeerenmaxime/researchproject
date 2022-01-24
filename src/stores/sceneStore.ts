@@ -55,8 +55,19 @@ export const useSceneStore = create(
       resetSceneSpeed: () => set({ sceneSpeed: 1 }),
       setSceneSpeed: (value: number) => set({ sceneSpeed: value }),
 
-      light1: "blue",
-      light2: "red",
+      lightColors: [
+        "blue",
+        "red",
+        "orange",
+        "purple",
+        "green",
+        "yellow",
+        "white",
+      ],
+      pointLight1: "blue",
+      setPointLight1: (value: string) => set({ pointLight1: value }),
+      pointLight2: "red",
+      setPointLight2: (value: string) => set({ pointLight2: value }),
     }),
     { name: "scene", getStorage: () => sessionStorage }
   )

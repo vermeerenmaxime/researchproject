@@ -1,5 +1,5 @@
-@tailwind base; 
-@tailwind components; 
+@tailwind base;
+@tailwind components;
 @tailwind utilities;
 
 html,
@@ -17,4 +17,16 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+.input {
+  @apply bg-white/10 h-8 outline-none px-2 py-1 rounded-sm text-xs;
+}
+
+.box {
+  @apply bg-white/5 flex flex-col space-y-3 border-2 rounded-sm border-white/10 px-4 py-3 text-xs;
+}
+
+hr {
+  @apply opacity-80 bg-white;
 }

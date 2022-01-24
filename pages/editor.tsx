@@ -188,6 +188,12 @@ const Editor: NextPage = () => {
     removeSceneSpeed,
     setSceneSpeed,
     resetSceneSpeed,
+
+    lightColors,
+    pointLight1,
+    setPointLight1,
+    pointLight2,
+    setPointLight2,
   ] = useSceneStore(
     (state) => [
       state.bloom,
@@ -208,6 +214,13 @@ const Editor: NextPage = () => {
       state.removeSceneSpeed,
       state.setSceneSpeed,
       state.resetSceneSpeed,
+
+      state.lightColors,
+
+      state.pointLight1,
+      state.setPointLight1,
+      state.pointLight2,
+      state.setPointLight2,
     ],
     shallow
   );
@@ -700,7 +713,7 @@ const Editor: NextPage = () => {
               </div>
             </div>
             <div className="grid gap-4 justify-start grid-cols-3">
-              <div className="bg-white/5 grid gap-2 border-2 rounded-sm border-white/10 px-4 py-3 text-xs">
+              <div className="box">
                 <b>Frequency controls</b>
                 <hr className="opacity-20"></hr>
                 <div className="flex justify-between items-center">
@@ -714,7 +727,7 @@ const Editor: NextPage = () => {
                       props={{ setKickFreq: setKickFreq }}
                     /> */}
                     <input
-                      className="bg-white/10 outline-none px-2 py-1 rounded-sm"
+                      className="input"
                       type="number"
                       value={kickFreq[0]}
                       placeholder="Start.."
@@ -724,7 +737,7 @@ const Editor: NextPage = () => {
                       }}
                     />
                     <input
-                      className="bg-white/10 outline-none px-2 py-1 rounded-sm"
+                      className="input"
                       type="number"
                       value={kickFreq[1]}
                       placeholder="End.."
@@ -752,6 +765,65 @@ const Editor: NextPage = () => {
                 {/* <Slider min={10} max={100} step={5} dots={true} />
                 <Range defaultValue={[2, 100]} /> */}
               </div>
+              <div className="box">
+                <b>Light controls</b>
+                <hr className="opacity-20"></hr>
+                <div className="flex justify-between items-center">
+                  <p>Pointlight 1</p>
+                  <div className="grid gap-2 ">
+                    <select
+                      className="input capitalize"
+                      placeholder="Select color.."
+                      onChange={(e) => {
+                        setPointLight1(e.target.value);
+                      }}
+                    >
+                      {lightColors.map((key, i) => {
+                        return (
+                          <option key={i} value={key}>
+                            {key}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </div>
+                </div>
+                Transform
+                <div className="grid gap-2 grid-cols-3">
+                  <input className="input" placeholder="X.."></input>
+                  <input className="input" placeholder="Y.."></input>
+                  <input className="input" placeholder="Z.."></input>
+                </div>
+                <div className="flex justify-between items-center">
+                  <p>Intensity</p>
+                  <div className="grid gap-2 ">
+                    <select className="input" placeholder="Select intensity..">
+                      <option value="small">Small</option>
+                      <option value="medium">Medium</option>
+                      <option value="large">Large</option>
+                    </select>
+                  </div>
+                </div>
+                <hr className="opacity-20"></hr>
+                <div className="flex justify-between items-center">
+                  <p>Pointlight 2</p>
+                  <div className="grid gap-2 ">
+                    <select
+                      className="input capitalize"
+                      placeholder="Select color.."
+                      onChange={(e) => setPointLight2(e.target.value)}
+                    >
+                      {lightColors.map((key, i) => {
+                        return (
+                          <option key={i} value={key}>
+                            {key}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </div>
+                </div>
+              </div>
             </div>
           </>
         )}
@@ -759,12 +831,13 @@ const Editor: NextPage = () => {
           {/* Create input box where input has to contain only letters and numbers */}
         </div>
         {mode === "edit" ? (
-          <div className="grid grid-flow-col gap-2 justify-start items-center">
-            <div>Select theme</div>
-            <Button onClick={() => setTheme("heart")}>Heart</Button>
-            <Button onClick={() => setTheme("space")}>Space</Button>
-            <Button onClick={() => setTheme("car")}>Car</Button>
-            <Button onClick={() => setTheme("explore")}>Explore</Button>
+          <div className="box items-start">
+            <div className="grid grid-flow-col gap-2">
+              <Button onClick={() => setTheme("heart")}>Heart</Button>
+              <Button onClick={() => setTheme("space")}>Space</Button>
+              <Button onClick={() => setTheme("car")}>Car</Button>
+              <Button onClick={() => setTheme("explore")}>Explore</Button>
+            </div>
           </div>
         ) : (
           <div className="grid grid-flow-col gap-2 justify-start">
