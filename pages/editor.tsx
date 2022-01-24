@@ -372,6 +372,8 @@ const Editor: NextPage = () => {
         bloom: bloom,
         lightIntensity: lightIntensity,
         sceneSpeed: sceneSpeed,
+        pointLight1: pointLight1,
+        pointLight2: pointLight2,
       },
       speed: {},
       objects: {
@@ -419,6 +421,8 @@ const Editor: NextPage = () => {
           if (data.scene.lightIntensity)
             setLightIntensity(data.scene.lightIntensity);
           if (data.scene.sceneSpeed) setSceneSpeed(data.scene.sceneSpeed);
+          if (data.scene.pointLight1) setPointLight1(data.scene.pointLight1);
+          if (data.scene.pointLight2) setPointLight2(data.scene.pointLight2);
         }
 
         if (data.audio) {
@@ -860,7 +864,7 @@ const Editor: NextPage = () => {
         )}
 
         <div className="grid gap-2">
-          <div className="bg-white/10 aspect-video rounded-sm relative overflow-hidden lg:w-[100%]">
+          <div className="bg-black aspect-video rounded-sm relative overflow-hidden lg:w-[100%]">
             <CanvasPlayer>
               <Scene></Scene>
             </CanvasPlayer>

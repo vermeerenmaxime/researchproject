@@ -18,8 +18,20 @@ const VideoContent = () => {
   const router = useRouter();
   const { videoId } = router.query;
 
-  const [setBloom, setLightIntensity, setSceneSpeed] = useSceneStore(
-    (state) => [state.setBloom, state.setLightIntensity, state.setSceneSpeed],
+  const [
+    setBloom,
+    setLightIntensity,
+    setSceneSpeed,
+    setPointLight1,
+    setPointLight2,
+  ] = useSceneStore(
+    (state) => [
+      state.setBloom,
+      state.setLightIntensity,
+      state.setSceneSpeed,
+      state.setPointLight1,
+      state.setPointLight2,
+    ],
     shallow
   );
 
@@ -67,6 +79,8 @@ const VideoContent = () => {
       if (data.scene.lightIntensity)
         setLightIntensity(data.scene.lightIntensity);
       if (data.scene.sceneSpeed) setSceneSpeed(data.scene.sceneSpeed);
+      if (data.scene.pointLight1) setPointLight1(data.scene.pointLight1);
+      if (data.scene.pointLight2) setPointLight2(data.scene.pointLight2);
     }
 
     if (data.audio) {
@@ -78,7 +92,7 @@ const VideoContent = () => {
   };
 
   useEffect(() => {
-    setMode("view")
+    setMode("view");
     if (videoId) {
       // const canvasSettings = require("../../../public/EditorSettings.json");
       const exploreSettings = require("../../../public/ExploreSettings.json");
