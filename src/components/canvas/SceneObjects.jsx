@@ -94,6 +94,7 @@ const Analyzer = ({ sound, scene, props }) => {
   const [theme] = useThemeStore((state) => [state.theme], shallow);
 
   const [mode] = useEditorStore((state) => [state.mode], shallow);
+  const [kickFreq] = useAudioStore((state) => [state.kickFreq], shallow);
 
   const avgDataRef = useRef();
   const lowDataRef = useRef();
@@ -105,7 +106,7 @@ const Analyzer = ({ sound, scene, props }) => {
     const averageFrequency = analyser.current.getAverageFrequency();
     frequencyDataArray = analyser.current.getFrequencyData();
 
-    const kickArray = frequencyDataArray.slice(0, 10);
+    const kickArray = frequencyDataArray.slice(kickFreq[0], kickFreq[1]);
     const lowFreqArray = frequencyDataArray.slice(
       0,
       frequencyDataArray.length / 3 - 1
@@ -142,19 +143,20 @@ const Analyzer = ({ sound, scene, props }) => {
     meshRef.current.scale.lerp(vec.set(zoom, zoom, zoom), 0.15);
     // Create calulculation but element cannot go lower than 1`
 
-    if (theme != "car")
+    if (theme != "car") {
       scene.current.rotation.y -= avg(midFreqArray) / (100000 / sceneSpeed);
+    } else {
+      if (props && props.corridor) {
+        props.corridor.current.position.z -=
+          avg(lowFreqArray) / (5000 / sceneSpeed);
+      }
+    }
 
     light1Ref.current.intensity = max(avg(highFreqArray) / 40, 5);
     light2Ref.current.intensity = max(avg(highFreqArray) / 40, 5);
     // console.log( avg(lowerHalfArray)/20)
     // htmlRef.current.innerHTML = Math.round(zoom * 100, 2) / 100;
     // console.log(meshRef.current.position)
-    if(props && props.corridor){
-      // props.corridor.current.position.z -= 0.02;
-      console.log(props.corridor.current.position.z)
-      props.corridor.current.position.z -= avg(lowFreqArray) / (5000 / sceneSpeed);
-    }
   });
 
   const updateMainObjectPosition = () => {

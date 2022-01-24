@@ -19,4 +19,14 @@ export const useAudioStore = create((set: any) => ({
     set((state: { audioCurrentTime: number }) => ({
       audioCurrentTime: state.audioCurrentTime + 1,
     })),
+
+  // Frequencies
+  bassFreq: [0, 10],
+  setBassFreq: (value: number[]) => set({ bassFreq: value }),
+  midFreq: [0, 10],
+  setMidFreq: (value: number[]) => set({ midFreq: value }),
+  highFreq: [0, 10],
+  setHighFreq: (value: number[]) => set({ highFreq: value }),
+  kickFreq: [10, 20],
+  setKickFreq: (value: number[]) => set({ kickFreq: value }),
 }));

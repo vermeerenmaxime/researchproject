@@ -24,6 +24,8 @@ import { Button } from "../src/components/Button";
 import { useThemeStore } from "../src/stores/themeStore";
 import { useEditorStore } from "../src/stores/editorStore";
 import { EditorSettingsType } from "../src/components/types/EditorSettings";
+import Slider, { Range } from "rc-slider";
+import { InputRange } from "../src/components/InputRange";
 
 const Control = ({
   add,
@@ -250,6 +252,8 @@ const Editor: NextPage = () => {
     audioCurrentTime,
     setAudioCurrentTime,
     addAudioCurrentTime,
+    kickFreq,
+    setKickFreq,
   ] = useAudioStore(
     (state: any) => [
       state.audioUrl,
@@ -263,6 +267,8 @@ const Editor: NextPage = () => {
       state.audioCurrentTime,
       state.setAudioCurrentTime,
       state.addAudioCurrentTime,
+      state.kickFreq,
+      state.setKickFreq,
     ],
     shallow
   );
@@ -691,6 +697,60 @@ const Editor: NextPage = () => {
                     />
                   </div>
                 </div>
+              </div>
+            </div>
+            <div className="grid gap-4 justify-start grid-cols-3">
+              <div className="bg-white/5 grid gap-2 border-2 rounded-sm border-white/10 px-4 py-3 text-xs">
+                <b>Frequency controls</b>
+                <hr className="opacity-20"></hr>
+                <div className="flex justify-between items-center">
+                  <p>
+                    Kick ({kickFreq[0]},{kickFreq[1]})
+                  </p>
+                  <div className="grid gap-2 grid-cols-2 w-36">
+                    {/* <InputRange
+                      valueArray={[10, 20]}
+                      setValue={setKickFreq}
+                      props={{ setKickFreq: setKickFreq }}
+                    /> */}
+                    <input
+                      className="bg-white/10 outline-none px-2 py-1 rounded-sm"
+                      type="number"
+                      value={kickFreq[0]}
+                      placeholder="Start.."
+                      max={64}
+                      onChange={(e) => {
+                        setKickFreq([parseInt(e.target.value), kickFreq[1]]);
+                      }}
+                    />
+                    <input
+                      className="bg-white/10 outline-none px-2 py-1 rounded-sm"
+                      type="number"
+                      value={kickFreq[1]}
+                      placeholder="End.."
+                      max={64}
+                      onChange={(e) => {
+                        setKickFreq([kickFreq[0], parseInt(e.target.value)]);
+                      }}
+                    ></input>
+                  </div>
+                </div>
+                <div className="flex  justify-between items-center">
+                  <p>Mid</p>
+                  <div className="grid gap-2 grid-cols-2 w-36">
+                    {/* <InputRange values={[1, 2]} /> */}
+                  </div>
+                </div>
+                <div className="flex  justify-between items-center">
+                  <p>High</p>
+                  <div className="grid gap-2 grid-cols-2 w-36">
+                    {/* <InputRange values={[1, 2]} /> */}
+                  </div>
+                </div>
+                {/* <input type="slider"></input> */}
+                {/* Todo: remove slider & range package */}
+                {/* <Slider min={10} max={100} step={5} dots={true} />
+                <Range defaultValue={[2, 100]} /> */}
               </div>
             </div>
           </>
