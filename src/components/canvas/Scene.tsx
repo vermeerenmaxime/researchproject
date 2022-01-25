@@ -85,7 +85,7 @@ export const Scene = () => {
           kernelSize={KernelSize.HUGE}
           luminanceThreshold={0}
           luminanceSmoothing={0}
-          intensity={0.2}
+          intensity={0.1}
         />
         <HueSaturation
           ref={hueRef}
@@ -109,6 +109,7 @@ export const Scene = () => {
           luminanceThreshold={0}
           luminanceSmoothing={1}
           intensity={Math.round(bloom * 10) / 10}
+          kernelSize={KernelSize.LARGE}
           // Hoogte van bloom
           height={400}
         />
@@ -144,6 +145,7 @@ export const Scene = () => {
           />
         </mesh> */}
         {/* <Environment files={environmentBackgroundUrl} background /> */}
+       
         <SceneObjects></SceneObjects>
       </Suspense>
     </>
