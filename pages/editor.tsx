@@ -23,7 +23,7 @@ import Cubes from "../src/components/models/Cubes";
 import { Button } from "../src/components/Button";
 import { useThemeStore } from "../src/stores/themeStore";
 import { useEditorStore } from "../src/stores/editorStore";
-import { EditorSettingsType } from "../src/components/types/EditorSettings";
+import { EditorSettingsType } from "../src/types/EditorSettings";
 import Slider, { Range } from "rc-slider";
 import { InputRange } from "../src/components/InputRange";
 
