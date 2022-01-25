@@ -83,7 +83,6 @@ const Analyzer = ({ sound, scene, props }) => {
 
   useEffect(() => {
     analyser.current = new THREE.AudioAnalyser(sound.current, 128);
-    console.log(sound.current);
   });
   const frequencyDataArray = [];
 
@@ -412,7 +411,6 @@ export const SceneObjects = () => {
         </mesh> */}
         {theme === "heart" ? (
           <>
-            {" "}
             <Environment files={"/spaces/earth.hdr"} background />
           </>
         ) : theme === "explore" ? (

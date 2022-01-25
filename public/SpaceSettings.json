@@ -1,0 +1,19 @@
+{
+  "scene": {
+    "bloom": 0.1,
+    "lightIntensity": 5,
+    "sceneSpeed": 1,
+    "pointLight1": "yellow",
+    "pointLight2": "red"
+  },
+  "speed": {},
+  "objects": { "stars": 0, "starSize": 4 },
+  "environment": {
+    "environmentBackgroundUrl": "/spaces/studio_small_03_4k.pic"
+  },
+  "audio": {
+    "audioUrl": "/audio/memories.mp3",
+    "audioName": "artists : title"
+  },
+  "theme": { "theme": "space" }
+}

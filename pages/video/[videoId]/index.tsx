@@ -13,6 +13,7 @@ import { CanvasPlayer } from "../../../src/components/CanvasPlayer";
 import { Scene } from "../../../src/components/canvas/Scene";
 import { AudioPlayer } from "../../../src/components/AudioPlayer";
 import { useEditorStore } from "../../../src/stores/editorStore";
+import { useThemeStore } from "../../../src/stores/themeStore";
 
 // import { Server } from "socket.io";
 // import SocketIOClient from "socket.io-client";
@@ -66,6 +67,8 @@ const VideoContent = () => {
     shallow
   );
 
+  const [setTheme] = useThemeStore((state: any) => [state.setTheme], shallow);
+
   const loadSettings = (canvasSettings: any) => {
     console.log("📤 Load settings");
 
@@ -99,6 +102,7 @@ const VideoContent = () => {
       if (data.audio.audioName) setAudioName(data.audio.audioName);
     }
 
+    if (data.theme) if (data.theme.theme) setTheme(data.theme.theme);
     console.log(data);
   };
 
@@ -106,8 +110,16 @@ const VideoContent = () => {
     setMode("view");
     if (videoId) {
       // const canvasSettings = require("../../../public/EditorSettings.json");
-      const exploreSettings = require("../../../public/ExploreSettings.json");
-      loadSettings(exploreSettings);
+
+      let themeSettings;
+      if (videoId === "1")
+        themeSettings = require("../../../public/ExploreSettings.json");
+      if (videoId === "2")
+        themeSettings = require("../../../public/SpaceSettings.json");
+      else themeSettings = require("../../../public/ExploreSettings.json");
+
+      console.log(themeSettings);
+      loadSettings(themeSettings);
     }
   });
 

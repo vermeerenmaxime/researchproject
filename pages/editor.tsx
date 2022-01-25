@@ -387,6 +387,9 @@ const Editor: NextPage = () => {
         audioUrl: audioUrl,
         audioName: audioName,
       },
+      theme: {
+        theme: theme,
+      },
     };
   };
 
@@ -405,10 +408,10 @@ const Editor: NextPage = () => {
         if (!data) return;
 
         if (data.environment) {
-          if (data.environment.environmentBackgroundUrl)
-            setEnvironmentBackgroundUrl(
-              data.environment.environmentBackgroundUrl
-            );
+          // if (data.environment.environmentBackgroundUrl)
+          //   setEnvironmentBackgroundUrl(
+          //     data.environment.environmentBackgroundUrl
+          //   );
         }
 
         if (!data.objects) {
@@ -429,6 +432,8 @@ const Editor: NextPage = () => {
           if (data.audio.audioUrl) setAudioUrl(data.audio.audioUrl);
           if (data.audio.audioName) setAudioName(data.audio.audioName);
         }
+
+        if (data.theme.theme) setTheme(data.theme.theme);
 
         console.log(data);
         loadSettingsInputRef.current.value = "";
