@@ -34,6 +34,9 @@ export const useObjectStore = create(
       mainObjectPosition: [0, 0, 0],
       setMainObjectPosition: (value: number[]) =>
         set({ mainObjectPosition: value }),
+
+      mainObjectSize: 1,
+      setMainObjectSize: (value: number) => set({ mainObjectSize: value }),
     }),
     { name: "object", getStorage: () => sessionStorage }
   )

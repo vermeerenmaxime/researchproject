@@ -332,7 +332,6 @@ export const SceneObjects = () => {
       console.log("⏯ Audio playing");
     } else {
       soundRef.current.pause();
-      soundRef.current.seek();
       console.log("⏸ Audio paused");
     }
   };

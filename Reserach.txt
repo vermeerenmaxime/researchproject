@@ -132,3 +132,7 @@ https://gero3.github.io/facetype.js/
 Audio not working in safari/ios
 https://github.com/mrdoob/three.js/issues/10404
 
+sockets 
+https://www.tutorialspoint.com/create-a-3d-multi-player-game-using-threejs-and-socketio/index.asp
+
+sockets niet mogelijk met vercel
