@@ -28,5 +28,5 @@ a {
 }
 
 hr {
-  @apply opacity-80 bg-white;
+  @apply opacity-20 bg-white;
 }

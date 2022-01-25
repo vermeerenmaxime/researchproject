@@ -38,7 +38,7 @@ export const AudioPlayer = () => {
       <div className="px-5 py-4 flex justify-between items-center">
         <div className="grid gap-2 grid-flow-col items-center">
           <div className="flex space-x-1 items-center">
-            <svg
+            {/* <svg
               className="w-5 h-5 rotate-180	"
               fill="none"
               stroke="currentColor"
@@ -51,7 +51,7 @@ export const AudioPlayer = () => {
                 strokeWidth="2"
                 d="M11.933 12.8a1 1 0 000-1.6L6.6 7.2A1 1 0 005 8v8a1 1 0 001.6.8l5.333-4zM19.933 12.8a1 1 0 000-1.6l-5.333-4A1 1 0 0013 8v8a1 1 0 001.6.8l5.333-4z"
               ></path>
-            </svg>
+            </svg> */}
             <svg
               className="w-5 h-5 cursor-pointer"
               onClick={() => {
@@ -86,7 +86,7 @@ export const AudioPlayer = () => {
                 </>
               )}
             </svg>
-            <svg
+            {/* <svg
               className="w-5 h-5"
               fill="none"
               stroke="currentColor"
@@ -99,7 +99,7 @@ export const AudioPlayer = () => {
                 strokeWidth="2"
                 d="M11.933 12.8a1 1 0 000-1.6L6.6 7.2A1 1 0 005 8v8a1 1 0 001.6.8l5.333-4zM19.933 12.8a1 1 0 000-1.6l-5.333-4A1 1 0 0013 8v8a1 1 0 001.6.8l5.333-4z"
               ></path>
-            </svg>
+            </svg> */}
           </div>
           <div className="flex items-center opacity-75">
             {/* Mave & Alex Silves - Memories */}

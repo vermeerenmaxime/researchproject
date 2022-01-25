@@ -26,6 +26,7 @@ import { useEditorStore } from "../src/stores/editorStore";
 import { EditorSettingsType } from "../src/types/EditorSettings";
 import Slider, { Range } from "rc-slider";
 import { InputRange } from "../src/components/InputRange";
+import { AudioPlayer } from "../src/components/AudioPlayer";
 
 const Control = ({
   add,
@@ -181,6 +182,7 @@ const Editor: NextPage = () => {
     removeLightIntensity,
     resetLightIntensity,
     setLightIntensity,
+    hue,
     setHue,
 
     sceneSpeed,
@@ -207,6 +209,7 @@ const Editor: NextPage = () => {
       state.removeLightIntensity,
       state.resetLightIntensity,
       state.setLightIntensity,
+      state.hue,
       state.setHue,
 
       state.sceneSpeed,
@@ -267,6 +270,12 @@ const Editor: NextPage = () => {
     addAudioCurrentTime,
     kickFreq,
     setKickFreq,
+    lowFreq,
+    setLowFreq,
+    midFreq,
+    setMidFreq,
+    highFreq,
+    setHighFreq,
   ] = useAudioStore(
     (state: any) => [
       state.audioUrl,
@@ -282,6 +291,12 @@ const Editor: NextPage = () => {
       state.addAudioCurrentTime,
       state.kickFreq,
       state.setKickFreq,
+      state.lowFreq,
+      state.setLowFreq,
+      state.midFreq,
+      state.setMidFreq,
+      state.highFreq,
+      state.setHighFreq,
     ],
     shallow
   );
@@ -307,8 +322,8 @@ const Editor: NextPage = () => {
     shallow
   );
 
-  const [mode, setMode] = useEditorStore(
-    (state: any) => [state.mode, state.setMode],
+  const [mode, setMode, fullscreen] = useEditorStore(
+    (state: any) => [state.mode, state.setMode, state.fullscreen],
     shallow
   );
 
@@ -334,26 +349,10 @@ const Editor: NextPage = () => {
 
     console.log("🎧 NEW - audio url setted", urlAudio);
   };
-  const [seconds, setSeconds] = useState(0);
 
   useEffect(() => {
-    // setAudioCurrentTime(0)
-    // setSeconds(0);
-    // const timer = setInterval(() => {
-    //   if (audioPlay) {
-    //     // console.log("hey");
-    //     // setSeconds(seconds + 1);
-    //     // setAudioCurrentTime(audioCurrentTime + 1);
-    //     // addAudioCurrentTime();
-    //   }
-    // }, 1000);
-    // return () => clearInterval(timer);
     setMode("edit");
   });
-
-  useEffect(() => {
-    console.log(mode);
-  }, [mode]);
 
   const [inputMessage, setInputMessage] = useState("");
 
@@ -386,6 +385,10 @@ const Editor: NextPage = () => {
       audio: {
         audioUrl: audioUrl,
         audioName: audioName,
+        kickFreq: kickFreq,
+        lowFreq: lowFreq,
+        midFreq: midFreq,
+        highFreq: highFreq,
       },
       theme: {
         theme: theme,
@@ -431,6 +434,10 @@ const Editor: NextPage = () => {
         if (data.audio) {
           if (data.audio.audioUrl) setAudioUrl(data.audio.audioUrl);
           if (data.audio.audioName) setAudioName(data.audio.audioName);
+          if (data.audio.kickFreq) setKickFreq(data.audio.kickFreq);
+          if (data.audio.lowFreq) setLowFreq(data.audio.lowFreq);
+          if (data.audio.midFreq) setMidFreq(data.audio.midFreq);
+          if (data.audio.highFreq) setHighFreq(data.audio.highFreq);
         }
 
         if (data.theme.theme) setTheme(data.theme.theme);
@@ -442,12 +449,14 @@ const Editor: NextPage = () => {
     }
   };
 
+  const saveVideo = () => {
+    console.log("save to backend");
+  };
+
   useEffect(() => {
     console.log("🪄 Loaded new theme: " + theme);
   }, [theme]);
-  useEffect(() => {
-    console.log("", bloom);
-  }, [bloom]);
+
   return (
     <>
       <Head>
@@ -519,6 +528,28 @@ const Editor: NextPage = () => {
                   Save settings
                 </Button>
               </a>
+
+              <Button
+                onClick={saveVideo}
+                icon={
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"
+                    ></path>
+                  </svg>
+                }
+              >
+                Save to backend
+              </Button>
             </div>
             <div>
               <div>
@@ -527,8 +558,8 @@ const Editor: NextPage = () => {
               Play, pause, reset, resolution, ..
             </div> */}
 
-                <div className="bg-white/90 px-1 py-1 rounded-sm grid grid-flow-col text-slate-700 justify-start gap-4 text-sm">
-                  <Control
+                <div className="bg-white/90 px-1 py-1 rounded-sm grid grid-flow-col text-slate-700 justify-start gap-2 text-sm">
+                  {/* <Control
                     add={addBloom}
                     remove={removeBloom}
                     reset={resetBloom}
@@ -573,7 +604,7 @@ const Editor: NextPage = () => {
                         ></path>
                       </svg>
                     }
-                  ></Control>
+                  ></Control> */}
                   <input
                     accept=".pic"
                     // accept="image/*"
@@ -603,7 +634,7 @@ const Editor: NextPage = () => {
                       </label>
                     }
                   ></Control>
-                  <Setting
+                  {/* <Setting
                     name="stars"
                     value={stars}
                     actions={{
@@ -636,8 +667,8 @@ const Editor: NextPage = () => {
                         d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
                       ></path>
                     </svg>
-                  </Setting>
-                  <Setting
+                  </Setting> */}
+                  {/* <Setting
                     name="music"
                     actions={{
                       top: resetSceneSpeed,
@@ -663,8 +694,8 @@ const Editor: NextPage = () => {
                         d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"
                       ></path>
                     </svg>
-                  </Setting>
-                  <input
+                  </Setting> */}
+                  {/* <input
                     accept="audio/*"
                     id="audioUrl"
                     type="file"
@@ -688,8 +719,8 @@ const Editor: NextPage = () => {
                         ></path>
                       </svg>
                     </label>
-                  </Setting>
-                  <Setting name="chat">
+                  </Setting> */}
+                  {/* <Setting name="chat">
                     <svg
                       className="w-6 h-6"
                       fill="none"
@@ -704,70 +735,131 @@ const Editor: NextPage = () => {
                         d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"
                       ></path>
                     </svg>
-                  </Setting>{" "}
-                  <div>
-                    Color hue
-                    <input
-                      type="range"
-                      min="0"
-                      max="10"
-                      step="0.1"
-                      onChange={(e) => {
-                        setHue(parseInt(e.target.value));
-                        // console.log(e.target.value);
-                      }}
-                    />
-                  </div>
+                  </Setting>{" "} */}
                 </div>
               </div>
             </div>
             <div className="grid gap-4 justify-start grid-cols-3">
               <div className="box">
-                <b>Frequency controls</b>
+                <b>Frequency range (0-64)</b>
                 <hr className="opacity-20"></hr>
-                <div className="flex justify-between items-center">
-                  <p>
-                    Kick ({kickFreq[0]},{kickFreq[1]})
-                  </p>
-                  <div className="grid gap-2 grid-cols-2 w-36">
-                    {/* <InputRange
+
+                <p>
+                  Kick ({kickFreq[0]},{kickFreq[1]})
+                </p>
+                <div className="grid gap-2 grid-cols-2 ">
+                  {/* <InputRange
                       valueArray={[10, 20]}
                       setValue={setKickFreq}
                       props={{ setKickFreq: setKickFreq }}
                     /> */}
-                    <input
-                      className="input"
-                      type="number"
-                      value={kickFreq[0]}
-                      placeholder="Start.."
-                      max={64}
-                      onChange={(e) => {
-                        setKickFreq([parseInt(e.target.value), kickFreq[1]]);
-                      }}
-                    />
-                    <input
-                      className="input"
-                      type="number"
-                      value={kickFreq[1]}
-                      placeholder="End.."
-                      max={64}
-                      onChange={(e) => {
-                        setKickFreq([kickFreq[0], parseInt(e.target.value)]);
-                      }}
-                    ></input>
-                  </div>
+                  <input
+                    className="input"
+                    type="number"
+                    value={kickFreq[0]}
+                    placeholder="Start.."
+                    min={0}
+                    max={64}
+                    onChange={(e) => {
+                      setKickFreq([parseInt(e.target.value), kickFreq[1]]);
+                    }}
+                  />
+                  <input
+                    className="input"
+                    type="number"
+                    value={kickFreq[1]}
+                    placeholder="End.."
+                    min={0}
+                    max={64}
+                    onChange={(e) => {
+                      setKickFreq([kickFreq[0], parseInt(e.target.value)]);
+                    }}
+                  />
                 </div>
-                <div className="flex  justify-between items-center">
-                  <p>Mid</p>
-                  <div className="grid gap-2 grid-cols-2 w-36">
-                    {/* <InputRange values={[1, 2]} /> */}
-                  </div>
+
+                <p>
+                  Low ({lowFreq[0]},{lowFreq[1]})
+                </p>
+                <div className="grid gap-2 grid-cols-2 ">
+                  <input
+                    className="input"
+                    type="number"
+                    value={lowFreq[0]}
+                    placeholder="Start.."
+                    min={0}
+                    max={64}
+                    onChange={(e) => {
+                      setLowFreq([parseInt(e.target.value), lowFreq[1]]);
+                    }}
+                  />
+                  <input
+                    className="input"
+                    type="number"
+                    value={lowFreq[1]}
+                    placeholder="End.."
+                    min={0}
+                    max={64}
+                    onChange={(e) => {
+                      setLowFreq([lowFreq[0], parseInt(e.target.value)]);
+                    }}
+                  />
                 </div>
-                <div className="flex  justify-between items-center">
-                  <p>High</p>
-                  <div className="grid gap-2 grid-cols-2 w-36">
-                    {/* <InputRange values={[1, 2]} /> */}
-                  </div>
+
+                <p>
+                  Mid ({midFreq[0]},{midFreq[1]})
+                </p>
+                <div className="grid gap-2 grid-cols-2 ">
+                  <input
+                    className="input"
+                    type="number"
+                    value={midFreq[0]}
+                    placeholder="Start.."
+                    min={0}
+                    max={64}
+                    onChange={(e) => {
+                      setMidFreq([parseInt(e.target.value), midFreq[1]]);
+                    }}
+                  />
+                  <input
+                    className="input"
+                    type="number"
+                    value={midFreq[1]}
+                    placeholder="End.."
+                    min={0}
+                    max={64}
+                    onChange={(e) => {
+                      setMidFreq([midFreq[0], parseInt(e.target.value)]);
+                    }}
+                  />
+                </div>
+
+                <p>
+                  High ({highFreq[0]},{highFreq[1]})
+                </p>
+                <div className="grid gap-2 grid-cols-2 ">
+                  {/* <InputRange values={[1, 2]} /> */}
+                  <input
+                    className="input"
+                    type="number"
+                    value={highFreq[0]}
+                    placeholder="Start.."
+                    min={0}
+                    max={64}
+                    onChange={(e) => {
+                      setHighFreq([parseInt(e.target.value), highFreq[1]]);
+                    }}
+                  />
+                  <input
+                    className="input"
+                    type="number"
+                    value={highFreq[1]}
+                    placeholder="End.."
+                    min={0}
+                    max={64}
+                    onChange={(e) => {
+                      setHighFreq([highFreq[0], parseInt(e.target.value)]);
+                    }}
+                  />
                 </div>
                 {/* <input type="slider"></input> */}
                 {/* Todo: remove slider & range package */}
@@ -775,8 +867,18 @@ const Editor: NextPage = () => {
                 <Range defaultValue={[2, 100]} /> */}
               </div>
               <div className="box">
-                <b>Light controls</b>
+                <b>Light</b>
                 <hr className="opacity-20"></hr>
+                <div>Light ({lightIntensity})</div>
+                <input
+                  type="range"
+                  step={0.1}
+                  min={0}
+                  max={2}
+                  value={lightIntensity}
+                  onChange={(e: any) => setLightIntensity(e.target.value)}
+                ></input>
+                <hr></hr>
                 <div className="flex justify-between items-center">
                   <p>Pointlight 1</p>
                   <div className="grid gap-2 ">
@@ -786,6 +888,7 @@ const Editor: NextPage = () => {
                       onChange={(e) => {
                         setPointLight1(e.target.value);
                       }}
+                      value={pointLight1}
                     >
                       {lightColors.map((key, i) => {
                         return (
@@ -821,6 +924,7 @@ const Editor: NextPage = () => {
                       className="input capitalize"
                       placeholder="Select color.."
                       onChange={(e) => setPointLight2(e.target.value)}
+                      value={pointLight2}
                     >
                       {lightColors.map((key, i) => {
                         return (
@@ -832,6 +936,131 @@ const Editor: NextPage = () => {
                     </select>
                   </div>
                 </div>
+              </div>
+              <div className="box">
+                <b>Bloom</b>
+                <hr></hr>
+                <div>Intensity ({bloom})</div>
+                <input
+                  type="range"
+                  step={0.1}
+                  min={0}
+                  max={2}
+                  value={bloom}
+                  onChange={(e: any) => setBloom(e.target.value)}
+                ></input>
+              </div>
+              <div className="box">
+                <b>Music</b>
+                <hr></hr>
+                <div>Scene speed ({sceneSpeed})</div>
+                <input
+                  type="range"
+                  step={0.1}
+                  min={0.5}
+                  max={10}
+                  value={sceneSpeed}
+                  onChange={(e: any) => setSceneSpeed(e.target.value)}
+                ></input>
+                <input
+                  accept="audio/*"
+                  id="audioUrl"
+                  type="file"
+                  className="hidden"
+                  onChange={onChangeAudio}
+                />
+                <label htmlFor="audioUrl" className="self-start">
+                  <Button
+                    icon={
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                        ></path>
+                      </svg>
+                    }
+                  >
+                    Upload Track
+                  </Button>
+                </label>
+              </div>
+              <div className="box">
+                <b>Background</b>
+                <hr></hr>
+                <div>Color hue </div>
+                <input
+                  type="range"
+                  min="0"
+                  max="10"
+                  step="0.1"
+                  value={hue}
+                  onChange={(e) => {
+                    setHue(parseInt(e.target.value));
+                  }}
+                />
+                {/* <input
+                  accept=".pic,.hdr"
+                  id="backgroundImage"
+                  type="file"
+                  className="hidden"
+                  onChange={onChangeBackground}
+                />
+                <label htmlFor="backgroundImage" className="self-start">
+                  <Button
+                    icon={
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                        ></path>
+                      </svg>
+                    }
+                  >
+                    Upload Background
+                  </Button>
+                </label> */}
+              </div>
+              <div className="box">
+                <b>Stars</b>
+                <hr></hr>
+                <div>Amount </div>
+                <input
+                  type="range"
+                  min="0"
+                  max="10000"
+                  step="50"
+                  value={stars}
+                  onChange={(e) => {
+                    setStars(e.target.value);
+                  }}
+                />
+                <div>Size stars </div>
+                <input
+                  type="range"
+                  min="1"
+                  max="15"
+                  step="1"
+                  value={starSize}
+                  onChange={(e) => {
+                    setStarSize(e.target.value);
+                  }}
+                />
               </div>
             </div>
           </>
@@ -867,13 +1096,14 @@ const Editor: NextPage = () => {
             </button>
           </div>
         )}
-
-        <div className="grid gap-2">
-          <div className="bg-black aspect-video rounded-sm relative overflow-hidden lg:w-[100%]">
+      
+        <div className={`grid gap-2 ${fullscreen ? "fixed inset-0" : ""}`}>
+          <div className="bg-black aspect-video rounded-sm relative overflow-hidden lg:w-[100%] ">
             <CanvasPlayer>
               <Scene></Scene>
             </CanvasPlayer>
           </div>
+          <AudioPlayer></AudioPlayer>
           {/* <div className="bg-white/10 aspect-video">
 
               <CanvasPlayer>
@@ -881,93 +1111,8 @@ const Editor: NextPage = () => {
                 <Cubes></Cubes>
               </CanvasPlayer>
             </div> */}
-          <div className="bg-white/10 rounded-sm text-sm relative ">
-            <div className="px-5 py-4 flex justify-between items-center">
-              <div className="grid gap-2 grid-flow-col items-center">
-                <div className="flex space-x-1 items-center">
-                  <svg
-                    className="w-5 h-5 rotate-180	"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M11.933 12.8a1 1 0 000-1.6L6.6 7.2A1 1 0 005 8v8a1 1 0 001.6.8l5.333-4zM19.933 12.8a1 1 0 000-1.6l-5.333-4A1 1 0 0013 8v8a1 1 0 001.6.8l5.333-4z"
-                    ></path>
-                  </svg>
-                  <svg
-                    className="w-5 h-5 cursor-pointer"
-                    onClick={() => {
-                      setAudioPlay(!audioPlay);
-                    }}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    {audioPlay ? (
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                      ></path>
-                    ) : (
-                      <>
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
-                        ></path>
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                        ></path>
-                      </>
-                    )}
-                  </svg>
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M11.933 12.8a1 1 0 000-1.6L6.6 7.2A1 1 0 005 8v8a1 1 0 001.6.8l5.333-4zM19.933 12.8a1 1 0 000-1.6l-5.333-4A1 1 0 0013 8v8a1 1 0 001.6.8l5.333-4z"
-                    ></path>
-                  </svg>
-                </div>
-                <div className="flex items-center opacity-75">
-                  {/* Mave & Alex Silves - Memories */}
-                  {audioName}
-                </div>
-                {/* <div className="bg-white/20 py-1 px-2 rounded-full text-xs opacity-75">
-                    {audioLength ? formatTime(audioCurrentTime) : "00:00"}
-                  </div> */}
-              </div>
-              <div className="text-xs opacity-50 ">
-                {audioLength ? formatTime(audioLength) : "00:00"}
-              </div>
-            </div>
-            <div className="absolute left-0 right-0 bottom-0 h-[1.5px] w-1/3 bg-white/80 m-1"></div>
-          </div>
         </div>
-        <div>
-          <audio>
-            <source src="/audio/memories.mp3" type="audio/mpeg" />
-          </audio>
-        </div>
+
         <Footer></Footer>
       </PageContent>
     </>

@@ -148,32 +148,20 @@ const Home: NextPage = () => {
         <h1 className="text-xl font-semibold ">3D Web Player</h1>
         <hr className="opacity-10 m-0"></hr>
         <div>
-          <h2 className="text-lg font-semibold ">Controls</h2>
+          <h2 className="text-md font-semibold ">What is it?</h2>
           <div className="opacity-70 font-base">
-            Play, pause, reset, resolution, ..
+            A web player where a canvas..
           </div>
-          likes {likes}
-          <button
-            className="bg-gray-700 px-8 py-4 rounded-sm"
-            onClick={addLike}
-          >
-            +1
-          </button>
-          <button
-            className="bg-gray-700 px-8 py-4 rounded-sm"
-            onClick={removeLikes}
-          >
-            clear
-          </button>
         </div>
-        {/* <video src="/video/video.mp4" loop controls></video> */}
-        <div className="bg-white/10 aspect-video rounded-sm relative overflow-hidden lg:w-[100%]">
-          <CanvasPlayer>
-            <Scene></Scene>
-          </CanvasPlayer>
-          <div className="absolute top-4 right-6 uppercase text-xs opacity-50">
-            fullscreen
+        <div>
+          <h2 className="text-md font-semibold ">Why is it usefull?</h2>
+          <div className="opacity-70 font-base">
+            YouTube channels and promoters
           </div>
+        </div>
+        <div>
+          <h2 className="text-md font-semibold ">What comes next?</h2>
+          <div className="opacity-70 font-base"></div>
         </div>
       </PageContent>
     </>

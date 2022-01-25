@@ -57,13 +57,27 @@ const VideoContent = () => {
     shallow
   );
 
-  const [setAudioUrl, setAudioName] = useAudioStore(
-    (state: any) => [state.setAudioUrl, state.setAudioName],
+  const [
+    setAudioUrl,
+    setAudioName,
+    audioName,
+    setLowFreq,
+    setMidFreq,
+    setHighFreq,
+  ] = useAudioStore(
+    (state: any) => [
+      state.setAudioUrl,
+      state.setAudioName,
+      state.audioName,
+      state.setLowFreq,
+      state.setMidFreq,
+      state.setHighFre,
+    ],
     shallow
   );
 
-  const [mode, setMode] = useEditorStore(
-    (state: any) => [state.mode, state.setMode],
+  const [mode, setMode, fullscreen] = useEditorStore(
+    (state: any) => [state.mode, state.setMode, state.fullscreen],
     shallow
   );
 
@@ -72,8 +86,6 @@ const VideoContent = () => {
   const loadSettings = (canvasSettings: any) => {
     console.log("📤 Load settings");
 
-    // const data = JSON.parse("canavsSettings.json");
-    // import import json file as object
     const data = JSON.parse(JSON.stringify(canvasSettings));
 
     if (!data) return;
@@ -100,6 +112,9 @@ const VideoContent = () => {
     if (data.audio) {
       if (data.audio.audioUrl) setAudioUrl(data.audio.audioUrl);
       if (data.audio.audioName) setAudioName(data.audio.audioName);
+      if (data.audio.lowFreq) setLowFreq(data.audio.lowFreq);
+      if (data.audio.midFreq) setMidFreq(data.audio.midFreq);
+      if (data.audio.highFreq) setHighFreq(data.audio.highFreq);
     }
 
     if (data.theme) if (data.theme.theme) setTheme(data.theme.theme);
@@ -123,83 +138,19 @@ const VideoContent = () => {
     }
   });
 
-  // // connected flag
-  // const [connected, setConnected] = useState<boolean>(false);
-
-  // // init chat and message
-  // const [chat, setChat] = useState<IMsg[]>([]);
-  // const [msg, setMsg] = useState<string>("");
-
-  // useEffect(() => {
-  //   // connect to socket server
-
-  //   const socket = SocketIOClient.connect(process.env.BASE_URL, {
-  //     path: "/api/socketio",
-  //   });
-
-  //   // log socket connection
-  //   socket.on("connect", () => {
-  //     console.log("SOCKET CONNECTED!", socket.id);
-  //     setConnected(true);
-  //   });
-
-  //   // update chat on new message dispatched
-  //   socket.on("message", (message: IMsg) => {
-  //     chat.push(message);
-  //     setChat([...chat]);
-  //   });
-
-  //   // socket disconnet onUnmount if exists
-  //   if (socket) return () => socket.disconnect();
-  // }, []);
-
-  // const inputRef: any = useRef(null);
-
-  // const sendMessage = async () => {
-  //   if (msg) {
-  //     // build message obj
-  //     const message: IMsg = {
-  //       user,
-  //       msg,
-  //     };
-
-  //     // dispatch message to other users
-  //     const resp = await fetch("/api/chat", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(message),
-  //     });
-
-  //     // reset field if OK
-  //     if (resp.ok) setMsg("");
-  //   }
-
-  //   // focus after click
-  //   inputRef?.current?.focus();
-  // };
-
   return (
     <PageContent>
-      <h1 className="text-xl font-semibold ">Video {videoId}</h1>
+      <h1 className="text-xl font-semibold ">Video</h1>
+      {audioName}
       <hr className="opacity-10 m-0"></hr>
-      {/* <input
-        className="input"
-        ref={inputRef}
-        onChange={(e) => {
-          setMsg(e.target.value);
-        }}
-      ></input>
-      <button onClick={sendMessage} disabled={!connected}>
-        SEND
-      </button> */}
-      <div className="bg-white/10 aspect-video rounded-sm relative overflow-hidden lg:w-[100%] ">
-        <CanvasPlayer>
-          <Scene></Scene>
-        </CanvasPlayer>
+      <div className={`grid gap-2 ${fullscreen ? "fixed inset-0" : ""}`}>
+        <div className="bg-white/10 aspect-video rounded-sm relative overflow-hidden lg:w-[100%] ">
+          <CanvasPlayer>
+            <Scene></Scene>
+          </CanvasPlayer>
+        </div>
+        <AudioPlayer></AudioPlayer>
       </div>
-      <AudioPlayer></AudioPlayer>
     </PageContent>
   );
 };

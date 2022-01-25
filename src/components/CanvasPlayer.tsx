@@ -8,6 +8,8 @@ import {
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useRef } from "react";
 import * as THREE from "three";
+import shallow from "zustand/shallow";
+import { useEditorStore } from "../stores/editorStore";
 
 // Change position
 const Rig = ({ children }: any) => {
@@ -30,9 +32,13 @@ const Rig = ({ children }: any) => {
 export const CanvasPlayer = ({ children }: any) => {
   const canvasRef: any = useRef();
 
+  const [fullscreen, setFullscreen] = useEditorStore(
+    (state: any) => [state.fullscreen, state.setFullscreen],
+    shallow
+  );
+
   return (
     <>
-      
       <Canvas
         ref={canvasRef}
         shadows
@@ -78,7 +84,10 @@ export const CanvasPlayer = ({ children }: any) => {
       </div> */}
 
       {/* Build in loader from drei */}
-      <div className="absolute top-4 right-6 uppercase text-xs opacity-50 grid grid-flow-col gap-2 items-center cursor-pointer hover:opacity-75 transition-opacity">
+      <div
+        onClick={() => setFullscreen(!fullscreen)}
+        className="absolute top-4 right-6 uppercase text-xs opacity-50 grid grid-flow-col gap-2 items-center cursor-pointer hover:opacity-75 transition-opacity"
+      >
         <div>fullscreen </div>
         <svg
           className="w-4 h-4"

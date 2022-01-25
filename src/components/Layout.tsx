@@ -8,7 +8,7 @@ export const Layout = ({ children }: any) => {
     <>
       <Main>
         <Menu>
-          <h1 className="text-xl px-8 py-8 font-semibold ">eVision</h1>
+          <h1 className="text-xl px-8 py-8 font-semibold ">Ethereal</h1>
           <div className="grid ">
             <MenuLink onClick={()=>router.push("/")}>Home</MenuLink>
             <MenuLink onClick={()=>router.push("/editor")}>Editor</MenuLink>

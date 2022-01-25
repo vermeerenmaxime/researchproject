@@ -98,7 +98,10 @@ const Analyzer = ({ sound, scene, props }) => {
   const [theme] = useThemeStore((state) => [state.theme], shallow);
 
   const [mode] = useEditorStore((state) => [state.mode], shallow);
-  const [kickFreq] = useAudioStore((state) => [state.kickFreq], shallow);
+  const [kickFreq, lowFreq, midFreq, highFreq] = useAudioStore(
+    (state) => [state.kickFreq, state.lowFreq, state.midFreq, state.highFreq],
+    shallow
+  );
 
   const avgDataRef = useRef();
   const lowDataRef = useRef();
@@ -111,18 +114,21 @@ const Analyzer = ({ sound, scene, props }) => {
     frequencyDataArray = analyser.current.getFrequencyData();
 
     const kickArray = frequencyDataArray.slice(kickFreq[0], kickFreq[1]);
-    const lowFreqArray = frequencyDataArray.slice(
-      0,
-      frequencyDataArray.length / 3 - 1
-    );
-    const midFreqArray = frequencyDataArray.slice(
-      frequencyDataArray.length / 3 - 1,
-      (frequencyDataArray.length / 3) * 2 - 1
-    );
-    const highFreqArray = frequencyDataArray.slice(
-      (frequencyDataArray.length / 3) * 2 - 1,
-      frequencyDataArray.length - 1
-    );
+    const lowFreqArray = frequencyDataArray.slice(lowFreq[0], lowFreq[1]);
+    const midFreqArray = frequencyDataArray.slice(midFreq[0], midFreq[1]);
+    const highFreqArray = frequencyDataArray.slice(highFreq[0], highFreq[1]);
+    // const lowFreqArray = frequencyDataArray.slice(
+    //   0,
+    //   frequencyDataArray.length / 3 - 1
+    // );
+    // const midFreqArray = frequencyDataArray.slice(
+    //   frequencyDataArray.length / 3 - 1,
+    //   (frequencyDataArray.length / 3) * 2 - 1
+    // );
+    // const highFreqArray = frequencyDataArray.slice(
+    //   (frequencyDataArray.length / 3) * 2 - 1,
+    //   frequencyDataArray.length - 1
+    // );
 
     avgDataRef.current.innerHTML = Math.floor(averageFrequency);
     lowDataRef.current.innerHTML = avg(lowFreqArray);
