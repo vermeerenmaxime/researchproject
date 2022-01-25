@@ -8,6 +8,7 @@ import {
   Box,
   Html,
   TransformControls,
+  GradientTexture,
 } from "@react-three/drei";
 import { useRef, useState, useEffect, useMemo } from "react";
 import Heart from "../models/Heart.js";
@@ -82,6 +83,7 @@ const Analyzer = ({ sound, scene, props }) => {
 
   useEffect(() => {
     analyser.current = new THREE.AudioAnalyser(sound.current, 128);
+    console.log(sound.current)
   });
   const frequencyDataArray = [];
 
@@ -388,17 +390,26 @@ export const SceneObjects = () => {
             />
           </>
         ) : null}
-        {/* <GLTF></GLTF> */}
-        {/* <Lightmountain></Lightmountain> */}
-        {theme === "explore" && (
+
+        {/* {theme === "explore" && (
           <Sky
             distance={450000}
             sunPosition={[0, 0.3, 0]}
             inclination={0}
             azimuth={0.25}
+          
           />
-        )}
-
+        )} */}
+        {/* <mesh>
+          <planeGeometry />
+          <meshBasicMaterial depthWrite={false}>
+            <GradientTexture
+              stops={[0, 1]} // As many stops as you want
+              colors={["aquamarine", "hotpink"]} // Colors need to match the number of stops
+              size={1024} // Size is optional, default = 1024
+            />
+          </meshBasicMaterial>
+        </mesh> */}
         {theme === "heart" ? (
           <></>
         ) : theme === "explore" ? (
@@ -408,6 +419,7 @@ export const SceneObjects = () => {
               sunPosition={[0, 0.3, 0]}
               inclination={0}
               azimuth={0.25}
+              color={"red"}
             />
             <mesh>
               <Explorer scale={4}></Explorer>
@@ -424,6 +436,7 @@ export const SceneObjects = () => {
             <mesh position={[10, 5, 5]}>
               <Orb></Orb>
             </mesh>
+            <Environment files={"/spaces/nebula.hdr"} background />
           </>
         ) : theme === "car" ? (
           <mesh scale={25} ref={corridorRef}>
