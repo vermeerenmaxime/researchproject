@@ -27,6 +27,6 @@ export const useAudioStore = create((set: any) => ({
   setMidFreq: (value: number[]) => set({ midFreq: value }),
   highFreq: [0, 10],
   setHighFreq: (value: number[]) => set({ highFreq: value }),
-  kickFreq: [2, 8],
+  kickFreq: [0, 10],
   setKickFreq: (value: number[]) => set({ kickFreq: value }),
 }));
