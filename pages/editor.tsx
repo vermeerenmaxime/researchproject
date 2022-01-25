@@ -797,12 +797,12 @@ const Editor: NextPage = () => {
                     </select>
                   </div>
                 </div>
-                Transform
+                {/* Transform
                 <div className="grid gap-2 grid-cols-3">
                   <input className="input" placeholder="X.."></input>
                   <input className="input" placeholder="Y.."></input>
                   <input className="input" placeholder="Z.."></input>
-                </div>
+                </div> */}
                 <div className="flex justify-between items-center">
                   <p>Intensity</p>
                   <div className="grid gap-2 ">

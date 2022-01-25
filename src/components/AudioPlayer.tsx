@@ -113,7 +113,7 @@ export const AudioPlayer = () => {
           {audioLength ? formatTime(audioLength) : "00:00"}
         </div>
       </div>
-      <div className="absolute left-0 right-0 bottom-0 h-[1.5px] w-1/3 bg-white/80 m-1"></div>
+      {/* <div className="absolute left-0 right-0 bottom-0 h-[1.5px] w-1/3 bg-white/80 m-1"></div> */}
     </div>
   );
 };
