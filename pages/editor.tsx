@@ -459,6 +459,7 @@ const Editor: NextPage = () => {
 
   const saveVideo = () => {
     console.log("save to backend");
+    console.log(audioUrl)
   };
 
   useEffect(() => {

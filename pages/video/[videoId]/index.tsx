@@ -14,6 +14,7 @@ import { Scene } from "../../../src/components/canvas/Scene";
 import { AudioPlayer } from "../../../src/components/AudioPlayer";
 import { useEditorStore } from "../../../src/stores/editorStore";
 import { useThemeStore } from "../../../src/stores/themeStore";
+import Head from "next/head";
 
 // import { Server } from "socket.io";
 // import SocketIOClient from "socket.io-client";
@@ -153,19 +154,26 @@ const VideoContent = () => {
   });
 
   return (
-    <PageContent>
-      <h1 className="text-xl font-semibold ">Video</h1>
-      {audioName}
-      <hr className="opacity-10 m-0"></hr>
-      <div className={`grid gap-2 ${fullscreen ? "fixed inset-0" : ""}`}>
-        <div className="bg-white/10 aspect-video rounded-sm relative overflow-hidden lg:w-[100%] ">
-          <CanvasPlayer>
-            <Scene></Scene>
-          </CanvasPlayer>
+    <>
+      <Head>
+        <title>{audioName}</title>
+        <meta name="description" content="3D Audio Visualizer" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <PageContent>
+        <h1 className="text-xl font-semibold ">Video</h1>
+        {audioName}
+        <hr className="opacity-10 m-0"></hr>
+        <div className={`grid gap-2 ${fullscreen ? "fixed inset-0" : ""}`}>
+          <div className="bg-white/10 aspect-video rounded-sm relative overflow-hidden lg:w-[100%] ">
+            <CanvasPlayer>
+              <Scene></Scene>
+            </CanvasPlayer>
+          </div>
+          <AudioPlayer></AudioPlayer>
         </div>
-        <AudioPlayer></AudioPlayer>
-      </div>
-    </PageContent>
+      </PageContent>
+    </>
   );
 };
 

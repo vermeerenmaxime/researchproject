@@ -138,3 +138,7 @@ https://www.tutorialspoint.com/create-a-3d-multi-player-game-using-threejs-and-s
 sockets niet mogelijk met vercel
 
 https://www.youtube.com/watch?v=sksfsOSlGkQ
+
+
+nextjs compiler
+https://nextjs.org/docs/advanced-features/compiler

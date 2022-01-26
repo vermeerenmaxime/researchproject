@@ -62,10 +62,6 @@ export const CanvasPlayer = ({ children }: any) => {
             maxDistance={20}
             minDistance={5}
             enableZoom={true}
-            addEventListener={undefined}
-            hasEventListener={undefined}
-            removeEventListener={undefined}
-            dispatchEvent={undefined}
             makeDefault
           />
           {/* Shake camera => buggy, not able to rotate, ..
@@ -79,11 +75,7 @@ export const CanvasPlayer = ({ children }: any) => {
           {children}
         </Rig>
       </Canvas>
-      {/* <div className="flex justify-center content-center bg-opacity-0">
-        <Loader />
-      </div> */}
 
-      {/* Build in loader from drei */}
       <div
         onClick={() => setFullscreen(!fullscreen)}
         className="absolute top-4 right-6 uppercase text-xs opacity-50 grid grid-flow-col gap-2 items-center cursor-pointer hover:opacity-75 transition-opacity"
