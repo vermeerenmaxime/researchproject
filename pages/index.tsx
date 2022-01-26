@@ -1,120 +1,10 @@
-import {
-  Html,
-  Loader,
-  OrbitControls,
-  Stars,
-  useProgress,
-  AdaptiveDpr,
-} from "@react-three/drei";
-import { Canvas, useFrame } from "@react-three/fiber";
-import {
-  Bloom,
-  DepthOfField,
-  EffectComposer,
-  Glitch,
-  Noise,
-  Vignette,
-  HueSaturation,
-} from "@react-three/postprocessing";
-// @ts-ignore
-import { BlurPass, Resizer, KernelSize, BlendFunction } from "postprocessing";
-
 import type { NextPage } from "next";
 import Head from "next/head";
 import { Suspense, useEffect, useRef } from "react";
-import { SceneObjects } from "../src/components/canvas/SceneObjects";
 
 import shallow from "zustand/shallow";
 import { useStore } from "../src/stores/store";
 
-const CanvasPlayer = ({ children }: any) => {
-  const canvasRef: any = useRef();
-
-  return (
-    <>
-      <Canvas
-        ref={canvasRef}
-        shadows
-        camera={{ position: [0, 5, 10] }}
-        vr={false} //Dunno what this does !todo
-        mode="concurrent"
-        className="overflow-hidden "
-        dpr={2}
-      >
-        <AdaptiveDpr pixelated />
-        {children}
-      </Canvas>
-      {/* Build in loader from drei */}
-      {/* <Loader /> */}
-    </>
-  );
-};
-
-const Scene = () => {
-  const Loader = () => {
-    const { active, progress, errors, item, loaded, total } = useProgress();
-    return (
-      <Html center>
-        <div className="bg-black/20 rounded-sm p-8 flex w-48 items-center justify-center">
-          {Math.round(progress)} % loaded
-        </div>
-      </Html>
-    );
-  };
-
-  const directionalLight1Ref: any = useRef();
-  const directionalLight2Ref: any = useRef();
-  const vignetteRef: any = useRef();
-  const hueRef: any = useRef();
-  const glitchRef: any = useRef();
-  const depthOfFieldRef: any = useRef();
-  const bloomRef: any = useRef();
-
-  return (
-    <>
-      <EffectComposer>
-        <HueSaturation
-          blendFunction={BlendFunction.NORMAL} // blend mode
-          hue={0} // hue in radians
-          saturation={0} // saturation in radians
-        />
-        <Glitch
-          active={false} // turn on/off the effect (switches between "mode" prop and GlitchMode.DISABLED)
-          ratio={0.95} // Threshold for strong glitches, 0 - no weak glitches, 1 - no strong glitches.
-        />
-        <DepthOfField
-          focusDistance={1.5}
-          focalLength={0.02}
-          bokehScale={0.2}
-          height={480}
-        />
-        <Bloom
-          blendFunction={BlendFunction.SCREEN}
-          luminanceThreshold={0}
-          luminanceSmoothing={1}
-          height={300}
-        />
-        {/* <Noise opacity={0.03} /> */}
-        <Vignette eskil={false} offset={0.01} darkness={0.9} />
-      </EffectComposer>
-      <OrbitControls
-        maxDistance={20}
-        minDistance={3}
-        enableZoom={true}
-        addEventListener={undefined}
-        hasEventListener={undefined}
-        removeEventListener={undefined}
-        dispatchEvent={undefined}
-      />
-      <ambientLight intensity={0.01} />
-      <directionalLight color="white" position={[-5, -5, -5]} intensity={0.5} />
-      <directionalLight color="white" position={[5, 5, 10]} intensity={0.5} />
-      <Suspense fallback={<Loader />}>
-        <SceneObjects></SceneObjects>
-      </Suspense>
-    </>
-  );
-};
 const PageContent = ({ children }: any) => {
   return (
     <section className="bg-slate-900/95 text-white ">
@@ -148,9 +38,19 @@ const Home: NextPage = () => {
         <h1 className="text-xl font-semibold ">3D Web Player</h1>
         <hr className="opacity-10 m-0"></hr>
         <div>
-          <h2 className="text-md font-semibold ">What is it?</h2>
+          <h2 className="text-md font-semibold ">What is it? Wat is het?</h2>
           <div className="opacity-70 font-base">
-            A web player where a canvas..
+            {/* A web player where a canvas.. */}
+            Een HTML5 canvas waar muziek in afgespeeld kan worden. Tijdens het
+            afspelen zullen objecten in de canvas bewegen aan de hand van de
+            frequencies in de muziek.
+            <br></br>
+            <br></br>
+            Het bereik van de kick, lows, mids en highs kun je zelf instellen.
+            De audioanalyser vangt 60x per seconde de frequencies op die in de
+            track aanwezig zijn. Dit wordt opgeslaan in een array van 64
+            waarden.<br></br> De kick komt voornamelijk voor in bijvoorbeeld in
+            het [2,7] van de array.
           </div>
         </div>
         <div>

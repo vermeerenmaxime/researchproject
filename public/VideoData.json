@@ -1,0 +1,48 @@
+{
+  "0": {
+    "description": "hello",
+    "image": "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
+    "canvas": {
+      "scene": {
+        "bloom": 0.1,
+        "lightIntensity": 5,
+        "sceneSpeed": 3,
+        "pointLight1": "yellow",
+        "pointLight2": "red"
+      },
+      "speed": {},
+      "objects": { "stars": 1000, "starSize": 4 },
+      "environment": {
+        "environmentBackgroundUrl": "/spaces/studio_small_03_4k.pic"
+      },
+      "audio": {
+        "audioUrl": "/audio/lightswitch.mp3",
+        "audioName": "Mave & Andrew A - Light Switch"
+      },
+      "theme": { "theme": "space" }
+    }
+  },
+  "1": {
+    "description": "hello",
+    "image": "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
+    "canvas": {
+      "scene": {
+        "bloom": 0.3,
+        "lightIntensity": 4,
+        "sceneSpeed": 1,
+        "pointLight1": "blue",
+        "pointLight2": "white"
+      },
+      "speed": {},
+      "objects": { "stars": 2000, "starSize": 5 },
+      "environment": {
+        "environmentBackgroundUrl": "/spaces/studio_small_03_4k.pic"
+      },
+      "audio": {
+        "audioUrl": "/audio/memories.mp3",
+        "audioName": "Mave & Alex Silves - Memories"
+      },
+      "theme": { "theme": "explore" }
+    }
+  }
+}

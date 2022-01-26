@@ -259,6 +259,7 @@ export const SceneObjects = () => {
     audioStart,
     audioPlay,
     audioName,
+    audioGenre,
 
     setAudioPlay,
     setAudioStart,
@@ -270,6 +271,7 @@ export const SceneObjects = () => {
       state.audioStart,
       state.audioPlay,
       state.audioName,
+      state.audioGenre,
 
       state.setAudioPlay,
       state.setAudioStart,
@@ -361,14 +363,20 @@ export const SceneObjects = () => {
       </Text> */}
       <NormalText
         hAlign="center"
-        position={[0, 5, -70]}
-        size={0.25}
+        position={theme === "car" ? [0, 8, -18] : [0, 8, -70]}
+        size={theme === "car" ? 0.1 : 0.25}
         color={theme === "explore" ? "black" : "white"}
       >
         {audioName.toUpperCase()}
       </NormalText>
-      <NormalText hAlign="center" position={[0, -5, -50]} fontSize={10}>
-        {messages[messages.length - 1].message}
+      <NormalText
+        hAlign="center"
+        position={theme === "car" ? [0, 0, -10] : [0, 0, -50]}
+        fontSize={10}
+        color={theme === "explore" ? "black" : "white"}
+      >
+        {/* {messages[messages.length - 1].message} */}#
+        {audioGenre.toUpperCase()}
       </NormalText>
       {/* <Text hAlign="center" position={[0, 3, -50]} children={audioName} /> */}
       {/* <Text hAlign="right" position={[-12, 3, -25]} children="Memories" /> */}

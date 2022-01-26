@@ -118,7 +118,7 @@ const VideoContent = () => {
     }
 
     if (data.theme) if (data.theme.theme) setTheme(data.theme.theme);
-    console.log(data);
+    // console.log(data);
   };
 
   useEffect(() => {
@@ -126,15 +126,23 @@ const VideoContent = () => {
     if (videoId) {
       // const canvasSettings = require("../../../public/EditorSettings.json");
 
-      let themeSettings;
-      if (videoId === "1")
-        themeSettings = require("../../../public/ExploreSettings.json");
-      if (videoId === "2")
-        themeSettings = require("../../../public/SpaceSettings.json");
-      else themeSettings = require("../../../public/ExploreSettings.json");
+      // let themeSettings;
+      // if (videoId === "1")
+      //   themeSettings = require("../../../public/ExploreSettings.json");
+      // if (videoId === "2")
+      //   themeSettings = require("../../../public/SpaceSettings.json");
+      // else themeSettings = require("../../../public/ExploreSettings.json");
 
-      console.log(themeSettings);
-      loadSettings(themeSettings);
+      const data = require("../../../public/VideoData.json");
+      const videoIdNumber = parseInt(videoId as string);
+      try {
+        const themeSettings = data[videoIdNumber].canvas;
+        loadSettings(themeSettings);
+      } catch {
+        console.log("Could not load data.");
+      }
+
+      // console.log(themeSettings);
     }
   });
 

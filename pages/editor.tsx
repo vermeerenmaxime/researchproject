@@ -265,6 +265,8 @@ const Editor: NextPage = () => {
     audioLength,
     setAudioName,
     audioName,
+    audioGenre,
+    setAudioGenre,
     audioCurrentTime,
     setAudioCurrentTime,
     addAudioCurrentTime,
@@ -286,6 +288,8 @@ const Editor: NextPage = () => {
       state.audioLength,
       state.setAudioName,
       state.audioName,
+      state.audioGenre,
+      state.setAudioGenre,
       state.audioCurrentTime,
       state.setAudioCurrentTime,
       state.addAudioCurrentTime,
@@ -548,7 +552,7 @@ const Editor: NextPage = () => {
                   </svg>
                 }
               >
-                Save to backend
+                Save to videos
               </Button>
             </div>
             <div>
@@ -949,6 +953,15 @@ const Editor: NextPage = () => {
                   value={bloom}
                   onChange={(e: any) => setBloom(e.target.value)}
                 ></input>
+                <b>Genre</b>
+                <hr></hr>
+                <div>Name</div>
+                <input
+                  type="text"
+                  className="input"
+                  value={audioGenre}
+                  onChange={(e: any) => setAudioGenre(e.target.value)}
+                ></input>
               </div>
               <div className="box">
                 <b>Music</b>
@@ -969,6 +982,13 @@ const Editor: NextPage = () => {
                   className="hidden"
                   onChange={onChangeAudio}
                 />
+                <div>Trackname</div>
+                <input
+                  type="text"
+                  className="input"
+                  value={audioName}
+                  onChange={(e: any) => setAudioName(e.target.value)}
+                ></input>
                 <label htmlFor="audioUrl" className="self-start">
                   <Button
                     icon={
@@ -1096,7 +1116,7 @@ const Editor: NextPage = () => {
             </button>
           </div>
         )}
-      
+
         <div className={`grid gap-2 ${fullscreen ? "fixed inset-0" : ""}`}>
           <div className="bg-black aspect-video rounded-sm relative overflow-hidden lg:w-[100%] ">
             <CanvasPlayer>

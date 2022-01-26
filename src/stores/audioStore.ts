@@ -20,6 +20,9 @@ export const useAudioStore = create((set: any) => ({
       audioCurrentTime: state.audioCurrentTime + 1,
     })),
 
+  audioGenre: "genre",
+  setAudioGenre: (value: string) => set({ audioGenre: value }),
+
   // Frequencies
   lowFreq: [0, 22],
   setLowFreq: (value: number[]) => set({ lowFreq: value }),
