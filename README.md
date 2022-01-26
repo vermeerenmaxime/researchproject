@@ -13,23 +13,41 @@ Ter uitbreiding van de appliciatie kan de administrator van de web applicatie ka
 
 ### Deelvragen 
 - Is het mogelijk om threeJS te gebruiken met een bepaald framework?
-    - ReactJS
+    - ReactJS => NextJS
       - react-three, react-three fiber, react-three drei, ..
     - Svelte
       - svelthree (oud)
       - https://svelte-cubed.vercel.app/ (nieuw)
+    - VueJS
+      - 
+      - https://troisjs.github.io/guide/
+
+    - Angular
+      - Ja, THREE aanspreken => geen custom components
+
+- Waarom aan de slag gegaan met three fiber?
+  - Bundel size van react three fiber is veel kleiner in vergelijking met troisJS 
+  - Documentatie van svelthree & svelte cubed is zeer incompleet en weinig community support
 - Wat voor impact heeft een virtuele dom op de performance van canvas?
+  - Meer loading doordat er extra bundels moeten worden ingeladen.
+  - 
 - Heeft de compiler van een framework (rust in NextJS) een invloed op de performantie van canvas?
+  - ...
+  - Ja, snellere refresh tijden (x3) & snellere builds (x5). O
+  - React heeft een experimental mode, waarbij er een virtual schedular dingen gaat prioritizen, en zo de scene optimaliseert. 
 - Is de snelheid van een computer waar de web applicatie op draait belangrijk voor de performance van HTML5 canvas?
-- 
+  - De snelheid van de internet verbinding speelt een grote rol bij het inladen van de objecten, textures en achtergronden. Je kan de fotos verkleinen, maar dan zullen de textures er niet meer zo realistisch uit komen te zien.
+  - De objecten moeten in een juist formaat geexporteerd worden, om zo het best ingeladen te worden. Wat dus ook een grote rol speelt bij de performance van je canvas.
 - Kunnen 3D programmas zoals Spline, Unity, Unreal Engine, Blender, .. helpen om 3D scenes te ontwikkelen en om te zetten naar ThreeJS?
-  - Blender: ja
-  - Spline
-  - Unity
-  - Unreal
-  - ThreeJS web:
+  - Blender: ja (build in export)
+  - Spline: ja (build in export)
+  - Unity: ja => https://github.com/Plattar/gltf-exporter
+  - Unreal: ja => https://www.unrealengine.com/marketplace/en-US/product/gltf-exporter
+  - ThreeJS web editor: ja, er is een mogelijkheid om te exporten naar .gltf
+  - Conclusie
+    - Zolang er een mogelijkheid is om te exporteren naar .gltf (optmized standaard voor het web) is het mogelijk.
 - Kan de ingeladen track in synchronisatie gezet worden met de 3D scene?
-  - ThreeJS stelt tools beschikbaar zoals positionalAudio, waardoor ..
+  - ThreeJS stelt tools beschikbaar zoals positionalAudio, waardoor een track kan ingeladen worden in de scene. Dit maakt het wel moeilijker om simpele tasks uit te voeren zoals play & stop. Het is geen gewoon javascript audio() element.
 - Hoeveel verschillende canvassen kunnen we op eenzelfde pagina renderen?
 - 
 - Welke voordelen heeft realtime rendering tegenover video?
@@ -41,7 +59,16 @@ Ter uitbreiding van de appliciatie kan de administrator van de web applicatie ka
   - Video voordelen
     - Streamingbuffer
     - Compability
+    - Geen krachtige graphics card nodig
 - Zijn er tools op de markt beschikbaar die dit al kunnen realiseren?
+  - Er zijn enkele audio visualisers die ontwikkelt zijn. 
+  - https://listeningtogether.atspotify.com/
+  - https://porterrobinson.com/tour
+  - https://medium.com/active-theory/introducing-dreamwave-microverses-1d3e0364eff
+  - https://codesandbox.io/s/audio-analyser-forked-infjx
+  - https://www.audiograph.xyz/?cc
+  - https://codesandbox.io/s/simple-audio-analyser-wu51m
+  - 
 
 
 ---
