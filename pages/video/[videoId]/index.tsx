@@ -36,6 +36,7 @@ const VideoContent = () => {
     setSceneSpeed,
     setPointLight1,
     setPointLight2,
+    setHue,
   ] = useSceneStore(
     (state) => [
       state.setBloom,
@@ -43,6 +44,7 @@ const VideoContent = () => {
       state.setSceneSpeed,
       state.setPointLight1,
       state.setPointLight2,
+      state.setHue,
     ],
     shallow
   );
@@ -61,6 +63,7 @@ const VideoContent = () => {
     setAudioUrl,
     setAudioName,
     audioName,
+    setAudioGenre,
     setLowFreq,
     setMidFreq,
     setHighFreq,
@@ -69,6 +72,7 @@ const VideoContent = () => {
       state.setAudioUrl,
       state.setAudioName,
       state.audioName,
+      state.setAudioGenre,
       state.setLowFreq,
       state.setMidFreq,
       state.setHighFre,
@@ -107,11 +111,13 @@ const VideoContent = () => {
       if (data.scene.sceneSpeed) setSceneSpeed(data.scene.sceneSpeed);
       if (data.scene.pointLight1) setPointLight1(data.scene.pointLight1);
       if (data.scene.pointLight2) setPointLight2(data.scene.pointLight2);
+      if (data.scene.hue) setHue(data.scene.hue);
     }
 
     if (data.audio) {
       if (data.audio.audioUrl) setAudioUrl(data.audio.audioUrl);
       if (data.audio.audioName) setAudioName(data.audio.audioName);
+      if (data.audio.audioGenre) setAudioGenre(data.audio.audioGenre);
       if (data.audio.lowFreq) setLowFreq(data.audio.lowFreq);
       if (data.audio.midFreq) setMidFreq(data.audio.midFreq);
       if (data.audio.highFreq) setHighFreq(data.audio.highFreq);

@@ -17,7 +17,8 @@
       },
       "audio": {
         "audioUrl": "/audio/lightswitch.mp3",
-        "audioName": "Mave & Andrew A - Light Switch"
+        "audioName": "Mave & Andrew A - Light Switch",
+        "audioGenre": "Future House"
       },
       "theme": { "theme": "space" }
     }
@@ -40,7 +41,8 @@
       },
       "audio": {
         "audioUrl": "/audio/memories.mp3",
-        "audioName": "Mave & Alex Silves - Memories"
+        "audioName": "Mave & Alex Silves - Memories",
+        "audioGenre": "Future Bounce"
       },
       "theme": { "theme": "explore" }
     }

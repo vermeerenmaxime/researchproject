@@ -356,6 +356,10 @@ export const SceneObjects = () => {
       );
     }
   );
+
+  useEffect(() => {
+    console.log(audioGenre);
+  }, [audioGenre]);
   return (
     <>
       {/* <Text hAlign="center" position={[0, 3, -50]}>
@@ -375,8 +379,8 @@ export const SceneObjects = () => {
         fontSize={10}
         color={theme === "explore" ? "black" : "white"}
       >
-        {/* {messages[messages.length - 1].message} */}#
-        {audioGenre.toUpperCase()}
+        {/* {messages[messages.length - 1].message} */}
+        {"#" + audioGenre.toUpperCase()}
       </NormalText>
       {/* <Text hAlign="center" position={[0, 3, -50]} children={audioName} /> */}
       {/* <Text hAlign="right" position={[-12, 3, -25]} children="Memories" /> */}

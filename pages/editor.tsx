@@ -377,6 +377,7 @@ const Editor: NextPage = () => {
         sceneSpeed: sceneSpeed,
         pointLight1: pointLight1,
         pointLight2: pointLight2,
+        hue: hue,
       },
       speed: {},
       objects: {
@@ -389,6 +390,7 @@ const Editor: NextPage = () => {
       audio: {
         audioUrl: audioUrl,
         audioName: audioName,
+        audioGenre: audioGenre,
         kickFreq: kickFreq,
         lowFreq: lowFreq,
         midFreq: midFreq,
@@ -433,6 +435,7 @@ const Editor: NextPage = () => {
           if (data.scene.sceneSpeed) setSceneSpeed(data.scene.sceneSpeed);
           if (data.scene.pointLight1) setPointLight1(data.scene.pointLight1);
           if (data.scene.pointLight2) setPointLight2(data.scene.pointLight2);
+          if (data.scene.hue) setHue(data.scene.hue);
         }
 
         if (data.audio) {
@@ -442,6 +445,7 @@ const Editor: NextPage = () => {
           if (data.audio.lowFreq) setLowFreq(data.audio.lowFreq);
           if (data.audio.midFreq) setMidFreq(data.audio.midFreq);
           if (data.audio.highFreq) setHighFreq(data.audio.highFreq);
+          if (data.audio.audioGenre) setAudioGenre(data.audio.audioGenre);
         }
 
         if (data.theme.theme) setTheme(data.theme.theme);
