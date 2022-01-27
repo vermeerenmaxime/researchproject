@@ -13,19 +13,6 @@ const PageContent = ({ children }: any) => {
   );
 };
 const Home: NextPage = () => {
-  // const likes = useStore((state) => state.likes);
-  // const addLike = useStore((state) => state.increaseLike);
-  // const removeLikes = useStore((state) => state.removeAllLikes);
-
-  const [likes, addLike, removeLikes] = useStore(
-    (state) => [state.likes, state.increaseLike, state.removeAllLikes],
-    shallow
-  );
-
-  useEffect(() => {
-    console.log(likes);
-  }, [likes]);
-  // const likes = useStore();
   return (
     <>
       <Head>

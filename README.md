@@ -34,7 +34,8 @@ Ter uitbreiding van de appliciatie kan de administrator van de web applicatie ka
 - Heeft de compiler van een framework (rust in NextJS) een invloed op de performantie van canvas?
   - ...
   - Ja, snellere refresh tijden (x3) & snellere builds (x5). O
-  - React heeft een experimental mode, waarbij er een virtual schedular dingen gaat prioritizen, en zo de scene optimaliseert. 
+  - React heeft een experimental mode, waarbij er een virtual schedular dingen gaat prioritizen, en zo de scene optimaliseert. Dit werkt nog niet optimaal met de nieuwe versie van NextJS en is alleen beschikbaar in React 18, wat nog moet uitkomen..
+  - 
 - Is de snelheid van een computer waar de web applicatie op draait belangrijk voor de performance van HTML5 canvas?
   - De snelheid van de internet verbinding speelt een grote rol bij het inladen van de objecten, textures en achtergronden. Je kan de fotos verkleinen, maar dan zullen de textures er niet meer zo realistisch uit komen te zien.
   - De objecten moeten in een juist formaat geexporteerd worden, om zo het best ingeladen te worden. Wat dus ook een grote rol speelt bij de performance van je canvas.

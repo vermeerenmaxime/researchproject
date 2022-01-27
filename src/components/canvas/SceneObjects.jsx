@@ -209,6 +209,7 @@ const Analyzer = ({ sound, scene, props }) => {
         position={[-5, 5, 5]}
         color={pointLight2}
       />
+
       {/* <ambientLight color="white" position={[0, 15, 0]} intensity={2} /> */}
       {/* <ambientLight  color="0xffffff" intensity={20}/> */}
 
@@ -362,11 +363,10 @@ export const SceneObjects = () => {
       {/* <Text hAlign="center" position={[0, 3, -50]}>
         {audioName}
       </Text> */}
-      <mesh>
-        <sphereGeometry args={[0.2, 32, 32]} />
-        <meshBasicMaterial toneMapped={false} transparent opacity={0.95} />
-        <pointLight color="red" distance={0.5} />
-      </mesh>
+      {/* <mesh>
+        <sphereGeometry args={[0.5, 32, 32]} />
+        <meshBasicMaterial />
+      </mesh> */}
       <NormalText
         hAlign="center"
         position={theme === "car" ? [0, 8, -18] : [0, 8, -70]}
@@ -510,16 +510,6 @@ export const SceneObjects = () => {
         </mesh>
 
         <fog attach="fog" args={["white", 0, 5]} />
-      </mesh>
-    </>
-  );
-};
-
-const demoObjects = () => {
-  return (
-    <>
-      <mesh scale={0.5} position={[0, 0, 0]}>
-        <Corridor></Corridor>
       </mesh>
     </>
   );
