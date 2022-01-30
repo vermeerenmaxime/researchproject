@@ -4,8 +4,8 @@
     "image": "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
     "canvas": {
       "scene": {
-        "bloom": 0.1,
-        "lightIntensity": 5,
+        "bloom": 0.4,
+        "lightIntensity": 2,
         "sceneSpeed": 3,
         "pointLight1": "yellow",
         "pointLight2": "red"
@@ -18,9 +18,11 @@
       "audio": {
         "audioUrl": "/audio/lightswitch.mp3",
         "audioName": "Mave & Andrew A - Light Switch",
-        "audioGenre": "Future House"
+        "audioGenre": "Future House",
+        "midFreq": [10, 43],
+        "highFreq": [31, 64]
       },
-      "theme": { "theme": "space" }
+      "theme": { "theme": "explore" }
     }
   },
   "1": {
@@ -28,8 +30,8 @@
     "image": "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
     "canvas": {
       "scene": {
-        "bloom": 0.3,
-        "lightIntensity": 4,
+        "bloom": 0.2,
+        "lightIntensity": 3,
         "sceneSpeed": 1,
         "pointLight1": "blue",
         "pointLight2": "white"
@@ -53,14 +55,14 @@
     "canvas": {
       "scene": {
         "bloom": 0.1,
-        "lightIntensity": "0.1",
+        "lightIntensity": 0.3,
         "sceneSpeed": "5",
         "pointLight1": "blue",
         "pointLight2": "white",
         "hue": 0
       },
       "speed": {},
-      "objects": { "stars": 0, "starSize": 4 },
+      "objects": { "stars": 2000, "starSize": 25 },
       "environment": {
         "environmentBackgroundUrl": "/spaces/studio_small_03_4k.pic"
       },
@@ -68,11 +70,12 @@
         "audioUrl": "/audio/rpdemo.mp3",
         "audioName": "Mave - Research Demo",
         "audioGenre": "Demo House",
-        "kickFreq": [0, 10],
+        "kickFreq": [0, 8],
         "lowFreq": [0, 22],
         "midFreq": [10, 43],
-        "highFreq": [31, 48]
-      }
+        "highFreq": [31, 55]
+      },
+      "theme": { "theme": "space" }
     }
   }
 }

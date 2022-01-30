@@ -65,6 +65,7 @@ const VideoContent = () => {
     setAudioName,
     audioName,
     setAudioGenre,
+    setKickFreq,
     setLowFreq,
     setMidFreq,
     setHighFreq,
@@ -74,9 +75,10 @@ const VideoContent = () => {
       state.setAudioName,
       state.audioName,
       state.setAudioGenre,
+      state.setKickFreq,
       state.setLowFreq,
       state.setMidFreq,
-      state.setHighFre,
+      state.setHighFreq,
     ],
     shallow
   );
@@ -119,13 +121,14 @@ const VideoContent = () => {
       if (data.audio.audioUrl) setAudioUrl(data.audio.audioUrl);
       if (data.audio.audioName) setAudioName(data.audio.audioName);
       if (data.audio.audioGenre) setAudioGenre(data.audio.audioGenre);
+      if (data.audio.kickFreq) setKickFreq(data.audio.kickFreq);
       if (data.audio.lowFreq) setLowFreq(data.audio.lowFreq);
       if (data.audio.midFreq) setMidFreq(data.audio.midFreq);
       if (data.audio.highFreq) setHighFreq(data.audio.highFreq);
     }
 
     if (data.theme) if (data.theme.theme) setTheme(data.theme.theme);
-    // console.log(data);
+    console.log(data);
   };
 
   useEffect(() => {
@@ -142,12 +145,13 @@ const VideoContent = () => {
 
       const data = require("../../../public/VideoData.json");
       const videoIdNumber = parseInt(videoId as string);
-      try {
+      console.log(data[videoIdNumber].canvas);
+      // try {
         const themeSettings = data[videoIdNumber].canvas;
         loadSettings(themeSettings);
-      } catch {
-        console.log("Could not load data.");
-      }
+      // } catch {
+      //   console.log("Could not load data.");
+      // }
 
       // console.log(themeSettings);
     }
