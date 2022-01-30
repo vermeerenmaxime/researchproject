@@ -44,7 +44,35 @@
         "audioName": "Mave & Alex Silves - Memories",
         "audioGenre": "Future Bounce"
       },
-      "theme": { "theme": "explore" }
+      "theme": { "theme": "car" }
+    }
+  },
+  "2": {
+    "description": "hello",
+    "image": "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
+    "canvas": {
+      "scene": {
+        "bloom": 0.1,
+        "lightIntensity": "0.1",
+        "sceneSpeed": "5",
+        "pointLight1": "blue",
+        "pointLight2": "white",
+        "hue": 0
+      },
+      "speed": {},
+      "objects": { "stars": 0, "starSize": 4 },
+      "environment": {
+        "environmentBackgroundUrl": "/spaces/studio_small_03_4k.pic"
+      },
+      "audio": {
+        "audioUrl": "/audio/rpdemo.mp3",
+        "audioName": "Mave - Research Demo",
+        "audioGenre": "Demo House",
+        "kickFreq": [0, 10],
+        "lowFreq": [0, 22],
+        "midFreq": [10, 43],
+        "highFreq": [31, 48]
+      }
     }
   }
 }

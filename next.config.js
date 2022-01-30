@@ -4,6 +4,7 @@ module.exports = {
   swcMinify: true,
   experimental: {
     removeConsole: false,
+    outputStandalone: true,
     // reactRoot: true,
     // concurrentFeatures: true,
   },

@@ -102,7 +102,7 @@ Ter uitbreiding van de appliciatie kan de administrator van de web applicatie ka
 ## Research
 Research.txt
 
-## Checklist
+## Checklist & ideas
 - [x] Analyze audio
 - [x] Detect lows, mids, highs in audio
 - [x] Detect average frequency
@@ -120,8 +120,8 @@ Research.txt
 - [ ] Detect loudness
 - [x] Modify objects in scene by music parameters (lows,mids,high)
 - [ ] Move objects by bpm, dynamic, loudness, ..
-- [ ] useAnimation actions of custom gltf object
-- [ ] Canvas fullscreen
+- [x] useAnimation actions of custom gltf object
+- [x] Canvas fullscreen
 - [ ] Canvas quality controls
 - [ ] Audio play, pause, stop, replay, .. controls
   - [x] play
