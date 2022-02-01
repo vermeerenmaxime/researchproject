@@ -9,6 +9,7 @@ import {
   Html,
   TransformControls,
   GradientTexture,
+  ContactShadows,
 } from "@react-three/drei";
 import { useRef, useState, useEffect, useMemo } from "react";
 import Heart from "../models/Heart.js";
@@ -212,7 +213,13 @@ const Analyzer = ({ sound, scene, props }) => {
 
       {/* <ambientLight color="white" position={[0, 15, 0]} intensity={2} /> */}
       {/* <ambientLight  color="0xffffff" intensity={20}/> */}
-
+      <ContactShadows
+        opacity={1}
+        scale={10}
+        blur={1}
+        far={10}
+        resolution={256}
+      />
       <mesh ref={meshRef} scale={1}>
         {theme === "heart" ? (
           <Heart position={[0, 0, 0]}></Heart>

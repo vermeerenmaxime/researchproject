@@ -1,12 +1,13 @@
 import {
   AdaptiveDpr,
+  AdaptiveEvents,
   CameraShake,
   FlyControls,
   Loader,
   OrbitControls,
 } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import shallow from "zustand/shallow";
 import { useEditorStore } from "../stores/editorStore";
@@ -49,6 +50,9 @@ export const CanvasPlayer = ({ children }: any) => {
         className="overflow-hidden "
         dpr={2}
       >
+        <AdaptiveDpr pixelated />
+        <AdaptiveEvents />
+
         <Rig>
           {/* Flycontrols met q,z,s,d */}
           {/* <FlyControls
@@ -64,14 +68,14 @@ export const CanvasPlayer = ({ children }: any) => {
             enableZoom={true}
             makeDefault
           />
-          {/* Shake camera => buggy, not able to rotate, ..
+          {/* Shake camera => buggy, not able to rotate, .. */}
           <CameraShake
             yawFrequency={0.1}
             pitchFrequency={0.1}
             rollFrequency={0.1}
-          /> */}
+            intensity={0.5}
+          />
 
-          <AdaptiveDpr pixelated />
           {children}
         </Rig>
       </Canvas>

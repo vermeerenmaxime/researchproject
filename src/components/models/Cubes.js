@@ -6,10 +6,9 @@ source: https://sketchfab.com/3d-models/kaleidoscopic-perception-leave-camera-al
 title: Kaleidoscopic Perception (Leave Camera Alone)
 */
 
-import React, { useRef, useEffect, useState } from "react";
-import { useFrame } from "@react-three/fiber";
+import React, { useRef, useEffect } from "react";
+
 import { useGLTF, useAnimations } from "@react-three/drei";
-import * as THREE from "three";
 
 export default function Model({ ...props }) {
   const group = useRef();
@@ -19,6 +18,7 @@ export default function Model({ ...props }) {
   useEffect(() => {
     actions.Animation.play();
   }, [mixer]);
+
   return <primitive ref={group} object={scene} dispose={null} />;
 }
 

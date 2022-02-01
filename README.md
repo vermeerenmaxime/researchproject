@@ -70,7 +70,7 @@ Ter uitbreiding van de appliciatie kan de administrator van de web applicatie ka
   - https://codesandbox.io/s/audio-analyser-forked-infjx
   - https://www.audiograph.xyz/?cc
   - https://codesandbox.io/s/simple-audio-analyser-wu51m
-  - 
+  - https://moonrider.xyz/ (audio rider)
 
 
 ---
@@ -145,6 +145,6 @@ Research.txt
 ## Struggels
 - Material inladen
 - 3D Text gebruiken (troikaJS TS error)
-- TS
+- TypeScript (TS)
 - Timer with hooks makes scene glitchy and choppy, not smooth
 - Animations not possible with ThreeJSX => glitchy & choppy
