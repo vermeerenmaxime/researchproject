@@ -145,13 +145,13 @@ const VideoContent = () => {
 
       const data = require("../../../public/VideoData.json");
       const videoIdNumber = parseInt(videoId as string);
-      console.log(data[videoIdNumber].canvas);
-      // try {
+      // console.log(data[videoIdNumber].canvas);
+      try {
         const themeSettings = data[videoIdNumber].canvas;
         loadSettings(themeSettings);
-      // } catch {
-      //   console.log("Could not load data.");
-      // }
+      } catch {
+        console.log("Could not load data.");
+      }
 
       // console.log(themeSettings);
     }

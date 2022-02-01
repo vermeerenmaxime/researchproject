@@ -501,7 +501,7 @@ export const SceneObjects = () => {
         </mesh> */}
 
         {/* <mesh position={new THREE.Vector3(0, 0, 0)}> */}
-        {/* <Cubes></Cubes> */}
+        <Cubes></Cubes>
         {/* </mesh> */}
 
         <mesh position={new THREE.Vector3(3, 3, 3)}>

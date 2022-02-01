@@ -19,9 +19,8 @@ Ter uitbreiding van de appliciatie kan de administrator van de web applicatie ka
       - svelthree (oud)
       - https://svelte-cubed.vercel.app/ (nieuw)
     - VueJS
-      - 
+      - Troisjs
       - https://troisjs.github.io/guide/
-
     - Angular
       - Ja, THREE aanspreken => geen custom components
 
@@ -30,7 +29,7 @@ Ter uitbreiding van de appliciatie kan de administrator van de web applicatie ka
   - Documentatie van svelthree & svelte cubed is zeer incompleet en weinig community support
 - Wat voor impact heeft een virtuele dom op de performance van canvas?
   - Meer loading doordat er extra bundels moeten worden ingeladen.
-  - 
+  - Verder kan een framework de performance van een canvas verbeteren, door gebruik te maken van resusable cached components.
 - Heeft de compiler van een framework (rust in NextJS) een invloed op de performantie van canvas?
   - ...
   - Ja, snellere refresh tijden (x3) & snellere builds (x5). O
@@ -39,6 +38,7 @@ Ter uitbreiding van de appliciatie kan de administrator van de web applicatie ka
 - Is de snelheid van een computer waar de web applicatie op draait belangrijk voor de performance van HTML5 canvas?
   - De snelheid van de internet verbinding speelt een grote rol bij het inladen van de objecten, textures en achtergronden. Je kan de fotos verkleinen, maar dan zullen de textures er niet meer zo realistisch uit komen te zien.
   - De objecten moeten in een juist formaat geexporteerd worden, om zo het best ingeladen te worden. Wat dus ook een grote rol speelt bij de performance van je canvas.
+  - De GPU kracht is nodig om de canvas smoother te laten runnen.
 - Kunnen 3D programmas zoals Spline, Unity, Unreal Engine, Blender, .. helpen om 3D scenes te ontwikkelen en om te zetten naar ThreeJS?
   - Blender: ja (build in export)
   - Spline: ja (build in export)
@@ -56,6 +56,7 @@ Ter uitbreiding van de appliciatie kan de administrator van de web applicatie ka
   - Precision
   - Quality
   - Loading lagg
+  - Multiplayer
 
   - Video voordelen
     - Streamingbuffer
