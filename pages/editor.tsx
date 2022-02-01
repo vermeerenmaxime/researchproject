@@ -882,7 +882,7 @@ const Editor: NextPage = () => {
                 ></input>
                 <hr></hr>
                 <div className="flex justify-between items-center">
-                  <p>Pointlight 1</p>
+                  <p>Pointlight 1 (L)</p>
                   <div className="grid gap-2 ">
                     <select
                       className="input capitalize"
@@ -908,7 +908,7 @@ const Editor: NextPage = () => {
                   <input className="input" placeholder="Y.."></input>
                   <input className="input" placeholder="Z.."></input>
                 </div> */}
-                <div className="flex justify-between items-center">
+                {/* <div className="flex justify-between items-center">
                   <p>Intensity</p>
                   <div className="grid gap-2 ">
                     <select className="input" placeholder="Select intensity..">
@@ -917,10 +917,10 @@ const Editor: NextPage = () => {
                       <option value="large">Large</option>
                     </select>
                   </div>
-                </div>
+                </div> */}
                 <hr className="opacity-20"></hr>
                 <div className="flex justify-between items-center">
-                  <p>Pointlight 2</p>
+                  <p>Pointlight 2 (R)</p>
                   <div className="grid gap-2 ">
                     <select
                       className="input capitalize"
