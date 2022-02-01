@@ -303,6 +303,9 @@ export const SceneObjects = () => {
   useEffect(() => {
     console.log("✨ " + stars + " stars rendering");
   }, [stars]);
+  useEffect(() => {
+    console.log("✨ Starsize changed to " + starSize);
+  }, [starSize]);
 
   // timer that ticks every second
 

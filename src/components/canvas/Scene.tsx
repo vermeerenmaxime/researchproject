@@ -69,11 +69,6 @@ export const Scene = () => {
 
   return (
     <>
-      {/* <Html fullscreen>
-         <div>Track title</div>
-        <div>Artists</div>
-        <div>Track title</div> 
-      </Html> */}
       <EffectComposer ref={effectRef} multisampling={8}>
         {/* <Bloom
           kernelSize={3}
@@ -145,7 +140,7 @@ export const Scene = () => {
           />
         </mesh> */}
         {/* <Environment files={environmentBackgroundUrl} background /> */}
-       
+
         <SceneObjects></SceneObjects>
       </Suspense>
     </>

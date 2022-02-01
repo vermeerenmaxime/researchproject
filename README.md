@@ -135,11 +135,9 @@ Research.txt
 - [ ] Landingpage
 - [x] Music page
 - [x] Make changes in canvas from outside canvas
-
-- [ ] Import scene from Blender
-- [ ] Import object from C4D
-- [ ] Chatbox in canvas
-- [ ] Likes in canvas
+- [x] Text in canvas
+- [x] Change text in cavnas
+- [ ] Multiplayer
 
 ## Answers
 
@@ -149,3 +147,4 @@ Research.txt
 - 3D Text gebruiken (troikaJS TS error)
 - TS
 - Timer with hooks makes scene glitchy and choppy, not smooth
+- Animations not possible with ThreeJSX => glitchy & choppy

@@ -27,6 +27,7 @@ import { EditorSettingsType } from "../src/types/EditorSettings";
 import Slider, { Range } from "rc-slider";
 import { InputRange } from "../src/components/InputRange";
 import { AudioPlayer } from "../src/components/AudioPlayer";
+import { EditBox } from "../src/components/EditBox";
 
 const Control = ({
   add,
@@ -459,7 +460,7 @@ const Editor: NextPage = () => {
 
   const saveVideo = () => {
     console.log("save to backend");
-    console.log(audioUrl)
+    console.log(audioUrl);
   };
 
   useEffect(() => {
@@ -567,8 +568,8 @@ const Editor: NextPage = () => {
               Play, pause, reset, resolution, ..
             </div> */}
 
-                <div className="bg-white/90 px-1 py-1 rounded-sm grid grid-flow-col text-slate-700 justify-start gap-2 text-sm">
-                  {/* <Control
+                {/* <div className="bg-white/90 px-1 py-1 rounded-sm grid grid-flow-col text-slate-700 justify-start gap-2 text-sm"> */}
+                {/* <Control
                     add={addBloom}
                     remove={removeBloom}
                     reset={resetBloom}
@@ -614,7 +615,7 @@ const Editor: NextPage = () => {
                       </svg>
                     }
                   ></Control> */}
-                  <input
+                {/* <input
                     accept=".pic"
                     // accept="image/*"
                     id="backgroundImage"
@@ -642,8 +643,8 @@ const Editor: NextPage = () => {
                         </svg>
                       </label>
                     }
-                  ></Control>
-                  {/* <Setting
+                  ></Control> */}
+                {/* <Setting
                     name="stars"
                     value={stars}
                     actions={{
@@ -677,7 +678,7 @@ const Editor: NextPage = () => {
                       ></path>
                     </svg>
                   </Setting> */}
-                  {/* <Setting
+                {/* <Setting
                     name="music"
                     actions={{
                       top: resetSceneSpeed,
@@ -704,7 +705,7 @@ const Editor: NextPage = () => {
                       ></path>
                     </svg>
                   </Setting> */}
-                  {/* <input
+                {/* <input
                     accept="audio/*"
                     id="audioUrl"
                     type="file"
@@ -729,7 +730,7 @@ const Editor: NextPage = () => {
                       </svg>
                     </label>
                   </Setting> */}
-                  {/* <Setting name="chat">
+                {/* <Setting name="chat">
                     <svg
                       className="w-6 h-6"
                       fill="none"
@@ -745,14 +746,11 @@ const Editor: NextPage = () => {
                       ></path>
                     </svg>
                   </Setting>{" "} */}
-                </div>
+                {/* </div> */}
               </div>
             </div>
             <div className="grid gap-4 justify-start grid-cols-3">
-              <div className="box">
-                <b>Frequency range (0-64)</b>
-                <hr className="opacity-20"></hr>
-
+              <EditBox title={"Frequency range (0-64)"}>
                 <p>
                   Kick ({kickFreq[0]},{kickFreq[1]})
                 </p>
@@ -870,14 +868,9 @@ const Editor: NextPage = () => {
                     }}
                   />
                 </div>
-                {/* <input type="slider"></input> */}
-                {/* Todo: remove slider & range package */}
-                {/* <Slider min={10} max={100} step={5} dots={true} />
-                <Range defaultValue={[2, 100]} /> */}
-              </div>
-              <div className="box">
-                <b>Light</b>
-                <hr className="opacity-20"></hr>
+              </EditBox>
+
+              <EditBox title="Light">
                 <div>Light ({lightIntensity})</div>
                 <input
                   type="range"
@@ -945,10 +938,8 @@ const Editor: NextPage = () => {
                     </select>
                   </div>
                 </div>
-              </div>
-              <div className="box">
-                <b>Bloom</b>
-                <hr></hr>
+              </EditBox>
+              <EditBox title="Bloom">
                 <div>Intensity ({bloom})</div>
                 <input
                   type="range"
@@ -958,19 +949,8 @@ const Editor: NextPage = () => {
                   value={bloom}
                   onChange={(e: any) => setBloom(e.target.value)}
                 ></input>
-                <b>Genre</b>
-                <hr></hr>
-                <div>Name</div>
-                <input
-                  type="text"
-                  className="input"
-                  value={audioGenre}
-                  onChange={(e: any) => setAudioGenre(e.target.value)}
-                ></input>
-              </div>
-              <div className="box">
-                <b>Music</b>
-                <hr></hr>
+              </EditBox>
+              <EditBox title="Music">
                 <div>Scene speed ({sceneSpeed})</div>
                 <input
                   type="range"
@@ -980,13 +960,6 @@ const Editor: NextPage = () => {
                   value={sceneSpeed}
                   onChange={(e: any) => setSceneSpeed(e.target.value)}
                 ></input>
-                <input
-                  accept="audio/*"
-                  id="audioUrl"
-                  type="file"
-                  className="hidden"
-                  onChange={onChangeAudio}
-                />
                 <div>Trackname</div>
                 <input
                   type="text"
@@ -994,6 +967,23 @@ const Editor: NextPage = () => {
                   value={audioName}
                   onChange={(e: any) => setAudioName(e.target.value)}
                 ></input>
+
+                <div>Genre name</div>
+                <input
+                  type="text"
+                  className="input"
+                  value={audioGenre}
+                  onChange={(e: any) => setAudioGenre(e.target.value)}
+                ></input>
+                <hr></hr>
+
+                <input
+                  accept="audio/*"
+                  id="audioUrl"
+                  type="file"
+                  className="hidden"
+                  onChange={onChangeAudio}
+                />
                 <label htmlFor="audioUrl" className="self-start">
                   <Button
                     icon={
@@ -1016,10 +1006,8 @@ const Editor: NextPage = () => {
                     Upload Track
                   </Button>
                 </label>
-              </div>
-              <div className="box">
-                <b>Background</b>
-                <hr></hr>
+              </EditBox>
+              <EditBox title="Background">
                 <div>Color hue </div>
                 <input
                   type="range"
@@ -1031,7 +1019,8 @@ const Editor: NextPage = () => {
                     setHue(parseInt(e.target.value));
                   }}
                 />
-                {/* <input
+                <hr></hr>
+                <input
                   accept=".pic,.hdr"
                   id="backgroundImage"
                   type="file"
@@ -1059,12 +1048,10 @@ const Editor: NextPage = () => {
                   >
                     Upload Background
                   </Button>
-                </label> */}
-              </div>
-              <div className="box">
-                <b>Stars</b>
-                <hr></hr>
-                <div>Amount </div>
+                </label>
+              </EditBox>
+              <EditBox title="Stars">
+                <div>Amount ({stars})</div>
                 <input
                   type="range"
                   min="0"
@@ -1075,7 +1062,7 @@ const Editor: NextPage = () => {
                     setStars(e.target.value);
                   }}
                 />
-                <div>Size stars </div>
+                <div>Size stars ({starSize})</div>
                 <input
                   type="range"
                   min="1"
@@ -1086,7 +1073,7 @@ const Editor: NextPage = () => {
                     setStarSize(e.target.value);
                   }}
                 />
-              </div>
+              </EditBox>
             </div>
           </>
         )}
@@ -1122,7 +1109,11 @@ const Editor: NextPage = () => {
           </div>
         )}
 
-        <div className={`grid gap-2 ${fullscreen ? "fixed inset-0" : ""}`}>
+        <div
+          className={`grid gap-2 ${
+            fullscreen ? "fixed inset-0 bg-slate-800" : ""
+          }`}
+        >
           <div className="bg-black aspect-video rounded-sm relative overflow-hidden lg:w-[100%] ">
             <CanvasPlayer>
               <Scene></Scene>

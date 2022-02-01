@@ -24,7 +24,7 @@ a {
 }
 
 .box {
-  @apply bg-white/5 flex flex-col space-y-3 border-2 rounded-sm border-white/10 px-4 py-3 text-xs;
+  @apply bg-white/5 flex flex-col space-y-3 border-2 rounded-sm border-white/10 px-4 py-4 text-xs;
 }
 
 hr {
