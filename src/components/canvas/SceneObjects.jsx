@@ -457,6 +457,9 @@ export const SceneObjects = () => {
             <mesh position={[10, 5, 5]}>
               <Orb></Orb>
             </mesh>
+            <mesh position={[-20, 2, 3]}>
+              <Cubes></Cubes>
+            </mesh>
             <Environment files={"/spaces/nebula.hdr"} background />
           </>
         ) : theme === "car" ? (
@@ -501,13 +504,13 @@ export const SceneObjects = () => {
         </mesh> */}
 
         {/* <mesh position={new THREE.Vector3(0, 0, 0)}> */}
-        <Cubes></Cubes>
+
         {/* </mesh> */}
 
-        <mesh position={new THREE.Vector3(3, 3, 3)}>
-          {/* <Cube></Cube> */}
-          {/* <Rainbow></Rainbow> */}
-        </mesh>
+        {/* <mesh position={new THREE.Vector3(3, 3, 3)}> */}
+        {/* <Cube></Cube> */}
+        {/* <Rainbow></Rainbow> */}
+        {/* </mesh> */}
 
         <fog attach="fog" args={["white", 0, 5]} />
       </mesh>

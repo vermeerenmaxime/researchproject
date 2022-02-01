@@ -18,8 +18,6 @@ export default function Model({ ...props }) {
   const { actions, mixer } = useAnimations(animations, group);
   useEffect(() => {
     actions.Animation.play();
-
-    console.log(mixer);
   }, [mixer]);
   return <primitive ref={group} object={scene} dispose={null} />;
 }

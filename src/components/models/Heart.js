@@ -14,23 +14,6 @@ export default function Model({ ...props }) {
   const group = useRef();
   const { nodes, materials } = useGLTF("/gltf/heart.gltf");
 
-  useFrame(() => {
-    if (group.current) {
-      // group.current.scale.x += 0.001
-      // group.current.scale.y += 0.001
-      // group.current.scale.z += 0.001
-      // console.log(group.current.scale)
-      // group.current.scale.map(s => {
-      //   console.log(s)
-      //   // s += 0.01
-      // })
-      // group.current.scale = {
-      //   x: 1,
-      //   y: 1,
-      //   z: 2,
-      // }
-    }
-  });
   return (
     <group ref={group} {...props} dispose={null}>
       <group rotation={[-Math.PI / 2, 0, 0]}>
